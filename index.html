@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOLF Dashboard</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background:#0b0f17; color:#e6edf3; min-height:100vh; }
+  header { padding:24px 32px; background:linear-gradient(135deg,#11161f,#1c2533); border-bottom:1px solid #222c3c; display:flex; align-items:center; gap:14px; }
+  header .logo { font-size:32px; }
+  header h1 { font-size:24px; letter-spacing:2px; }
+  header span.sub { color:#7d8da3; font-size:13px; margin-left:8px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; padding:32px; }
+  .card { background:#141b26; border:1px solid #222c3c; border-radius:12px; padding:24px; transition:transform .15s, border-color .15s; }
+  .card:hover { transform:translateY(-4px); border-color:#3b82f6; }
+  .card h2 { font-size:13px; text-transform:uppercase; color:#7d8da3; letter-spacing:1px; margin-bottom:12px; }
+  .card .value { font-size:34px; font-weight:700; }
+  .card .delta { font-size:13px; margin-top:8px; }
+  .up { color:#3fb950; } .down { color:#f85149; }
+  footer { text-align:center; padding:24px; color:#56657c; font-size:12px; border-top:1px solid #222c3c; }
+  .badge { display:inline-block; padding:4px 10px; background:#1f6feb22; color:#58a6ff; border-radius:20px; font-size:11px; margin-left:auto; }
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">WOLF</span>
+  <h1>WOLF DASHBOARD</h1>
+  <span class="sub">Painel de Controle</span>
+  <span class="badge">ONLINE</span>
+</header>
+<main class="grid">
+  <div class="card"><h2>Usuarios Ativos</h2><div class="value">1.284</div><div class="delta up">+12,4% esta semana</div></div>
+  <div class="card"><h2>Receita</h2><div class="value">R$ 48,9k</div><div class="delta up">+8,1% este mes</div></div>
+  <div class="card"><h2>Pedidos</h2><div class="value">372</div><div class="delta down">-3,2% hoje</div></div>
+  <div class="card"><h2>Taxa de Conversao</h2><div class="value">4,7%</div><div class="delta up">+0,6 pts</div></div>
+  <div class="card"><h2>Sessoes</h2><div class="value">9.610</div><div class="delta up">+5,9%</div></div>
+  <div class="card"><h2>Tempo Medio</h2><div class="value">3m 42s</div><div class="delta up">+14s</div></div>
+</main>
+<footer>WOLF Dashboard - Pagina de demonstracao gerada automaticamente</footer>
+</body>
+</html>
