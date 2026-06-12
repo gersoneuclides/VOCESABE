@@ -163,30 +163,43 @@ body::before{
 .main-col{display:flex;flex-direction:column;gap:18px}
 .queue-card{min-height:380px;display:flex;flex-direction:column}
 .qbody{padding:8px 12px 14px;overflow:auto;flex:1}
-.qrow{display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;
-  padding:12px 12px;border-radius:11px;transition:background .2s}
-.qrow:hover{background:var(--card-2)}
-.qrow + .qrow{border-top:1px solid var(--edge)}
-.op{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;flex:none;
-  font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:14px}
-.op.mpesa{background:rgba(228,0,43,.16);color:var(--red-soft)}
-.op.emola{background:rgba(70,210,126,.16);color:var(--green)}
-.op.gen{background:var(--card-hi);color:var(--ink-dim)}
-.qmid{min-width:0}
-.qmid .num{font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-weight:700;font-size:15px;color:var(--ink);
-  display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.qmid .sub{font-size:11.5px;color:var(--ink-faint);margin-top:3px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
-.qtag{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;
-  padding:2px 8px;border-radius:6px;text-transform:uppercase}
-.qtag.wait{background:rgba(245,185,66,.16);color:var(--amber)}
-.qtag.done{background:rgba(70,210,126,.16);color:var(--green)}
-.qtag.err{background:rgba(228,0,43,.16);color:var(--red-soft)}
-.qstate{width:9px;height:9px;border-radius:50%;flex:none}
-.qstate.wait{background:var(--amber);animation:pulse 2s infinite}
-.qstate.done{background:var(--green)}
-.qstate.err{background:var(--red-soft)}
-.qrow-err{background:rgba(228,0,43,.05)}
+/* tabela da fila (estilo painel de pedidos) */
+.qtable{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
+.qtable th{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:10.5px;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-faint);text-align:left;
+  padding:10px 10px;border-bottom:1px solid var(--edge);white-space:nowrap}
+.qtable td{padding:11px 10px;border-bottom:1px solid var(--edge);vertical-align:middle}
+.qtable tbody tr:last-child td{border-bottom:none}
+.qtable tbody tr{transition:background .15s}
+.qtable tbody tr:hover td{background:var(--card-2)}
+.qtable th.r,.qtable td.r{text-align:right}
+.qtable th.c,.qtable td.c{text-align:center}
+.qidx{color:var(--ink-faint);font-size:12px;width:30px}
+.qnum{font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:.3px}
+.qsub{display:flex;align-items:center;gap:8px;margin-top:4px;min-width:0}
+.qop{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:9.5px;
+  letter-spacing:.8px;padding:2px 7px;border-radius:5px;text-transform:uppercase;flex:none}
+.qop.mpesa{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.qop.emola{background:rgba(70,210,126,.16);color:var(--green)}
+.qop.gen{background:var(--card-hi);color:var(--ink-dim)}
+.qid{font-size:10.5px;color:var(--ink-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.qval{font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+.qval .u{font-size:10.5px;color:var(--ink-dim);margin-left:3px;font-weight:500}
+.qchip{display:inline-flex;align-items:center;gap:6px;font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;
+  font-weight:700;font-size:10px;letter-spacing:.8px;padding:3px 10px;border-radius:6px;
+  text-transform:uppercase;white-space:nowrap}
+.qchip i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.qchip.env{background:rgba(245,185,66,.12);color:var(--amber);border:1px solid rgba(245,185,66,.45)}
+.qchip.env i{animation:pulse 1.6s infinite}
+.qchip.fila{background:var(--card-hi);color:var(--ink-dim)}
+.qchip.ok{background:rgba(70,210,126,.16);color:var(--green)}
+.qchip.err{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.qtr-err td{background:rgba(228,0,43,.05)}
+.qsms{color:var(--ink-faint);font-size:11.5px}
+@media(max-width:680px){
+  .qtable th:nth-child(5),.qtable td:nth-child(5){display:none}
+  .qid{max-width:120px}
+}
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:50px 20px;text-align:center;color:var(--ink-faint)}
 .empty .big{font-size:42px;margin-bottom:12px;opacity:.8}
@@ -400,7 +413,7 @@ footer{position:relative;z-index:2;text-align:center;padding:20px;color:var(--in
    ===================================================================== */
 const PROJECT = "venda-de-megas-f1638";
 const API_KEY = "AIzaSyCNwaDaoL1aA6fVR9lV9KxM5GTs4vcznbU";
-const META_LUCRO_DIA = 5000;
+const META_LUCRO_DIA = 2000;
 const CAP_MB = 10240;
 const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
 
@@ -473,95 +486,135 @@ function detectOp(s){
   if(t.includes("emola")||t.includes("e-mola")||t==="e") return {cls:"emola",lbl:"eM"};
   return {cls:"gen",lbl:"··"};
 }
-const filaHistorico = new Map();
-let filaSeq = 0;
-const FILA_MAX_HIST = 30;
-
+/* ---- formato plano do macro 🛰️ Publicar Painel ----
+   fOk  = histórico (FilaItens)         -> ENVIADO
+   fEsp = à espera  (FilaSMS)           -> A ENVIAR / FILA
+   fErr = falhados  (FilaPendentes)     -> FALHOU
+   item: "num:84...,op:E,valor:25,id:PP..." unidos por ~ ;
+   o fOk novo vem em string contínua — cada item começa em "num:"           */
+function parseFlat(s){
+  if(!s || typeof s!=="string") return [];
+  const out=[];
+  const pedacos=[];
+  for(const ch of s.split("~")){
+    for(const p of ch.split(/,(?=num:)/)) pedacos.push(p);
+  }
+  for(const raw of pedacos){
+    const it=raw.trim(); if(!it) continue;
+    const o={};
+    for(const f of it.split(",")){
+      const i=f.indexOf(":"); if(i<1) continue;
+      o[f.slice(0,i).trim()]=f.slice(i+1).trim();
+    }
+    if(o.num||o.id) out.push(o);
+  }
+  return out;
+}
+function normId(x){return (x==null?"":String(x)).trim().replace(/\.+$/,"").toUpperCase();}
+function chaveItem(o){
+  const id=normId(pick(o,["id","recibo","transacao","ref"],""));
+  /* SEMID-... é placeholder gerado e repete-se entre clientes diferentes —
+     nesses casos a chave passa a ser num|valor para não colapsar linhas   */
+  if(id && !id.startsWith("SEMID")) return id;
+  return String(pick(o,["num","numero"],""))+"|"+String(pick(o,["valor","valorMT","mt"],""));
+}
 function classificarEstado(raw){
   const s=(raw||"").toString().toLowerCase();
   if(s.includes("erro")||s.includes("fail")||s.includes("falh")||s.includes("rejeit")||s.includes("trocad")) return "err";
-  if(s.includes("send")||s.includes("ok")||s.includes("conclu")||s.includes("done")||s.includes("sucesso")||s.includes("envid")) return "done";
-  return "wait";
+  if(s.includes("send")||s.includes("conclu")||s.includes("done")||s.includes("sucesso")||s.includes("envi")||s==="ok") return "ok";
+  return "fila";
 }
 function horaAgora(){
   const d=new Date();
   return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
 }
+const horaVista=new Map();
+let filaSeq=0;
 
-function renderQueue(items){
+/* junta fOk/fEsp/fErr num só mapa; estado mais "vivo" ganha (env > fila > err > ok) */
+function buildFila(F){
+  const PRIO={env:0,fila:1,err:2,ok:3};
+  const mapa=new Map();
+  const poe=(o,estado)=>{
+    const k=chaveItem(o); if(!k) return;
+    const ex=mapa.get(k);
+    if(ex){
+      for(const kk in o){ if(o[kk]!=null && o[kk]!=="") ex.d[kk]=o[kk]; }
+      if(PRIO[estado]<PRIO[ex.estado]) ex.estado=estado;
+    }else{
+      if(!horaVista.has(k)) horaVista.set(k,{hora:horaAgora(),seq:filaSeq++});
+      const hv=horaVista.get(k);
+      mapa.set(k,{d:{...o},estado,seq:hv.seq,hora:hv.hora});
+    }
+  };
+  parseFlat(F.fOk).forEach(o=>poe(o,"ok"));
+  parseFlat(F.fErr).forEach(o=>poe(o,"err"));
+  const ativa=String(F.filaAtiva??"")==="1";
+  const fpos=toNum(F.filaPos);
+  parseFlat(F.fEsp).forEach((o,i)=>{
+    let st="fila";
+    if(ativa){
+      if(fpos!=null && i<fpos) st="ok";                       // ponteiro já passou
+      else if((fpos==null && i===0) || i===fpos) st="env";    // a ser enviado agora
+    }
+    poe(o,st);
+  });
+  if(horaVista.size>400){
+    for(const k of [...horaVista.keys()].slice(0,horaVista.size-400)) horaVista.delete(k);
+  }
+  return [...mapa.values()];
+}
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function renderQueue(rows, meta){
   const body=document.getElementById("queueBody");
   const badge=document.getElementById("qbadge");
   const hint=document.getElementById("qhint");
-  items = items || [];
+  rows=rows||[]; meta=meta||{};
 
-  for(const v of filaHistorico.values()) v.naNuvem=false;
+  const ativos=rows.filter(r=>r.estado==="env"||r.estado==="fila").length;
+  const falhados=rows.filter(r=>r.estado==="err").length;
+  const naFila = meta.naFila!=null ? meta.naFila : ativos;
 
-  let ativos=0;
-  for(const it of items){
-    const id = (pick(it,["id","recibo","transacao","ref"]) || pick(it,["num","numero"]) || JSON.stringify(it)).toString();
-    const estado = classificarEstado(pick(it,["estado","status","state"],""));
-    if(estado==="wait") ativos++;
-    const ex = filaHistorico.get(id);
-    if(ex){
-      ex.dados=it; ex.naNuvem=true;
-      if(ex.estado==="wait") ex.estado=estado;
-      else if(estado!=="wait") ex.estado=estado;
-    }else{
-      const horaItem = pick(it,["hora","horaPagamento","hora_pag","timestamp"]) || horaAgora();
-      filaHistorico.set(id, {dados:it, estado, naNuvem:true, seq:filaSeq++, hora:horaItem});
-    }
-  }
-  for(const v of filaHistorico.values()){
-    if(!v.naNuvem && v.estado==="wait") v.estado="done";
-  }
-  if(filaHistorico.size>FILA_MAX_HIST){
-    const concl=[...filaHistorico.entries()].filter(([k,v])=>v.estado==="done").sort((a,b)=>a[1].seq-b[1].seq);
-    let remover=filaHistorico.size-FILA_MAX_HIST;
-    for(const [k] of concl){ if(remover-->0) filaHistorico.delete(k); else break; }
-  }
+  badge.textContent=naFila;
+  const qc=document.getElementById("queueCount"); if(qc) qc.textContent=naFila;
+  hint.textContent = naFila>0
+    ? (naFila+" na fila"+(falhados?" · "+falhados+" falhou":""))
+    : (falhados? falhados+" falhou" : "tudo processado");
 
-  badge.textContent=ativos;
-  document.getElementById("queueCount").textContent=ativos;
-
-  const todos=[...filaHistorico.values()];
-  const falhados=todos.filter(v=>v.estado==="err").length;
-  const enviados=todos.filter(v=>v.estado==="done").length;
-  hint.textContent = ativos>0 ? (ativos+" na fila") : (falhados? falhados+" falhou":"tudo processado");
-
-  // taxa de sucesso real
-  const srEl=document.getElementById("successRate");
-  if(srEl && !srEl.dataset.explicit){
-    const totalFinal=enviados+falhados;
-    srEl.textContent = totalFinal>0 ? Math.round((enviados/totalFinal)*100) : "—";
-  }
-
-  if(todos.length===0){
+  if(!rows.length){
     body.innerHTML=`<div class="empty"><div class="big">✨</div><div class="t">Fila limpa</div><div class="s">Tudo processado. Sem pedidos pendentes.</div></div>`;
     return;
   }
 
-  const ordem={err:0, wait:1, done:2};
-  todos.sort((a,b)=> ordem[a.estado]!==ordem[b.estado] ? ordem[a.estado]-ordem[b.estado] : b.seq-a.seq);
+  const ordem={env:0,fila:1,err:2,ok:3};
+  rows.sort((a,b)=> ordem[a.estado]!==ordem[b.estado] ? ordem[a.estado]-ordem[b.estado] : b.seq-a.seq);
+  const total=rows.length;
+  rows=rows.slice(0,40);   /* histórico pode ter 100+ enviados; tabela mostra os 40 mais relevantes */
 
-  body.innerHTML = todos.map(v=>{
-    const it=v.dados;
-    const op=detectOp(pick(it,["op","operadora","operator","tipo"], JSON.stringify(it)));
-    const num=pick(it,["num","numero","number","msisdn","telefone"],"—");
-    const nome=pick(it,["nome","cliente","name"],"");
-    const mt=toNum(pick(it,["valor","valorMT","mt","preco","valor_mt"]));
-    const st=v.estado;
-    const tag = st==="err"?`<span class="qtag err">Falhou</span>`
-              : st==="done"?`<span class="qtag done">Enviado</span>`
-              : `<span class="qtag wait">À espera</span>`;
-    return `<div class="qrow ${st==="err"?"qrow-err":""}">
-      <div class="op ${op.cls}">${op.lbl}</div>
-      <div class="qmid">
-        <div class="num">${num} ${tag}</div>
-        <div class="sub">${nome?nome+" · ":""}🕐 ${v.hora}${mt!=null?" · "+fmt(mt)+" MT":""}</div>
-      </div>
-      <div class="qstate ${st}"></div>
-    </div>`;
-  }).join("");
+  const CH={env:["env","A enviar"],fila:["fila","Fila"],ok:["ok","Enviado"],err:["err","Falhou"]};
+  body.innerHTML =
+    `<table class="qtable"><thead><tr>`+
+    `<th>#</th><th>Número</th><th class="r">Valor</th><th class="c">Estado</th><th class="c">SMS</th>`+
+    `</tr></thead><tbody>`+
+    rows.map((r,ix)=>{
+      const d=r.d;
+      const op=detectOp(pick(d,["op","operadora","operator","tipo"],""));
+      const mt=toNum(pick(d,["valor","valorMT","mt","preco","valor_mt"]));
+      const nome=pick(d,["nome","cliente","name"],"");
+      const opLbl=op.cls==="mpesa"?"M-PESA":op.cls==="emola"?"eMOLA":"··";
+      const [cls,lbl]=CH[r.estado]||CH.fila;
+      return `<tr class="${r.estado==="err"?"qtr-err":""}" title="${esc(nome)}">
+        <td class="qidx">${ix+1}</td>
+        <td><div class="qnum">${esc(pick(d,["num","numero","number","msisdn","telefone"],"—"))}</div>
+            <div class="qsub"><span class="qop ${op.cls}">${opLbl}</span><span class="qid">${esc(pick(d,["id","recibo"],""))}</span></div></td>
+        <td class="r qval">${mt!=null?fmt(mt):"—"}<span class="u">MT</span></td>
+        <td class="c"><span class="qchip ${cls}"><i></i>${lbl}</span></td>
+        <td class="c qsms">1/1</td>
+      </tr>`;
+    }).join("")+
+    `</tbody></table>`;
 }
 
 /* ---------- SIM ---------- */
@@ -603,6 +656,9 @@ async function tick(){
   const F = fila.data || {};
   const E = estado.data || {};
   const SRC = Object.assign({}, E, F);
+  // Para os SIMs, lucros/atual é a fonte de verdade (o botão Editar escreve lá).
+  // Isto impede que valores antigos congelados em fila/atual ganhem na mesclagem.
+  const SIMSRC = Object.assign({}, F, E);
 
   const profit  = toNum(pick(SRC,["LucroDia","lucroDia","lucro_dia","lucro","profit"]));
   const revenue = toNum(pick(SRC,["faturacao","faturado","receita","vendas_dia","totalDia"]));
@@ -626,11 +682,16 @@ async function tick(){
     document.getElementById("marginSub").textContent="margem "+mg;
   }
 
-  // taxa sucesso explícita (se o MacroDroid enviar)
-  const taxaExplicita = toNum(pick(SRC,["taxaSucesso","sucesso","success","taxa"]));
+  // taxa de sucesso: explícita se existir; senão enviados hoje vs falhas do dia (🛰️ Publicar Painel)
+  const falhasDia = toNum(pick(SRC,["falhasDia","falhas_dia","falhas"]));
+  const taxaExplicita = toNum(pick(SRC,["taxaSucesso","taxa_sucesso","success"]));
   const srElTick=document.getElementById("successRate");
-  if(taxaExplicita!=null){ srElTick.dataset.explicit="1"; srElTick.textContent = taxaExplicita; }
-  else { delete srElTick.dataset.explicit; }
+  if(taxaExplicita!=null){ srElTick.textContent = taxaExplicita; }
+  else if(sends!=null && (sends>0 || (falhasDia||0)>0)){
+    const tot = sends + (falhasDia||0);
+    srElTick.textContent = Math.round((sends/tot)*100);
+  }
+  else { srElTick.textContent = "—"; }
 
   // delta vs ontem
   const dEl=document.getElementById("deltaDay");
@@ -654,39 +715,49 @@ async function tick(){
   document.getElementById("goalPct").textContent=Math.round(pct)+"%";
   document.getElementById("goalMeta").textContent=fmt(profit||0)+" / "+fmt(META_LUCRO_DIA);
 
-  // FILA
-  let items = pick(SRC,["filaJson","fila","queue","pedidos","items","lista","DashArr"]);
-  if(typeof items==="string"){
-    let t=items.trim();
-    if(!t || /^\[\s*(0(\.0)?|null)?\s*\]$/.test(t)){ items=[]; }
-    else{
-      try{ items=JSON.parse(t); }
-      catch(e){
-        try{ items=JSON.parse("["+t.replace(/^\[|\]$/g,"").replace(/,\s*$/,"")+"]"); }
-        catch(e2){ items=[]; }
+  // FILA — formato plano do 🛰️ Publicar Painel; fallback para o filaJson antigo
+  let rows;
+  if(F.fOk!=null || F.fEsp!=null || F.fErr!=null){
+    rows = buildFila(F);
+  }else{
+    let items = pick(SRC,["filaJson","fila","queue","pedidos","items","lista","DashArr"]);
+    if(typeof items==="string"){
+      let t=items.trim();
+      if(!t || /^\[\s*(0(\.0)?|null)?\s*\]$/.test(t)){ items=[]; }
+      else{
+        try{ items=JSON.parse(t); }
+        catch(e){
+          try{ items=JSON.parse("["+t.replace(/^\[|\]$/g,"").replace(/,\s*$/,"")+"]"); }
+          catch(e2){ items=[]; }
+        }
       }
     }
+    if(items && !Array.isArray(items)) items=Object.values(items);
+    if(!Array.isArray(items)) items=[];
+    rows = items
+      .filter(it => it && typeof it==="object" && (pick(it,["num","numero","id","recibo"])!=null))
+      .map(it=>{
+        const k=chaveItem(it);
+        if(!horaVista.has(k)) horaVista.set(k,{hora:horaAgora(),seq:filaSeq++});
+        const hv=horaVista.get(k);
+        return {d:it, estado:classificarEstado(pick(it,["estado","status","state"],"")), seq:hv.seq, hora:hv.hora};
+      });
   }
-  if(items && !Array.isArray(items)) items=Object.values(items);
-  if(Array.isArray(items)){
-    items = items.filter(it => it && typeof it==="object" &&
-      (pick(it,["num","numero","id","recibo"])!=null));
-  }
-  renderQueue(items);
+  renderQueue(rows, {naFila: toNum(F.naFila)});
 
   // SIMs
-  const bal1=toNum(pick(SRC,["saldoSim1","saldo_sim1","sim1_saldo","saldo1","bal1"]));
-  const bal2=toNum(pick(SRC,["saldoSim2","saldo_sim2","sim2_saldo","saldo2","bal2"]));
+  const bal1=toNum(pick(SIMSRC,["saldoSim1","saldo_sim1","sim1_saldo","saldo1","bal1"]));
+  const bal2=toNum(pick(SIMSRC,["saldoSim2","saldo_sim2","sim2_saldo","saldo2","bal2"]));
   const normSt = s => { s=(s==null?"":String(s)).toLowerCase();
     if(s.includes("ativ")||s.includes("ok")) return "ativo";
     if(s.includes("bloq")||s.includes("block")||s.includes("inativ")) return "bloqueado";
     return null; };
-  let st1=normSt(pick(SRC,["status_sim1","statusSim1","estado_sim1","sim1_estado"],null));
-  let st2=normSt(pick(SRC,["status_sim2","statusSim2","estado_sim2","sim2_estado"],null));
+  let st1=normSt(pick(SIMSRC,["status_sim1","statusSim1","estado_sim1","sim1_estado"],null));
+  let st2=normSt(pick(SIMSRC,["status_sim2","statusSim2","estado_sim2","sim2_estado"],null));
   if(st1==null && bal1!=null) st1 = bal1>0 ? "ativo" : "bloqueado";
   if(st2==null && bal2!=null) st2 = bal2>0 ? "ativo" : "bloqueado";
-  const tx1=toNum(pick(SRC,["cont_sim1","transf_sim1","tx_sim1","transferencias_sim1"]));
-  const tx2=toNum(pick(SRC,["cont_sim2","transf_sim2","tx_sim2","transferencias_sim2"]));
+  const tx1=toNum(pick(SIMSRC,["cont_sim1","transf_sim1","tx_sim1","transferencias_sim1"]));
+  const tx2=toNum(pick(SIMSRC,["cont_sim2","transf_sim2","tx_sim2","transferencias_sim2"]));
   renderSim(1, bal1, st1, tx1);
   renderSim(2, bal2, st2, tx2);
 
