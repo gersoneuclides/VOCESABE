@@ -515,6 +515,13 @@ function parseFlat(s){
   return out;
 }
 function normId(x){return (x==null?"":String(x)).trim().replace(/\.+$/,"").toUpperCase();}
+function parseEnviados(s){
+  const set=new Set();
+  if(s && typeof s==="string"){
+    for(const id of s.split(",")){ const n=normId(id); if(n) set.add(n); }
+  }
+  return set;
+}
 function chaveItem(o){
   const id=normId(pick(o,["id","recibo","transacao","ref"],""));
   /* SEMID-... é placeholder gerado e repete-se entre clientes diferentes —
@@ -536,7 +543,7 @@ const horaVista=new Map();
 let filaSeq=0;
 
 /* junta fOk/fEsp/fErr num só mapa; estado mais "vivo" ganha (env > fila > err > ok) */
-function buildFila(F, confirmadas){
+function buildFila(F, confirmadas, enviadosSet){
   /* err é facto (falhou), ok é facto (confirmado por queda de saldo),
      pend = enviado ao operador mas ainda sem confirmação */
   const PRIO={err:0,ok:1,pend:2,env:3,fila:4};
@@ -578,6 +585,14 @@ function buildFila(F, confirmadas){
   const pend=out.filter(r=>r.estado==="pend").sort((a,b)=>a.seq-b.seq);
   let C = confirmadas==null ? pend.length : Math.max(0, confirmadas);
   for(const r of pend) r.estado = (C>0 ? (C--, "ok") : "conf");
+  /* dado real por-ID: se o comprovativo está no log de enviados, é ENVIADO (verde),
+     mesmo que tenha falhado antes e sido reprocessado com sucesso */
+  if(enviadosSet && enviadosSet.size){
+    for(const r of out){
+      const k=normId(pick(r.d,["id","recibo","transacao","ref"],""));
+      if(k && enviadosSet.has(k)) r.estado="ok";
+    }
+  }
   return out;
 }
 
@@ -734,7 +749,7 @@ async function tick(){
   // FILA — formato plano do 🛰️ Publicar Painel; fallback para o filaJson antigo
   let rows;
   if(F.fOk!=null || F.fEsp!=null || F.fErr!=null){
-    rows = buildFila(F, sends);
+    rows = buildFila(F, sends, parseEnviados(F.enviados));
   }else{
     let items = pick(SRC,["filaJson","fila","queue","pedidos","items","lista","DashArr"]);
     if(typeof items==="string"){
@@ -798,4 +813,4 @@ setInterval(tick, 3000);
 
 </script>
 </body>
-</html>
+      </html>
