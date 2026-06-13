@@ -194,6 +194,8 @@ body::before{
 .qchip.fila{background:var(--card-hi);color:var(--ink-dim)}
 .qchip.ok{background:rgba(70,210,126,.16);color:var(--green)}
 .qchip.err{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.qchip.conf{background:rgba(80,170,255,.12);color:#6ab8ff;border:1px solid rgba(80,170,255,.4)}
+.qchip.conf i{animation:pulse 1.6s infinite}
 .qtr-err td{background:rgba(228,0,43,.05)}
 .qsms{color:var(--ink-faint);font-size:11.5px}
 @media(max-width:680px){
@@ -506,6 +508,8 @@ function parseFlat(s){
       const i=f.indexOf(":"); if(i<1) continue;
       o[f.slice(0,i).trim()]=f.slice(i+1).trim();
     }
+    if(o.id && o.id.indexOf("PubArr")>=0) continue;        /* lixo de magic text não resolvido */
+    if(!o.num && !o.valor) continue;                        /* item sem substância */
     if(o.num||o.id) out.push(o);
   }
   return out;
@@ -532,8 +536,10 @@ const horaVista=new Map();
 let filaSeq=0;
 
 /* junta fOk/fEsp/fErr num só mapa; estado mais "vivo" ganha (env > fila > err > ok) */
-function buildFila(F){
-  const PRIO={env:0,fila:1,err:2,ok:3};
+function buildFila(F, confirmadas){
+  /* err é facto (falhou), ok é facto (confirmado por queda de saldo),
+     pend = enviado ao operador mas ainda sem confirmação */
+  const PRIO={err:0,ok:1,pend:2,env:3,fila:4};
   const mapa=new Map();
   const poe=(o,estado)=>{
     const k=chaveItem(o); if(!k) return;
@@ -547,7 +553,10 @@ function buildFila(F){
       mapa.set(k,{d:{...o},estado,seq:hv.seq,hora:hv.hora});
     }
   };
-  parseFlat(F.fOk).forEach(o=>poe(o,"ok"));
+  parseFlat(F.fOk).forEach(o=>{
+    const e=(o.estado||"").toLowerCase();
+    poe(o, e==="falhou"||e==="err" ? "err" : (e==="ok" ? "ok" : "pend"));
+  });
   parseFlat(F.fErr).forEach(o=>poe(o,"err"));
   const ativa=String(F.filaAtiva??"")==="1";
   const fpos=toNum(F.filaPos);
@@ -562,7 +571,14 @@ function buildFila(F){
   if(horaVista.size>400){
     for(const k of [...horaVista.keys()].slice(0,horaVista.size-400)) horaVista.delete(k);
   }
-  return [...mapa.values()];
+  /* confirmação real: total_hoje conta vendas confirmadas por queda de saldo.
+     Os C itens "pend" mais antigos viram ENVIADO; o resto fica A CONFIRMAR —
+     se alguém não recebeu, o item NUNCA confirma e fica visível em âmbar. */
+  const out=[...mapa.values()];
+  const pend=out.filter(r=>r.estado==="pend").sort((a,b)=>a.seq-b.seq);
+  let C = confirmadas==null ? pend.length : Math.max(0, confirmadas);
+  for(const r of pend) r.estado = (C>0 ? (C--, "ok") : "conf");
+  return out;
 }
 
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
@@ -588,12 +604,12 @@ function renderQueue(rows, meta){
     return;
   }
 
-  const ordem={env:0,fila:1,err:2,ok:3};
+  const ordem={env:0,fila:1,conf:2,err:3,ok:4};
   rows.sort((a,b)=> ordem[a.estado]!==ordem[b.estado] ? ordem[a.estado]-ordem[b.estado] : b.seq-a.seq);
   const total=rows.length;
   rows=rows.slice(0,40);   /* histórico pode ter 100+ enviados; tabela mostra os 40 mais relevantes */
 
-  const CH={env:["env","A enviar"],fila:["fila","Fila"],ok:["ok","Enviado"],err:["err","Falhou"]};
+  const CH={env:["env","A enviar"],fila:["fila","Fila"],conf:["conf","A confirmar"],ok:["ok","Enviado"],err:["err","Falhou"]};
   body.innerHTML =
     `<table class="qtable"><thead><tr>`+
     `<th>#</th><th>Número</th><th class="r">Valor</th><th class="c">Estado</th><th class="c">SMS</th>`+
@@ -718,7 +734,7 @@ async function tick(){
   // FILA — formato plano do 🛰️ Publicar Painel; fallback para o filaJson antigo
   let rows;
   if(F.fOk!=null || F.fEsp!=null || F.fErr!=null){
-    rows = buildFila(F);
+    rows = buildFila(F, sends);
   }else{
     let items = pick(SRC,["filaJson","fila","queue","pedidos","items","lista","DashArr"]);
     if(typeof items==="string"){
