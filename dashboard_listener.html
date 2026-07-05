@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>WOLFSTREAM · Central de Vendas</title>
+
+<!-- SEO e partilha -->
+<meta name="description" content="Painel em tempo real da WOLFSTREAM: fila de pedidos, saldo dos SIMs, lucro do dia, megas vendidos e taxa de sucesso.">
+<meta name="author" content="WOLFSTREAM">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0c0d10">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WOLFSTREAM · Central de Vendas">
+<meta property="og:description" content="Painel em tempo real de vendas de megas.">
+
+<!-- Fontes (com fallback do sistema caso a internet falhe) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d10;
+  --bg-rail:#121317;
+  --card:#17191e;
+  --card-2:#1c1e24;
+  --card-hi:#22252c;
+  --edge:rgba(255,255,255,.06);
+  --edge-hi:rgba(255,255,255,.12);
+  --ink:#f2f4f8;
+  --ink-dim:#9aa1ad;
+  --ink-faint:#646a76;
+  --red:#e4002b;            /* acento AMD */
+  --red-soft:#ff3355;
+  --green:#46d27e;
+  --green-deep:#16361f;
+  --amber:#f5b942;
+  --blue:#4aa3ff;
+  --ok:#2ecc71;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+/* leve textura/profundidade no fundo, como o Adrenalin */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 88% -8%, rgba(228,0,43,.10), transparent 60%),
+    radial-gradient(700px 600px at 6% 110%, rgba(70,210,126,.05), transparent 55%),
+    linear-gradient(180deg,#0c0d10 0%, #0e0f13 60%, #090a0d 100%);
+}
+
+/* ===== barra de topo ===== */
+.topbar{
+  position:relative;z-index:3;display:flex;align-items:center;gap:22px;
+  padding:14px 22px;background:rgba(14,15,19,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--edge);
+}
+.logo{
+  width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--red),#b3001f);
+  box-shadow:0 4px 18px rgba(228,0,43,.4);overflow:hidden;
+}
+.logo img{width:34px;height:34px;object-fit:contain;display:block}
+.brand-name{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:19px;letter-spacing:2px;
+  color:var(--ink);margin-left:-13px}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{
+  font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:16px;letter-spacing:.4px;
+  color:var(--ink-dim);text-decoration:none;padding:9px 16px;border-radius:9px;
+  position:relative;transition:color .2s,background .2s;cursor:pointer;
+}
+.nav a:hover{color:var(--ink);background:var(--card)}
+.nav a.active{color:var(--ink)}
+.nav a.active::after{
+  content:"";position:absolute;left:16px;right:16px;bottom:2px;height:2.5px;border-radius:3px;
+  background:var(--red);box-shadow:0 0 10px rgba(228,0,43,.6);
+}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--edge);
+  border-radius:9px;padding:8px 13px;color:var(--ink-faint);font-size:13px;min-width:150px;
+}
+.live{
+  display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-size:12px;
+  color:var(--ink-dim);background:var(--card);border:1px solid var(--edge);
+  padding:8px 13px;border-radius:9px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 0 rgba(70,210,126,.5);animation:pulse 2s infinite}
+.dot.warn{background:var(--amber);animation:none}
+.dot.dead{background:var(--red);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(70,210,126,.5)}70%{box-shadow:0 0 0 8px rgba(70,210,126,0)}100%{box-shadow:0 0 0 0 rgba(70,210,126,0)}}
+.icon-btn{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:var(--card);border:1px solid var(--edge);color:var(--ink-dim);cursor:pointer}
+
+/* ===== layout principal ===== */
+.shell{position:relative;z-index:2;max-width:1480px;margin:0 auto;padding:22px;
+  display:grid;grid-template-columns:1fr 320px;gap:18px}
+
+/* cartão base estilo Adrenalin */
+.card{background:var(--card);border:1px solid var(--edge);border-radius:16px;position:relative;overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px 0}
+.card-title{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--ink-dim)}
+.card-link{font-size:11px;color:var(--ink-faint);text-decoration:none;display:flex;align-items:center;gap:4px}
+
+/* faixa de destaque (jogado pela última vez -> "destaque do dia") */
+.feature{
+  grid-column:1 / -1;
+  display:grid;grid-template-columns:1.15fr 1fr 1fr 0.9fr;gap:14px;
+}
+.hero-card{
+  background:
+    linear-gradient(180deg,rgba(228,0,43,.10),transparent 45%),
+    var(--card);
+  border:1px solid var(--edge);border-radius:16px;padding:18px;display:flex;flex-direction:column;
+}
+.hero-eyebrow{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:12px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--ink-faint)}
+.hero-figure{flex:1;display:flex;align-items:center;justify-content:center;gap:18px;padding:14px 0}
+.ring-wrap{position:relative;width:118px;height:118px;flex:none}
+.ring-wrap svg{transform:rotate(-90deg);overflow:visible}
+.ring-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:10}
+.ring-fg{fill:none;stroke:url(#wolfgrad);stroke-width:10;stroke-linecap:round;
+  filter:drop-shadow(0 0 6px rgba(228,0,43,.5));transition:stroke-dashoffset 1s cubic-bezier(.22,1,.36,1)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-center .pct{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:26px;color:var(--ink)}
+.ring-center .lbl{font-size:9px;letter-spacing:1.5px;color:var(--ink-faint);text-transform:uppercase}
+.hero-figtext .big{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:38px;line-height:1;color:var(--ink)}
+.hero-figtext .big .cur{font-size:.4em;color:var(--ink-dim);margin-left:6px}
+.hero-figtext .meta{font-size:12px;color:var(--ink-dim);margin-top:6px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
+.hero-figtext .delta{font-size:12px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;margin-top:4px}
+.delta.pos{color:var(--green)} .delta.neg{color:var(--red-soft)}
+.hero-cta{margin-top:6px;background:var(--red);color:#fff;border:none;border-radius:10px;
+  padding:11px;font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.5px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.hero-cta:hover{background:var(--red-soft)}
+
+/* mini-cartões de stat (estilo "jogos recentes") */
+.stat{background:var(--card);border:1px solid var(--edge);border-radius:16px;padding:18px;
+  display:flex;flex-direction:column;justify-content:center;transition:transform .25s,border-color .25s}
+.stat:hover{transform:translateY(-3px);border-color:var(--edge-hi)}
+.stat .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:18px}
+.stat .ic.r{background:rgba(228,0,43,.14);color:var(--red-soft)}
+.stat .ic.g{background:rgba(70,210,126,.14);color:var(--green)}
+.stat .ic.b{background:rgba(74,163,255,.14);color:var(--blue)}
+.stat .ic.a{background:rgba(245,185,66,.14);color:var(--amber)}
+.stat .k{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:12px;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:16px}
+.stat .v{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:34px;line-height:1;margin-top:4px}
+.stat .v .u{font-size:14px;color:var(--ink-dim);margin-left:4px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-weight:500}
+.stat .sub{font-size:11px;color:var(--ink-faint);margin-top:6px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
+
+/* coluna esquerda: fila grande */
+.main-col{display:flex;flex-direction:column;gap:18px}
+.queue-card{min-height:380px;display:flex;flex-direction:column}
+.qbody{padding:8px 12px 14px;overflow:auto;flex:1}
+/* tabela da fila (estilo painel de pedidos) */
+.qtable{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
+.qtable th{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:10.5px;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-faint);text-align:left;
+  padding:10px 10px;border-bottom:1px solid var(--edge);white-space:nowrap}
+.qtable td{padding:11px 10px;border-bottom:1px solid var(--edge);vertical-align:middle}
+.qtable tbody tr:last-child td{border-bottom:none}
+.qtable tbody tr{transition:background .15s}
+.qtable tbody tr:hover td{background:var(--card-2)}
+.qtable th.r,.qtable td.r{text-align:right}
+.qtable th.c,.qtable td.c{text-align:center}
+.qidx{color:var(--ink-faint);font-size:12px;width:30px}
+.qnum{font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:.3px}
+.qsub{display:flex;align-items:center;gap:8px;margin-top:4px;min-width:0}
+.qop{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:9.5px;
+  letter-spacing:.8px;padding:2px 7px;border-radius:5px;text-transform:uppercase;flex:none}
+.qop.mpesa{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.qop.emola{background:rgba(70,210,126,.16);color:var(--green)}
+.qop.gen{background:var(--card-hi);color:var(--ink-dim)}
+.qid{font-size:10.5px;color:var(--ink-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.qval{font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+.qval .u{font-size:10.5px;color:var(--ink-dim);margin-left:3px;font-weight:500}
+.qchip{display:inline-flex;align-items:center;gap:6px;font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;
+  font-weight:700;font-size:10px;letter-spacing:.8px;padding:3px 10px;border-radius:6px;
+  text-transform:uppercase;white-space:nowrap}
+.qchip i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.qchip.env{background:rgba(245,185,66,.12);color:var(--amber);border:1px solid rgba(245,185,66,.45)}
+.qchip.env i{animation:pulse 1.6s infinite}
+.qchip.fila{background:var(--card-hi);color:var(--ink-dim)}
+.qchip.ok{background:rgba(70,210,126,.16);color:var(--green)}
+.qchip.err{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.qchip.conf{background:rgba(80,170,255,.12);color:#6ab8ff;border:1px solid rgba(80,170,255,.4)}
+.qchip.conf i{animation:pulse 1.6s infinite}
+.qtr-err td{background:rgba(228,0,43,.05)}
+.qsms{color:var(--ink-faint);font-size:11.5px}
+@media(max-width:680px){
+  .qtable th:nth-child(5),.qtable td:nth-child(5){display:none}
+  .qid{max-width:120px}
+}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:50px 20px;text-align:center;color:var(--ink-faint)}
+.empty .big{font-size:42px;margin-bottom:12px;opacity:.8}
+.empty .t{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:18px;color:var(--ink-dim);letter-spacing:.5px}
+.empty .s{font-size:12.5px;margin-top:6px}
+.qcount-badge{font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-weight:700;font-size:12px;
+  background:var(--card-hi);color:var(--ink-dim);padding:3px 10px;border-radius:999px}
+
+/* coluna direita (rail estilo Adrenalin) */
+.rail{display:flex;flex-direction:column;gap:18px}
+.rail .card{padding-bottom:16px}
+
+/* SIM panel */
+.sim{padding:14px 18px 0}
+.sim + .sim{border-top:1px solid var(--edge);margin-top:6px;padding-top:16px}
+.sim-top{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.sim-badge{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:13px;background:rgba(74,163,255,.15);color:var(--blue)}
+.sim-name{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.5px}
+.sim-st{margin-left:auto;font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 9px;border-radius:6px}
+.sim-st.ok{background:rgba(70,210,126,.16);color:var(--green)}
+.sim-st.block{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.sim-st.unk{background:var(--card-hi);color:var(--ink-faint)}
+.sim-bal{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:28px;line-height:1}
+.sim-bal .u{font-size:13px;color:var(--ink-dim);margin-left:3px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-weight:500}
+.sim-bar{height:7px;border-radius:4px;background:var(--card-hi);margin-top:11px;overflow:hidden}
+.sim-bar .fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),#7cc0ff);
+  transition:width .9s cubic-bezier(.22,1,.36,1)}
+.sim-bar .fill.mid{background:linear-gradient(90deg,var(--amber),#ffd778)}
+.sim-bar .fill.low{background:linear-gradient(90deg,var(--red),var(--red-soft))}
+.sim-foot{font-size:11px;color:var(--ink-faint);margin-top:9px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+  display:flex;justify-content:space-between}
+
+/* painel info (estilo "driver e software") */
+.info-row{display:flex;align-items:center;justify-content:space-between;padding:13px 18px}
+.info-row + .info-row{border-top:1px solid var(--edge)}
+.info-k{font-size:12px;color:var(--ink-dim)}
+.info-v{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:15px;color:var(--ink)}
+.info-v.ok{color:var(--green)}
+
+footer{position:relative;z-index:2;text-align:center;padding:20px;color:var(--ink-faint);
+  font-size:11px;font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace}
+
+/* responsivo */
+@media(max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .feature{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav a:not(.active){display:none}
+  .search{display:none}
+  .feature{grid-template-columns:1fr}
+  .shell{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- gradientes SVG -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="wolfgrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff3355"/>
+      <stop offset="1" stop-color="#e4002b"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- barra de topo -->
+<div class="topbar">
+  <div class="logo">
+    <img src="data:image/png;base64,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" alt="WOLFSTREAM" />
+  </div>
+  <div class="brand-name">WOLFSTREAM</div>
+  <nav class="nav">
+    <a class="active">Visão geral</a>
+    <a id="navQueue">Fila</a>
+    <a id="navSims">SIMs</a>
+  </nav>
+  <div class="top-right">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <span>Pesquisar</span>
+    </div>
+    <div class="live"><span class="dot" id="liveDot"></span><span id="liveTxt">A ligar…</span></div>
+    <div class="icon-btn" title="Atualiza a cada 3s">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+    </div>
+  </div>
+</div>
+
+
+<style>
+/* ---- dois dispositivos ---- */
+.dev-card{margin-bottom:0}
+.dev-head{display:flex;align-items:center;gap:10px;padding:14px 18px 4px}
+.dev-ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:rgba(74,163,255,.15)}
+.dev-name{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.6px}
+.dev-pill{margin-left:auto;font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.dev-pill.ok{background:rgba(70,210,126,.16);color:var(--green)}
+.dev-pill.full{background:rgba(228,0,43,.16);color:var(--red-soft)}
+.dev-pill.unk{background:var(--card-hi);color:var(--ink-faint)}
+.dev-card .sim:first-of-type{margin-top:6px}
+.qdev{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.8px;padding:2px 7px;border-radius:5px;
+  text-transform:uppercase;flex:none;background:var(--card-hi);color:var(--ink-dim)}
+.qdev.d1{background:rgba(74,163,255,.16);color:#7cc0ff}
+.qdev.d2{background:rgba(245,185,66,.16);color:var(--amber)}
+.split2{display:grid;grid-template-columns:1fr;gap:12px}
+</style>
+<div class="shell">
+
+  <!-- FAIXA DE DESTAQUE -->
+  <section class="feature">
+    <!-- lucro TOTAL (anel) -->
+    <div class="hero-card">
+      <span class="hero-eyebrow">Lucro do dia · negócio</span>
+      <div class="hero-figure">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 118 118">
+            <circle class="ring-bg" cx="59" cy="59" r="50"/>
+            <circle class="ring-fg" id="ring" cx="59" cy="59" r="50" stroke-dasharray="314.159" stroke-dashoffset="314.159"/>
+          </svg>
+          <div class="ring-center"><div class="pct" id="goalPct">0%</div><div class="lbl">meta</div></div>
+        </div>
+        <div class="hero-figtext">
+          <div class="big"><span id="profit">0</span><span class="cur">MT</span></div>
+          <div class="meta" id="goalMeta">0 / 2000</div>
+        </div>
+      </div>
+      <button class="hero-cta" id="refreshBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 11-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        Atualizar agora
+      </button>
+    </div>
+
+    <div class="stat"><div class="ic r">⚡</div><div class="k">Envios hoje (total)</div><div class="v"><span id="sendsToday">0</span></div><div class="sub" id="ticketSub">Redmi 8: <span id="send1">0</span> · 13c: <span id="send2">0</span></div></div>
+    <div class="stat"><div class="ic b">📊</div><div class="k">Megas vendidos (total)</div><div class="v"><span id="mbToday">0</span><span class="u">MB</span></div><div class="sub" id="marginSub">soma dos 2 telefones</div></div>
+    <div class="stat"><div class="ic g">✓</div><div class="k">Telefones disponíveis</div><div class="v"><span id="dispCount">—</span><span class="u">/2</span></div><div class="sub" id="successSub">na fila: <span id="queueCount">0</span></div></div>
+  </section>
+
+  <!-- COLUNA PRINCIPAL: FILA -->
+  <div class="main-col">
+    <div class="card queue-card" id="queueSection">
+      <div class="card-head">
+        <span class="card-title">Fila em tempo real · 2 telefones</span>
+        <span class="qcount-badge"><span id="qbadge">0</span> · <span id="qhint">a sincronizar</span></span>
+      </div>
+      <div class="qbody" id="queueBody">
+        <div class="empty"><div class="big">⏳</div><div class="t">A carregar fila…</div><div class="s">A ligar ao servidor.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAIL DIREITO: 2 DISPOSITIVOS -->
+  <aside class="rail" id="simSection">
+    <div class="split2">
+
+      <!-- DISPOSITIVO 1 -->
+      <div class="card dev-card">
+        <div class="dev-head">
+          <div class="dev-ico">📱</div><span class="dev-name">Redmi 8</span>
+          <span class="dev-pill unk" id="pill1">—</span>
+        </div>
+        <div class="sim">
+          <div class="sim-top"><span class="sim-badge">S1</span><span class="sim-name">SIM 1</span><span class="sim-st unk" id="d1s1st">—</span></div>
+          <div class="sim-bal"><span id="d1s1bal">—</span><span class="u">MB</span></div>
+          <div class="sim-bar"><div class="fill" id="d1s1bar" style="width:2%"></div></div>
+          <div class="sim-foot"><span>Transf. hoje</span><span><span id="d1s1tx">—</span>/<span id="d1s1lim">10</span></span></div>
+        </div>
+        <div class="sim">
+          <div class="sim-top"><span class="sim-badge">S2</span><span class="sim-name">SIM 2</span><span class="sim-st unk" id="d1s2st">—</span></div>
+          <div class="sim-bal"><span id="d1s2bal">—</span><span class="u">MB</span></div>
+          <div class="sim-bar"><div class="fill" id="d1s2bar" style="width:2%"></div></div>
+          <div class="sim-foot"><span>Transf. hoje</span><span><span id="d1s2tx">—</span>/<span id="d1s2lim">10</span></span></div>
+        </div>
+      </div>
+
+      <!-- DISPOSITIVO 2 -->
+      <div class="card dev-card">
+        <div class="dev-head">
+          <div class="dev-ico" style="background:rgba(245,185,66,.15)">📱</div><span class="dev-name">Redmi 13c</span>
+          <span class="dev-pill unk" id="pill2">—</span>
+        </div>
+        <div class="sim">
+          <div class="sim-top"><span class="sim-badge">S1</span><span class="sim-name">SIM 1</span><span class="sim-st unk" id="d2s1st">—</span></div>
+          <div class="sim-bal"><span id="d2s1bal">—</span><span class="u">MB</span></div>
+          <div class="sim-bar"><div class="fill" id="d2s1bar" style="width:2%"></div></div>
+          <div class="sim-foot"><span>Transf. hoje</span><span><span id="d2s1tx">—</span>/<span id="d2s1lim">10</span></span></div>
+        </div>
+        <div class="sim">
+          <div class="sim-top"><span class="sim-badge">S2</span><span class="sim-name">SIM 2</span><span class="sim-st unk" id="d2s2st">—</span></div>
+          <div class="sim-bal"><span id="d2s2bal">—</span><span class="u">MB</span></div>
+          <div class="sim-bar"><div class="fill" id="d2s2bar" style="width:2%"></div></div>
+          <div class="sim-foot"><span>Transf. hoje</span><span><span id="d2s2tx">—</span>/<span id="d2s2lim">10</span></span></div>
+        </div>
+      </div>
+
+      <!-- RESUMO -->
+      <div class="card">
+        <div class="card-head"><span class="card-title">Resumo financeiro</span></div>
+        <div class="info-row"><span class="info-k">Lucro do negócio</span><span class="info-v ok" id="r_ptot">—</span></div>
+        <div class="info-row"><span class="info-k">Última sincronização</span><span class="info-v" id="lastSync">—</span></div>
+      </div>
+
+    </div>
+  </aside>
+
+</div>
+
+<footer>WOLFSTREAM · 2 telefones (Redmi 8 + Redmi 13c) · ligado a lacasadigital-8b078 · tempo real (listener)</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ============ CONFIG — 2 dispositivos no mesmo projeto Firebase ============ */
+const PROJECT = "lacasadigital-8b078";
+const API_KEY = "AIzaSyCMQ7OT56AOyP6zZpN1zWSzN4-yejrPrWs";
+const META_LUCRO_DIA = 2000;   /* meta TOTAL dos 2 telefones */
+const CAP_MB = 10240;
+const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
+
+// LUCRO/VENDAS/MB agora são do NEGÓCIO (documento único e comum, incremento atómico).
+const DOC_NEGOCIO = ["users/negocio/lucros/atual"];
+
+// Cada telefone lê o SEU saldo/fila do seu próprio documento de fila
+// (a macro "SIMs → Nuvem" publica saldoSim1/2, status e cont neste documento,
+//  isolado por telefone, evitando a colisão do documento comum de lucro).
+const DEVICES = [
+  { id:"redmi8",   nome:"Redmi 8",   px:"d1", fila:["users/redmi8/fila/atual"],   estado:["users/redmi8/fila/atual"] },
+  { id:"redmi13c", nome:"Redmi 13c", px:"d2", fila:["users/redmi13c/fila/atual"], estado:["users/redmi13c/fila/atual"] },
+];
+/* ---------- desempacotar Firestore REST ---------- */
+function fval(v){
+  if(v==null) return null;
+  if("stringValue" in v) return v.stringValue;
+  if("integerValue" in v) return Number(v.integerValue);
+  if("doubleValue" in v) return Number(v.doubleValue);
+  if("booleanValue" in v) return v.booleanValue;
+  if("timestampValue" in v) return v.timestampValue;
+  if("mapValue" in v) return unwrap(v.mapValue.fields||{});
+  if("arrayValue" in v) return (v.arrayValue.values||[]).map(fval);
+  if("nullValue" in v) return null;
+  return null;
+}
+function unwrap(fields){const o={};for(const k in fields)o[k]=fval(fields[k]);return o;}
+async function getDoc(path){
+  try{
+    const r = await fetch(`${BASE}/${path}?key=${API_KEY}`,{cache:"no-store"});
+    if(!r.ok) return null;
+    const j = await r.json();
+    if(!j.fields) return {};
+    return unwrap(j.fields);
+  }catch(e){return null;}
+}
+async function firstDoc(list){
+  for(const p of list){const d = await getDoc(p); if(d) return {data:d, path:p};}
+  return {data:null, path:null};
+}
+
+/* ---------- helpers ---------- */
+function pick(obj, keys, dflt=null){
+  if(!obj) return dflt;
+  for(const k of keys){
+    for(const real in obj){
+      if(real.toLowerCase()===k.toLowerCase() && obj[real]!=null && obj[real]!=="") return obj[real];
+    }
+  }
+  return dflt;
+}
+function toNum(x){if(x==null)return null;const n=Number(String(x).replace(/[^\d.-]/g,""));return isNaN(n)?null:n;}
+function fmt(n){return n==null?"—":Number(n).toLocaleString("pt-PT");}
+
+function animateNum(el, to){
+  if(el==null) return;
+  if(to==null){el.textContent="—";return;}
+  const from = parseFloat(el.dataset.v||"0")||0;
+  el.dataset.v = to;
+  const t0=performance.now(), d=800;
+  function step(t){
+    const p=Math.min(1,(t-t0)/d), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(to-from)*e).toLocaleString("pt-PT");
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+let prevProfit=null, lastOk=0, failCount=0;
+
+/* ---------- fila ---------- */
+function detectOp(s){
+  const t=(s||"").toLowerCase();
+  if(t.includes("mpesa")||t.includes("m-pesa")||t==="m") return {cls:"mpesa",lbl:"M-P"};
+  if(t.includes("emola")||t.includes("e-mola")||t==="e") return {cls:"emola",lbl:"eM"};
+  return {cls:"gen",lbl:"··"};
+}
+/* ---- formato plano do macro 🛰️ Publicar Painel ----
+   fOk  = histórico (FilaItens)         -> ENVIADO
+   fEsp = à espera  (FilaSMS)           -> A ENVIAR / FILA
+   fErr = falhados  (FilaPendentes)     -> FALHOU
+   item: "num:84...,op:E,valor:25,id:PP..." unidos por ~ ;
+   o fOk novo vem em string contínua — cada item começa em "num:"           */
+function parseFlat(s){
+  if(!s || typeof s!=="string") return [];
+  const out=[];
+  const pedacos=[];
+  for(const ch of s.split("~")){
+    for(const p of ch.split(/,(?=num:)/)) pedacos.push(p);
+  }
+  for(const raw of pedacos){
+    const it=raw.trim(); if(!it) continue;
+    const o={};
+    for(const f of it.split(",")){
+      const i=f.indexOf(":"); if(i<1) continue;
+      o[f.slice(0,i).trim()]=f.slice(i+1).trim();
+    }
+    if(o.id && o.id.indexOf("PubArr")>=0) continue;        /* lixo de magic text não resolvido */
+    if(!o.num && !o.valor) continue;                        /* item sem substância */
+    if(o.num||o.id) out.push(o);
+  }
+  return out;
+}
+function normId(x){return (x==null?"":String(x)).trim().replace(/\.+$/,"").toUpperCase();}
+function chaveItem(o){
+  const id=normId(pick(o,["id","recibo","transacao","ref"],""));
+  /* SEMID-... é placeholder gerado e repete-se entre clientes diferentes —
+     nesses casos a chave passa a ser num|valor para não colapsar linhas   */
+  if(id && !id.startsWith("SEMID")) return id;
+  return String(pick(o,["num","numero"],""))+"|"+String(pick(o,["valor","valorMT","mt"],""));
+}
+function classificarEstado(raw){
+  const s=(raw||"").toString().toLowerCase();
+  if(s.includes("erro")||s.includes("fail")||s.includes("falh")||s.includes("rejeit")||s.includes("trocad")) return "err";
+  if(s.includes("send")||s.includes("conclu")||s.includes("done")||s.includes("sucesso")||s.includes("envi")||s==="ok") return "ok";
+  return "fila";
+}
+function horaAgora(){
+  const d=new Date();
+  return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
+}
+const horaVista=new Map();
+let filaSeq=0;
+
+/* junta fOk/fEsp/fErr num só mapa; estado mais "vivo" ganha (env > fila > err > ok) */
+function buildFila(F, confirmadas){
+  /* err é facto (falhou), ok é facto (confirmado por queda de saldo),
+     pend = enviado ao operador mas ainda sem confirmação */
+  const PRIO={err:0,ok:1,pend:2,env:3,fila:4};
+  const mapa=new Map();
+  const poe=(o,estado)=>{
+    const k=chaveItem(o); if(!k) return;
+    const ex=mapa.get(k);
+    if(ex){
+      for(const kk in o){ if(o[kk]!=null && o[kk]!=="") ex.d[kk]=o[kk]; }
+      if(PRIO[estado]<PRIO[ex.estado]) ex.estado=estado;
+    }else{
+      if(!horaVista.has(k)) horaVista.set(k,{hora:horaAgora(),seq:filaSeq++});
+      const hv=horaVista.get(k);
+      mapa.set(k,{d:{...o},estado,seq:hv.seq,hora:hv.hora});
+    }
+  };
+  parseFlat(F.fOk).forEach(o=>{
+    const e=(o.estado||"").toLowerCase();
+    poe(o, e==="falhou"||e==="err" ? "err" : (e==="ok" ? "ok" : "pend"));
+  });
+  parseFlat(F.fErr).forEach(o=>poe(o,"err"));
+  const ativa=String(F.filaAtiva??"")==="1";
+  const fpos=toNum(F.filaPos);
+  parseFlat(F.fEsp).forEach((o,i)=>{
+    let st="fila";
+    if(ativa){
+      if(fpos!=null && i<fpos) st="ok";                       // ponteiro já passou
+      else if((fpos==null && i===0) || i===fpos) st="env";    // a ser enviado agora
+    }
+    poe(o,st);
+  });
+  if(horaVista.size>400){
+    for(const k of [...horaVista.keys()].slice(0,horaVista.size-400)) horaVista.delete(k);
+  }
+  /* confirmação real: total_hoje conta vendas confirmadas por queda de saldo.
+     Os C itens "pend" mais antigos viram ENVIADO; o resto fica A CONFIRMAR —
+     se alguém não recebeu, o item NUNCA confirma e fica visível em âmbar. */
+  const out=[...mapa.values()];
+  const pend=out.filter(r=>r.estado==="pend").sort((a,b)=>a.seq-b.seq);
+  let C = confirmadas==null ? pend.length : Math.max(0, confirmadas);
+  for(const r of pend) r.estado = (C>0 ? (C--, "ok") : "conf");
+  return out;
+}
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function renderQueue(rows, meta){
+  const body=document.getElementById("queueBody");
+  const badge=document.getElementById("qbadge");
+  const hint=document.getElementById("qhint");
+  rows=rows||[]; meta=meta||{};
+
+  const ativos=rows.filter(r=>r.estado==="env"||r.estado==="fila").length;
+  const falhados=rows.filter(r=>r.estado==="err").length;
+  const naFila = meta.naFila!=null ? meta.naFila : ativos;
+
+  badge.textContent=naFila;
+  const qc=document.getElementById("queueCount"); if(qc) qc.textContent=naFila;
+  hint.textContent = naFila>0
+    ? (naFila+" na fila"+(falhados?" · "+falhados+" falhou":""))
+    : (falhados? falhados+" falhou" : "tudo processado");
+
+  if(!rows.length){
+    body.innerHTML=`<div class="empty"><div class="big">✨</div><div class="t">Fila limpa</div><div class="s">Tudo processado. Sem pedidos pendentes.</div></div>`;
+    return;
+  }
+
+  const ordem={env:0,fila:1,conf:2,err:3,ok:4};
+  rows.sort((a,b)=> ordem[a.estado]!==ordem[b.estado] ? ordem[a.estado]-ordem[b.estado] : b.seq-a.seq);
+  const total=rows.length;
+  rows=rows.slice(0,40);   /* histórico pode ter 100+ enviados; tabela mostra os 40 mais relevantes */
+
+  const CH={env:["env","A enviar"],fila:["fila","Fila"],conf:["conf","A confirmar"],ok:["ok","Enviado"],err:["err","Falhou"]};
+  body.innerHTML =
+    `<table class="qtable"><thead><tr>`+
+    `<th>#</th><th>Número</th><th class="r">Valor</th><th class="c">Estado</th><th class="c">SMS</th>`+
+    `</tr></thead><tbody>`+
+    rows.map((r,ix)=>{
+      const d=r.d;
+      const op=detectOp(pick(d,["op","operadora","operator","tipo"],""));
+      const mt=toNum(pick(d,["valor","valorMT","mt","preco","valor_mt"]));
+      const nome=pick(d,["nome","cliente","name"],"");
+      const opLbl=op.cls==="mpesa"?"M-PESA":op.cls==="emola"?"eMOLA":"··";
+      const [cls,lbl]=CH[r.estado]||CH.fila;
+      return `<tr class="${r.estado==="err"?"qtr-err":""}" title="${esc(nome)}">
+        <td class="qidx">${ix+1}</td>
+        <td><div class="qnum">${esc(pick(d,["num","numero","number","msisdn","telefone"],"—"))}</div>
+            <div class="qsub"><span class="qop ${op.cls}">${opLbl}</span><span class="qid">${esc(pick(d,["id","recibo"],""))}</span></div></td>
+        <td class="r qval">${mt!=null?fmt(mt):"—"}<span class="u">MT</span></td>
+        <td class="c"><span class="qchip ${cls}"><i></i>${lbl}</span></td>
+        <td class="c qsms">1/1</td>
+      </tr>`;
+    }).join("")+
+    `</tbody></table>`;
+}
+
+
+
+/* ---------- SIM (por dispositivo) ---------- */
+function renderSim(px, n, saldoMB, status, tx, lim){
+  const bal=document.getElementById(px+"s"+n+"bal");
+  const barFill=document.getElementById(px+"s"+n+"bar");
+  const stEl=document.getElementById(px+"s"+n+"st");
+  const txEl=document.getElementById(px+"s"+n+"tx");
+  const limEl=document.getElementById(px+"s"+n+"lim");
+  const u = bal.parentElement.querySelector(".u");
+  if(saldoMB!=null){
+    u.textContent = saldoMB>=1024?"GB":"MB";
+    bal.textContent = saldoMB>=1024 ? (saldoMB/1024).toFixed(1) : Math.round(saldoMB);
+    const pct=Math.max(2,Math.min(100,(saldoMB/CAP_MB)*100));
+    barFill.style.width=pct+"%";
+    barFill.className = "fill "+(pct<20?"low":(pct<50?"mid":""));
+  }else{ bal.textContent="—"; }
+  const s=(status||"").toLowerCase();
+  if(s.includes("ativ")||s.includes("ok")||s==="true"||s==="on"){stEl.textContent="Ativo";stEl.className="sim-st ok";}
+  else if(s.includes("bloq")||s.includes("block")||s.includes("inativ")||s==="false"){stEl.textContent="Bloqueado";stEl.className="sim-st block";}
+  else{stEl.textContent="—";stEl.className="sim-st unk";}
+  txEl.textContent = tx!=null?tx:"—";
+  if(lim!=null && limEl) limEl.textContent = lim;
+}
+
+function simLivre(saldoMB, status, tx, lim){
+  const s=(status==null?"":String(status)).toLowerCase();
+  const ativo = s.includes("ativ")||s.includes("ok")||s==="true"||s==="on" || (s==="" && (saldoMB==null||saldoMB>0));
+  const bloqueado = s.includes("bloq")||s.includes("block")||s.includes("inativ")||s==="false";
+  const dentroLimite = (tx==null||lim==null) ? true : (tx < lim);
+  return ativo && !bloqueado && dentroLimite;
+}
+
+/* ---------- estado por dispositivo (APENAS saldo/SIMs/fila; o lucro vem do negócio) ---------- */
+async function lerDispositivo(dev){
+  const [fila, estado] = await Promise.all([ firstDoc(dev.fila), firstDoc(dev.estado) ]);
+  const online = !!(fila.data || estado.data);
+  const F = fila.data || {}, E = estado.data || {};
+  const SIMSRC = Object.assign({}, F, E);
+
+  const lim    = toNum(pick(SIMSRC,["LimiteSIM","limiteSim","limite"])) ?? 10;
+
+  const bal1=toNum(pick(SIMSRC,["saldoSim1","saldo_sim1","sim1_saldo","saldo1","bal1"]));
+  const bal2=toNum(pick(SIMSRC,["saldoSim2","saldo_sim2","sim2_saldo","saldo2","bal2"]));
+  const st1=pick(SIMSRC,["status_sim1","statusSim1","estado_sim1","sim1_estado"],null);
+  const st2=pick(SIMSRC,["status_sim2","statusSim2","estado_sim2","sim2_estado"],null);
+  const tx1=toNum(pick(SIMSRC,["cont_sim1","transf_sim1","tx_sim1","transferencias_sim1"]));
+  const tx2=toNum(pick(SIMSRC,["cont_sim2","transf_sim2","tx_sim2","transferencias_sim2"]));
+
+  // disponivel: usa flag do beacon se existir, senão calcula pelos SIMs
+  let disp = pick(SIMSRC,["disponivel","disponível","available"],null);
+  if(disp!=null){ disp = (String(disp)==="1"||String(disp).toLowerCase()==="true"); }
+  else { disp = simLivre(bal1,st1,tx1,lim) || simLivre(bal2,st2,tx2,lim); }
+
+  return {online, F, lim, bal1,bal2, st1,st2, tx1,tx2, disp};
+}
+
+/* ---------- lucro do NEGÓCIO (documento único e comum) ---------- */
+async function lerNegocio(){
+  const r = await firstDoc(DOC_NEGOCIO);
+  const N = r.data || {};
+  return {
+    online: !!r.data,
+    profit: toNum(pick(N,["LucroDia","lucroDia","lucro_dia","lucro","profit"])) || 0,
+    sends:  toNum(pick(N,["total_hoje","enviosDia","envios","contagem","sends"])) || 0,
+    mb:     toNum(pick(N,["MB_vendidos_dia","megasDia","mbDia","megas_vendidos","totalMB","mb"])) || 0,
+    profitSem: toNum(pick(N,["LucroSemana","lucroSemana","lucro_semana"])) || 0,
+    sendsSem:  toNum(pick(N,["total_sem","enviosSemana"])) || 0,
+    mbSem:     toNum(pick(N,["MB_vendidos_semana","megasSemana"])) || 0,
+  };
+}
+
+/* ---------- loop principal ---------- */
+async function tick(){
+  const [negocio, ...dados] = await Promise.all([ lerNegocio(), ...DEVICES.map(lerDispositivo) ]);
+  renderFromState(negocio, dados);
+}
+function renderFromState(negocio, dados){
+  const online = negocio.online || dados.some(d=>d.online);
+  setLive(online);
+  if(!online){ failCount++; if(failCount>2) setLive(false,true); return; }
+  failCount=0; lastOk=Date.now();
+
+  // TOTAIS do negócio (uma única fonte, sem duplicar)
+  const profitTot = negocio.profit;
+  const sendsTot  = negocio.sends;
+  const mbTot     = negocio.mb;
+
+  let dispTot=0;
+  const filas=[];
+
+  dados.forEach((d,i)=>{
+    const dev=DEVICES[i], px=dev.px, ni=i+1;
+    renderSim(px,1, d.bal1, d.st1, d.tx1, d.lim);
+    renderSim(px,2, d.bal2, d.st2, d.tx2, d.lim);
+    // o lucro é COMUM (não se mostra por telefone); aqui só envios por telefone
+    const elS=document.getElementById("send"+ni);
+    if(elS) elS.textContent = sendsTot;
+    // pílula de disponibilidade (por telefone, continua individual)
+    const pill=document.getElementById("pill"+ni);
+    if(pill){
+      if(d.disp){ pill.textContent="Disponível"; pill.className="dev-pill ok"; dispTot++; }
+      else { pill.textContent="Sem transf."; pill.className="dev-pill full"; }
+    }
+
+    // recolher fila deste dispositivo (com etiqueta)
+    let rows;
+    const F=d.F;
+    if(F.fOk!=null || F.fEsp!=null || F.fErr!=null){ rows = buildFila(F, d.sends||0); }
+    else { rows=[]; }
+    rows.forEach(r=>{ r._dev=ni; r._devNome=dev.nome; });
+    filas.push(...rows);
+  });
+
+  // TOTAIS (do negócio)
+  animateNum(document.getElementById("profit"), profitTot);
+  animateNum(document.getElementById("sendsToday"), sendsTot);
+  document.getElementById("mbToday").textContent = fmt(mbTot);
+  const rptot=document.getElementById("r_ptot"); if(rptot) rptot.textContent = fmt(profitTot)+" MT";
+  document.getElementById("dispCount").textContent = dispTot;
+
+  // anel meta TOTAL
+  const pct=Math.max(0,Math.min(100,(profitTot/META_LUCRO_DIA)*100));
+  const circ=2*Math.PI*50;
+  document.getElementById("ring").style.strokeDashoffset = circ - (pct/100)*circ;
+  document.getElementById("goalPct").textContent=Math.round(pct)+"%";
+  document.getElementById("goalMeta").textContent=fmt(profitTot)+" / "+fmt(META_LUCRO_DIA);
+
+  // FILA combinada
+  renderQueue2(filas);
+  document.getElementById("lastSync").textContent = new Date().toLocaleTimeString("pt-PT");
+}
+
+/* fila combinada dos 2 telefones (reusa classificação/visual da original + etiqueta de telefone) */
+function renderQueue2(rows){
+  const body=document.getElementById("queueBody");
+  const badge=document.getElementById("qbadge");
+  const hint=document.getElementById("qhint");
+  rows=rows||[];
+  const ativos=rows.filter(r=>r.estado==="env"||r.estado==="fila").length;
+  const falhados=rows.filter(r=>r.estado==="err").length;
+  badge.textContent=ativos;
+  const qc=document.getElementById("queueCount"); if(qc) qc.textContent=ativos;
+  hint.textContent = ativos>0 ? (ativos+" na fila"+(falhados?" · "+falhados+" falhou":"")) : (falhados? falhados+" falhou" : "tudo processado");
+  if(!rows.length){
+    body.innerHTML=`<div class="empty"><div class="big">✨</div><div class="t">Fila limpa</div><div class="s">Sem pedidos pendentes nos 2 telefones.</div></div>`;
+    return;
+  }
+  const ordem={env:0,fila:1,conf:2,err:3,ok:4};
+  rows.sort((a,b)=> ordem[a.estado]!==ordem[b.estado] ? ordem[a.estado]-ordem[b.estado] : b.seq-a.seq);
+  rows=rows.slice(0,50);
+  const CH={env:["env","A enviar"],fila:["fila","Fila"],conf:["conf","A confirmar"],ok:["ok","Enviado"],err:["err","Falhou"]};
+  body.innerHTML =
+    `<table class="qtable"><thead><tr><th>#</th><th>Telefone</th><th>Número</th><th class="r">Valor</th><th class="c">Estado</th></tr></thead><tbody>`+
+    rows.map((r,ix)=>{
+      const d=r.d;
+      const op=detectOp(pick(d,["op","operadora","operator","tipo"],""));
+      const mt=toNum(pick(d,["valor","valorMT","mt","preco","valor_mt"]));
+      const opLbl=op.cls==="mpesa"?"M-PESA":op.cls==="emola"?"eMOLA":"··";
+      const [cls,lbl]=CH[r.estado]||CH.fila;
+      const devc = r._dev===1?"d1":"d2";
+      return `<tr class="${r.estado==="err"?"qtr-err":""}">
+        <td class="qidx">${ix+1}</td>
+        <td><span class="qdev ${devc}">${esc(r._devNome||("Tel "+r._dev))}</span></td>
+        <td><div class="qnum">${esc(pick(d,["num","numero","number","msisdn","telefone"],"—"))}</div>
+            <div class="qsub"><span class="qop ${op.cls}">${opLbl}</span><span class="qid">${esc(pick(d,["id","recibo"],""))}</span></div></td>
+        <td class="r qval">${mt!=null?fmt(mt):"—"}<span class="u">MT</span></td>
+        <td class="c"><span class="qchip ${cls}"><i></i>${lbl}</span></td>
+      </tr>`;
+    }).join("")+`</tbody></table>`;
+}
+
+function setLive(ok, dead=false){
+  const dot=document.getElementById("liveDot"), txt=document.getElementById("liveTxt");
+  if(dead){dot.className="dot dead";txt.textContent="Sem ligação";return;}
+  if(ok){dot.className="dot";txt.textContent="Ao vivo";}
+  else{dot.className="dot warn";txt.textContent="A reconectar…";}
+}
+
+document.getElementById("navQueue").onclick=()=>document.getElementById("queueSection").scrollIntoView({behavior:"smooth"});
+document.getElementById("navSims").onclick=()=>document.getElementById("simSection").scrollIntoView({behavior:"smooth"});
+document.getElementById("refreshBtn").onclick=()=>tick();
+
+/* ================== TEMPO REAL (listeners) ==================
+   A base de dados EMPURRA cada mudança (onSnapshot): o painel
+   atualiza no instante da venda, e só "gasta" leitura quando algo
+   muda de facto. Se o SDK falhar (rede/regras), cai sozinho para
+   o polling REST antigo (tick) a 5s — nunca fica às escuras.     */
+
+const CACHE = { negocio: parseNegocioData(null), dev: [parseDispositivoData(null), parseDispositivoData(null)] };
+
+function parseNegocioData(N){
+  const on = !!N; N = N || {};
+  return {
+    online: on,
+    profit: toNum(pick(N,["LucroDia","lucroDia","lucro_dia","lucro","profit"])) || 0,
+    sends:  toNum(pick(N,["total_hoje","enviosDia","envios","contagem","sends"])) || 0,
+    mb:     toNum(pick(N,["MB_vendidos_dia","megasDia","mbDia","megas_vendidos","totalMB","mb"])) || 0,
+    profitSem: toNum(pick(N,["LucroSemana","lucroSemana","lucro_semana"])) || 0,
+    sendsSem:  toNum(pick(N,["total_sem","enviosSemana"])) || 0,
+    mbSem:     toNum(pick(N,["MB_vendidos_semana","megasSemana"])) || 0,
+  };
+}
+function parseDispositivoData(F){
+  const on = !!F; F = F || {};
+  const SIMSRC = F;
+  const lim  = toNum(pick(SIMSRC,["LimiteSIM","limiteSim","limite"])) ?? 10;
+  const bal1 = toNum(pick(SIMSRC,["saldoSim1","saldo_sim1","sim1_saldo","saldo1","bal1"]));
+  const bal2 = toNum(pick(SIMSRC,["saldoSim2","saldo_sim2","sim2_saldo","saldo2","bal2"]));
+  const st1  = pick(SIMSRC,["status_sim1","statusSim1","estado_sim1","sim1_estado"],null);
+  const st2  = pick(SIMSRC,["status_sim2","statusSim2","estado_sim2","sim2_estado"],null);
+  const tx1  = toNum(pick(SIMSRC,["cont_sim1","transf_sim1","tx_sim1","transferencias_sim1"]));
+  const tx2  = toNum(pick(SIMSRC,["cont_sim2","transf_sim2","tx_sim2","transferencias_sim2"]));
+  let disp = pick(SIMSRC,["disponivel","disponível","available"],null);
+  if(disp!=null){ disp = (String(disp)==="1"||String(disp).toLowerCase()==="true"); }
+  else { disp = simLivre(bal1,st1,tx1,lim) || simLivre(bal2,st2,tx2,lim); }
+  return {online:on, F, lim, bal1,bal2, st1,st2, tx1,tx2, disp};
+}
+
+let _rt=false, _rtTimer=null, _fbTimer=null, _pend=null;
+function scheduleRender(){
+  if(_pend) return;
+  _pend = setTimeout(()=>{ _pend=null; renderFromState(CACHE.negocio, CACHE.dev); }, 120);
+}
+function startFallback(motivo){
+  if(_fbTimer) return;
+  console.warn("Tempo real indisponível ("+motivo+") → polling REST 5s");
+  const t=document.getElementById("liveTxt"); if(t) t.textContent="Ao vivo (poll)";
+  tick();
+  _fbTimer = setInterval(tick, 5000);
+}
+function stopFallback(){ if(_fbTimer){ clearInterval(_fbTimer); _fbTimer=null; } }
+
+function tryRealtime(){
+  if(!window.firebase || !firebase.firestore){ startFallback("SDK não carregou"); return; }
+  try{ firebase.initializeApp({ apiKey: API_KEY, projectId: PROJECT }); }catch(e){}
+  let db;
+  try{ db = firebase.firestore(); }catch(e){ startFallback("init: "+e.message); return; }
+  const alvos = [
+    { k:"n",  path: DOC_NEGOCIO[0] },
+    { k:"d0", path: DEVICES[0].fila[0] },
+    { k:"d1", path: DEVICES[1].fila[0] },
+  ];
+  for(const a of alvos){
+    db.doc(a.path).onSnapshot(
+      s => {
+        _rt = true; clearTimeout(_rtTimer); stopFallback();
+        const data = s.exists ? s.data() : null;
+        if(a.k==="n") CACHE.negocio = parseNegocioData(data);
+        else CACHE.dev[a.k==="d0"?0:1] = parseDispositivoData(data);
+        scheduleRender();
+      },
+      err => { console.warn("listener "+a.path, err && err.code); startFallback(err && err.code || "erro"); }
+    );
+  }
+  _rtTimer = setTimeout(()=>{ if(!_rt) startFallback("sem resposta em 8s"); }, 8000);
+}
+
+tryRealtime();
+</script>
+</body>
+</html>
