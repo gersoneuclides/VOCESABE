@@ -321,7 +321,7 @@ footer{position:relative;z-index:2;text-align:center;padding:20px;color:var(--in
   <section class="feature">
     <!-- lucro TOTAL (anel) -->
     <div class="hero-card">
-      <span class="hero-eyebrow">Lucro do dia · negócio</span>
+      <span class="hero-eyebrow">Lucro do dia · meta</span>
       <div class="hero-figure">
         <div class="ring-wrap">
           <svg viewBox="0 0 118 118">
@@ -592,15 +592,12 @@ function buildFila(F, confirmadas){
   const out=[...mapa.values()];
   const pend=out.filter(r=>r.estado==="pend").sort((a,b)=>a.seq-b.seq);
   const nums=String(pick(F,["numsEntregues","NumsEntregues","nums_entregues"])??"");
-  if(nums){
-    for(const r of pend){
-      const n9=String(r.d.num??"").replace(/\D/g,"").slice(-9);
-      r.estado = (n9 && nums.includes(n9+",")) ? "ok" : "conf";
-    }
-  }else{
-    /* fallback (docs antigos sem numsEntregues): promoção por contagem */
-    let C = confirmadas==null ? pend.length : Math.max(0, confirmadas);
-    for(const r of pend) r.estado = (C>0 ? (C--, "ok") : "conf");
+  for(const r of pend){
+    const n9=String(r.d.num??"").replace(/\D/g,"").slice(-9);
+    const est=(r.d.estado||"").toLowerCase();
+    if(n9 && nums && nums.includes(n9+",")) r.estado="ok";        // SMS da Vodacom confirmou
+    else if(est==="verificar")             r.estado="conf";       // entrega incerta: fica em âmbar
+    else                                    r.estado="ok";        // telefone enviou => Enviado
   }
   return out;
 }
@@ -785,17 +782,14 @@ function renderFromState(negocio, dados){
   document.getElementById("ring").style.strokeDashoffset = circ - (pct/100)*circ;
   document.getElementById("goalPct").textContent=Math.round(pct)+"%";
   document.getElementById("goalMeta").textContent=fmt(profitTot)+" / "+fmt(META_LUCRO_DIA);
-  { const lp=document.getElementById("lastPack");
+  { /* 3 coisas simples, cada uma com a sua função:
+       1) LUCRO (numero grande)  2) META (x / 2000)  3) LUCRO DO PACOTE (esta linha) */
+    const lp=document.getElementById("lastPack");
     if(lp){
       const u = toNum(negocio.ultimo)||0;
-      const ontemTot = (dados||[]).reduce((s,d)=> s + (toNum(pick((d&&d.F)||d||{},["lucroOntem","LucroOntem","lucro_ontem"]))||0), 0);
-      let txt="meta "+fmt(META_LUCRO_DIA)+" MT", cls="delta";
-      if(u>0){ txt="último pacote: +"+fmt(u)+" MT"; cls="delta pos"; }
-      else if(ontemTot>0){ const pc=Math.round(((profitTot-ontemTot)/ontemTot)*100); txt=(pc>=0?"▲ ":"▼ ")+Math.abs(pc)+"% vs ontem"; cls="delta "+(pc>=0?"pos":"neg"); }
-      else if(prevProfit!=null && profitTot!==prevProfit){ const diff=profitTot-prevProfit; txt=(diff>=0?"▲ +":"▼ -")+fmt(Math.abs(diff))+" MT"; cls="delta "+(diff>=0?"pos":"neg"); }
-      lp.textContent=txt; lp.className=cls;
+      if(u>0){ lp.textContent="▲ último pacote +"+fmt(u)+" MT"; lp.className="delta pos"; }
+      else   { lp.textContent="último pacote: —";               lp.className="delta"; }
     }
-    prevProfit=profitTot;
   }
 
   // FILA combinada
