@@ -251,8 +251,37 @@ button.forte{background:linear-gradient(180deg,#ff3455,#c8102e);border-color:#ff
 .chips{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:9px}
 .al{color:var(--mel);border-color:rgba(255,194,51,.42);background:rgba(255,194,51,.10)}
 .baixo{color:var(--tijolo);border-color:rgba(255,77,61,.42);background:rgba(255,77,61,.10)}
-.acoesGav{display:none;gap:7px;grid-template-columns:1fr 1fr;margin-top:8px}
-.acoesGav.ver{display:grid}
+.acoesGav{display:none;margin-top:8px}
+.acoesGav.ver{display:block}
+/* gaveta com rolo: em vez de crescer o cartão, rola por dentro */
+.acoesRolo{display:grid;gap:7px;grid-template-columns:1fr 1fr;
+  max-height:168px;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:2px 4px 2px 2px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+.acoesRolo::-webkit-scrollbar{width:5px}
+.acoesRolo::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px}
+.acoesRolo::-webkit-scrollbar-track{background:transparent}
+/* barra do aparelho: separada dos SIM, uma só vez por telefone */
+.gOps.apar{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
+
+/* ── CONTAGEM NO LIMITE ─────────────────────────────────────
+   Azul-gelo: o cartão fez o trabalho todo e arrefeceu.
+   O vermelho fica reservado para sistema parado e sem sinal.
+   Usa a var --gelo, que já muda sozinha entre tema escuro e claro.
+
+   Para trocar, muda só a linha --limite-cor:
+     var(--gelo)    azul-gelo   ← activa
+     var(--volt)    roxo
+     var(--mel)     âmbar
+     #ff2d20        brasa viva (vermelho)
+     #6b7280        cinzento apagado                          */
+:root{ --limite-cor:var(--gelo); }
+.noLimite{
+  color:var(--limite-cor);
+  font-weight:800;
+  letter-spacing:.4px;
+  text-shadow:0 0 10px color-mix(in srgb, var(--limite-cor) 55%, transparent);
+}
 
 /* ══ Fila · opção 5: zebra com selo ══ */
 .zebra{border:1px solid var(--borda);border-radius:13px;overflow:hidden;margin-top:4px}
@@ -2228,6 +2257,101 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
   button,.item,.dispT,.tile,summary,.caixa,.pill{transition:none}
   button:active,.item:active,.dispT:active{transform:none !important}}
 
+.botlinha{padding:11px 0;border-top:1px solid rgba(255,255,255,.06)}
+.botlinha:first-of-type{border-top:0;padding-top:4px}
+.botcab{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:1px;
+  text-transform:uppercase;font-weight:600;margin-bottom:9px}
+.botpt{width:8px;height:8px;border-radius:50%;flex:none;background:rgba(255,255,255,.2)}
+.botpt.on{background:var(--menta);box-shadow:0 0 8px var(--menta)}
+.botpt.off{background:var(--sangue);box-shadow:0 0 8px var(--sangue)}
+.botres{margin-top:9px;font-size:12.5px;line-height:1.5;display:none;
+  font-family:ui-monospace,Menlo,monospace;padding:9px 11px;border-radius:10px}
+.botres.ver{display:block}
+.botres.ok{background:rgba(61,255,164,.09);border:1px solid rgba(61,255,164,.22);color:var(--menta)}
+.botres.esp{background:rgba(255,194,51,.09);border:1px solid rgba(255,194,51,.22);color:var(--mel)}
+.botres.mau{background:rgba(255,31,67,.09);border:1px solid rgba(255,31,67,.22);color:var(--sangue)}
+.qrcx{display:none;margin-top:12px;padding:13px;border-radius:13px;background:#fff}
+.qrcx.ver{display:block}
+.qrcx pre{margin:0;font-family:ui-monospace,Menlo,monospace;font-size:5px;line-height:5px;
+  color:#000;text-align:center;overflow:hidden;letter-spacing:0;white-space:pre}
+.qrpe{display:flex;justify-content:space-between;align-items:center;margin-top:10px;
+  padding-top:9px;border-top:1px solid rgba(0,0,0,.1);font-size:11px;color:#555}
+.qrconta{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;color:#c1121f}
+.recgrelha label,.reccheck small{display:block;font-size:10.5px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--fumo);margin-bottom:6px}
+.recgrelha input[type=date],.recgrelha input[type=time]{width:100%;font-size:15px;
+  font-family:ui-monospace,Menlo,monospace;margin-bottom:10px}
+.rechoras{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.reccheck{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:11px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);margin:2px 0 11px;
+  font-size:12.5px;cursor:pointer}
+.reccheck input{width:19px;height:19px;accent-color:var(--menta);flex:none}
+.reccheck small{text-transform:none;letter-spacing:0;margin:2px 0 0;font-size:11px}
+
+/* ═══ DISPOSITIVOS · dois anéis por cartão ═══ */
+.simA{display:flex;gap:16px;align-items:flex-start;padding:16px 0}
+.simA+.simA{border-top:1px solid rgba(255,255,255,.06)}
+.aPar{position:relative;flex:none;width:126px;height:126px}
+.aGr{position:absolute;inset:0}
+.aGr svg,.aMini svg{transform:rotate(-90deg);overflow:visible}
+.aF{fill:none;stroke:rgba(255,255,255,.08);stroke-width:11}
+.aP{fill:none;stroke-width:11;stroke-linecap:round}
+.aMini .aF{stroke-width:7}.aMini .aP{stroke-width:7}
+.aC{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none}
+.aV{font:800 26px/1 var(--mono);letter-spacing:-.02em}
+.aL{font:600 10px var(--titulo);letter-spacing:.22em;color:var(--fumo);margin-top:3px}
+.aMini{position:absolute;right:-7px;bottom:-7px;width:56px;height:56px;border-radius:50%;
+  background:var(--void);box-shadow:0 0 0 4px var(--void),0 3px 10px rgba(0,0,0,.7)}
+.aN{font:800 15px/1 var(--mono)}
+.aLn{font:600 7px/1 var(--titulo);letter-spacing:.15em;color:var(--fumo);margin-top:2px}
+.aLado{flex:1;min-width:0}
+.aRot{margin:0;font:600 9.5px/1 var(--titulo);letter-spacing:.19em;
+  text-transform:uppercase;color:var(--fumo)}
+.aTel{margin:5px 0 0;font:400 12.5px var(--mono);color:var(--texto)}
+.aSelo{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 10px;
+  border-radius:20px;font:700 9.5px/1 var(--titulo);letter-spacing:.13em;text-transform:uppercase}
+.aSelo::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 6px currentColor}
+.aOk{color:var(--menta);background:rgba(61,255,164,.11)}
+.aFim{color:var(--gelo);background:rgba(57,220,255,.11)}
+.aMudo{color:var(--sangue);background:rgba(255,31,67,.11)}
+.aPe{margin:8px 0 0;font:400 11px var(--mono);color:var(--fumo)}
+.aGrav{display:flex;gap:7px;margin-top:11px}
+.aGrav input{flex:1;min-width:0;font:400 13px var(--mono);padding:10px 11px;border-radius:10px;
+  border:1px solid var(--borda);background:rgba(255,255,255,.05);color:var(--texto)}
+.aGrav button{flex:none;padding:10px 15px;border-radius:10px;border:1px solid var(--borda);
+  background:rgba(255,255,255,.06);color:var(--texto);min-height:42px;
+  font:700 10.5px var(--titulo);letter-spacing:.11em;text-transform:uppercase}
+@media(max-width:390px){.simA{flex-direction:column;gap:13px}}
+
+
+
+
+/* ═══ BARRA DE ACÇÕES ═══
+   Mesma cápsula do seletor de velocidade: fundo #2E343C, raio 99,
+   e o escolhido em gradiente verde com texto escuro.            */
+.barra{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;
+  margin-top:15px;border-radius:99px;background:#2E343C}
+.bt{min-height:44px;padding:11px 10px;border-radius:99px;cursor:pointer;border:0;
+  font:700 11px var(--titulo);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--fumo);background:transparent;
+  transition:background .18s ease,color .18s ease,transform .1s ease}
+.bt:hover{background:rgba(255,255,255,.06);color:var(--texto)}
+.bt:active{transform:translateY(1px)}
+.bt:focus-visible{outline:2px solid var(--menta);outline-offset:2px}
+
+/* verde escolhido — o mesmo do seletor de velocidade */
+.bTroca{background:linear-gradient(135deg,#2fd9a4,#12b083);color:#08281f;
+  box-shadow:0 2px 10px -4px rgba(47,217,164,.6)}
+.bTroca:hover{background:linear-gradient(135deg,#3ee6b0,#15c493);color:#08281f}
+
+/* limite atingido — vermelho carregado, a pedir troca */
+.bTroca.urge{background:linear-gradient(135deg,#ff3455,#c8102e);color:#fff;
+  box-shadow:0 2px 12px -4px rgba(255,52,85,.75)}
+.bTroca.urge:hover{background:linear-gradient(135deg,#ff4a68,#d81338);color:#fff}
+
+@media(max-width:340px){.barra{grid-template-columns:1fr}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('wolf_tema');
 if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();</script>
@@ -2312,7 +2436,9 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
       <div id="cmdBox" class="fumo">—</div></div>
   </section>
   <section id="s-consultas">
-    <div class="cabecalho"><h1>Ajustes <span id="carimboV" class="carimbo">v04/08 04h25</span></h1><p>preços e envio, e o estado do sistema</p></div>
+    <div class="cabecalho"><h1>Ajustes <span id="carimboV" class="carimbo" style="background:rgba(61,255,164,.16);color:var(--menta)">v13/08 · BOTS</span></h1><p>preços e envio, e o estado do sistema</p></div>
+
+
     <div class="cartao"><div class="faixa" style="background-image:var(--rog)"></div>
       <h3>Consultas</h3><p class="funcao">o que queres fazer primeiro, os telefones depois</p>
       <div class="cAbas" id="cAbas"></div>
@@ -2350,6 +2476,8 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
       <div id="tbNums"></div>
       <div class="acoes"><button class="acao forte" onclick="gravarNums()">Gravar números</button></div></div>
   <div class="sepR"><b>Sistema e bot</b><i></i></div>
+
+
     
     <div class="cartao"><div class="faixa" style="background-image:var(--panda)"></div>
       <h3>Estado geral</h3><p class="funcao">relógio da nuvem e ligação do bot</p>
@@ -2504,48 +2632,69 @@ async function carregarSerie(){ await carregarSerie();
 function cartaoFone(id,nome,t,p){
  const e=estadoFone(t),txt=e==='on'?'ligado':e==='mid'?'atrasado':'sem sinal',lim=n0(t.LimiteSIM)||9;
  const chips='';
+ const noLim = n0(t.cont_sim1)>=lim || n0(t.cont_sim2)>=lim;
  const sims=[1,2].map(n=>{
-  const u=n0(t['cont_sim'+n]),mb=n0(t['saldoSim'+n]),baixo=mb>0&&mb<1000,k=id+'_'+n;
-  return `<div class="simG" id="sg_${k}">
-    <div class="gCab" onclick="abrirSim('${k}')">
-      <div class="gL1">
-        <span class="gV">${gbPartes(t['saldoSim'+n])}</span>
-        <span class="gD">
-          <span class="gS">SIM ${n}${t['status_sim'+n]==='Verdadeiro'?' · em uso':''}</span>
-          ${t['numSim'+n]?`<span class="gN copiavel" onclick="event.stopPropagation();copiar('${seg(t['numSim'+n])}')">${seg(t['numSim'+n])}</span>`:`<span class="gN">—</span>`}
-        </span>
+  const u=n0(t['cont_sim'+n]), mb=n0(t['saldoSim'+n]), k=id+'_'+n;
+  const CG=314.16, CP=138.23;               /* 2·pi·50 e 2·pi·22 */
+  const pMb = Math.max(0, Math.min(mb/10240, 1));       /* 10 GB = anel cheio */
+  const pEn = Math.max(0, Math.min(u/lim, 1));
+  const fim = u>=lim, semSaldo = !(mb>0);
+  const cor = fim ? 'var(--gelo)' : (mb>0 && mb<1000 ? 'var(--mel)' : 'var(--menta)');
+  const gb  = mb>0 ? (mb>=1024 ? (mb/1024).toFixed(1).replace('.',',') : String(Math.round(mb))) : '—';
+  const un  = mb>0 ? (mb>=1024 ? 'GB' : 'MB') : 'SEM SALDO';
+  const selo = fim ? '<span class="aSelo aFim">esgotado</span>'
+             : semSaldo ? '<span class="aSelo aMudo">sem saldo</span>'
+             : '<span class="aSelo aOk">a vender</span>';
+  const pe = fim ? 'volta a vender às 00h00'
+           : semSaldo ? 'consulta para saber quanto tem'
+           : ('restam ' + (lim-u) + (lim-u===1?' envio':' envios'));
+  return `<div class="simA" id="sg_${k}">
+    <div class="aPar">
+      <div class="aGr">
+        <svg viewBox="0 0 120 120" width="126" height="126" role="img"
+             aria-label="${mb>0?gb+' '+un+' no cartão':'sem saldo lido'}">
+          <circle class="aF" cx="60" cy="60" r="50"/>
+          ${mb>0?`<circle class="aP" cx="60" cy="60" r="50" stroke="${cor}"
+             stroke-dasharray="${CG}" stroke-dashoffset="${(CG*(1-pMb)).toFixed(2)}"/>`:''}
+        </svg>
+        <div class="aC"><div class="aV" ${mb>0?'':'style="color:var(--fumo)"'}>${gb}</div>
+          <div class="aL">${un}</div></div>
       </div>
-      <div class="fio"><i class="${baixo?'baixo':''}" style="width:${pctSaldo(t['saldoSim'+n]||0)}%"></i></div>
-      <div class="gL2">
-        <span>${u} de ${lim} envios</span>
-        <span style="color:${corCont(u,lim)}">${u>=lim?'no limite':pctSaldo(t['saldoSim'+n]||0)+'%'}</span>
+      <div class="aMini">
+        <svg viewBox="0 0 56 56" width="56" height="56" role="img"
+             aria-label="${u} de ${lim} envios usados">
+          <circle class="aF" cx="28" cy="28" r="22"/>
+          ${u>0?`<circle class="aP" cx="28" cy="28" r="22" stroke="${cor}"
+             stroke-dasharray="${CP}" stroke-dashoffset="${(CP*(1-pEn)).toFixed(2)}"/>`:''}
+        </svg>
+        <div class="aC"><div class="aN" ${u>0?'':'style="color:var(--fumo)"'}>${u}</div>
+          <div class="aLn">DE ${lim}</div></div>
       </div>
     </div>
-    <div class="gAbre">
-      <div class="gSaldo">
-        <input id="sal_${k}" inputmode="numeric" placeholder="megas reais do cartão">
+    <div class="aLado">
+      <p class="aRot">SIM ${n}${t['status_sim'+n]==='Verdadeiro'?' · em uso':''}</p>
+      ${t['numSim'+n]
+        ? `<p class="aTel copiavel" onclick="copiar('${seg(t['numSim'+n])}')">${seg(t['numSim'+n])}</p>`
+        : `<p class="aTel" style="color:var(--fumo)">por consultar</p>`}
+      ${selo}
+      <p class="aPe">${pe}</p>
+      <div class="aGrav">
+        <input id="sal_${k}" inputmode="numeric" placeholder="megas reais">
         <button onclick="cmd('${id}','saldo_sim${n}',document.getElementById('sal_${k}').value,event)">Gravar</button>
-      </div>
-      <div class="gOps">
-        <button onclick="cmd('${id}','consultar_sim${n}','',event)">Ver número</button>
-        <button onclick="cmd('${id}','recolher_sim${n}','',event)">Recolher</button>
-        <button onclick="cmd('${id}','zerar_sim${n}','',event)">Zerar contador</button>
-      </div>
-      <div class="gOps b">
-        <button onclick="osDois('${id}','consultar_sim')">Consultar os dois</button>
-        <button onclick="osDois('${id}','recolher_sim')">Recolher dos dois</button>
-        <button onclick="abrirAcoes('${id}_${n}')">Mais acções</button>
-      </div>
-      <div class="acoesGav" id="ac_${id}_${n}">
-        <button class="acao" onclick="cmd('${id}','cartao_trocado','',event)">Cartão trocado</button>
-        <button class="acao" onclick="cmd('${id}','zerar_fila','',event)">Zerar fila</button>
-        <button class="acao" onclick="cmd('${id}','sincronizar','',event)">Sincronizar</button>
       </div>
     </div>
   </div>`}).join('');
  return `<div class="foneG ${id==='redmi13'?'f2':''}">
   <div class="gQuem">${seg(nome)}<span class="gIdade">${idade(t.beaconTs)}</span></div>
-  ${sims}</div>`;}
+  ${sims}
+  <div class="barra">
+    <button class="bt bCons" onclick="osDois('${id}','consultar_sim')">Consultar</button>
+    <button class="bt bRec"  onclick="osDois('${id}','recolher_sim')">Recolher</button>
+    <button class="bt bFila" onclick="cmd('${id}','zerar_fila','',event)">Zerar fila</button>
+    <button class="bt bTroca${noLim?' urge':''}" onclick="cmd('${id}','cartao_trocado','',event)"
+      >${noLim?'Trocar cartão':'Cartão trocado'}</button>
+  </div>
+  </div>`;}
 function gav(k){const el=document.getElementById('gav_'+k);if(!el)return;
  el.classList.toggle('ver');
  if(el.classList.contains('ver')){const i=el.querySelector('input');if(i)i.focus();}}
@@ -2893,6 +3042,8 @@ async function f7reenvia(id,num){
  try{const r=await rpc('fila_reenviar',{p_refid:id,p_destino:dest});
   if(String(r).indexOf('OK')!==0){
    if(r==='NAO_ENCONTRADO') return aviso('ID não encontrado','bad');
+   if(r==='JA_ENTREGUE') return aviso('Este cliente já recebeu os megas — não reenviei.','ok');
+   if(r==='JA_NA_FILA')  return aviso('Já está na fila à espera — não dupliquei.','ok');
    if(r==='FALTA_DESTINO'){
     const p=prompt('Este comprovativo é antigo e não tem o número guardado.\n'+
       'Para que número vão os megas?','');
@@ -3362,7 +3513,8 @@ setTimeout(negCiclo, 900);
   var EXTRA={ajustes:'Ajustes'};
   var PORTITULO={'Consultas':'consultas','Histórico':'historico','Valores de hoje':'lucro',
                  '30 lugares':'numeros','Estado geral':'sistema',
-                 'Fechar pop-ups':'popup','Regras de operação':'regras'};
+                 'Fechar pop-ups':'popup','Regras de operação':'regras',
+                  'Bots do WhatsApp':'sistema','Recolher comprovativos':'sistema'};
   var PORSEPARADOR={'Lucro e meta':'lucro','Números':'numeros','Sistema e bot':'sistema'};
 
   function n0(x){ x=parseFloat(x); return isFinite(x)?x:0; }
@@ -3899,15 +4051,35 @@ function reporSims(){
 async function osDois(dev, acao){
  const rot = acao==='consultar_sim' ? 'consultar' : 'recolher';
  const bs = document.querySelectorAll('.gTodos button');
- bs.forEach(function(b){ b.disabled = true; });
+ bs.forEach(function(b){ if(b.dataset && !b.dataset.rot0) b.dataset.rot0=b.textContent; b.disabled = true; });
+ /* Em vez de esperar um tempo fixo, espera pela RESPOSTA do telemóvel.
+    Ele devolve saldo_simN quando acaba; aí manda-se logo o segundo. */
+ const rotulo = function(t){ const b0=bs[0]; if(b0) b0.textContent=t; };
  try{
-  await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'1',p_valor:''});
-  await new Promise(function(r){ setTimeout(r,1500); });
-  await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'2',p_valor:''});
+  const r1 = await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'1',p_valor:''});
+  if(String(r1).indexOf('USSD_OCUPADO')===0){ aviso(String(r1),'bad'); return; }
+  aviso('SIM 1 a '+rot+'… assim que responder, vai o SIM 2.','ok');
+
+  let livre=false;
+  for(let i=0;i<21;i++){                       // até ~60 segundos
+    await new Promise(function(r){ setTimeout(r,3000); });
+    let est=null;
+    try{ est = await rpc('ussd_estado',{p_dev:dev}); }catch(e){}
+    if(est && est.ocupado===false){ livre=true; break; }
+    rotulo('SIM 1 a responder… '+((est&&est.ha_seg)||'')+'s');
+  }
+  if(!livre){ aviso('O SIM 1 não respondeu em 1 min. Tenta o SIM 2 à mão em Mais acções.','bad'); return; }
+
+  rotulo('a pedir SIM 2…');
+  const r2 = await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'2',p_valor:''});
+  if(String(r2).indexOf('USSD_OCUPADO')===0){ aviso(String(r2),'bad'); return; }
   aviso('Pedido de '+rot+' enviado aos dois cartões.','ok');
   setTimeout(function(){ if(typeof carregarFones==='function') carregarFones(); },8000);
  }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
- finally{ setTimeout(function(){ bs.forEach(function(b){ b.disabled=false; }); },8000); }
+ finally{
+   bs.forEach(function(b){ if(b.dataset && b.dataset.rot0) b.textContent=b.dataset.rot0; });
+   setTimeout(function(){ bs.forEach(function(b){ b.disabled=false; }); },2000);
+ }
 }
 
 /* v23: trava geral — nenhum botão aceita dois toques seguidos */
@@ -3940,6 +4112,272 @@ document.addEventListener('click', function(ev){
   }
   document.addEventListener('pointerdown',toque,{passive:true,capture:true});
 })();
+
+
+
 </script>
+
+<script>
+/* ═══ BOTS E RECOLHA — constrói-se sozinho ao abrir ═══════════════
+   Em vez de HTML fixo no meio do ficheiro, este bloco cria os
+   cartões e mete-os nos Ajustes. Corre depois de tudo o resto.     */
+(function(){
+  if (window.__botsProntos) return;
+  window.__botsProntos = true;
+
+  var CSS = ''
+  + '.bwLinha{padding:13px 0;border-top:1px solid rgba(255,255,255,.07)}'
+  + '.bwLinha:first-of-type{border-top:0;padding-top:2px}'
+  + '.bwCab{display:flex;align-items:center;gap:9px;font:700 13px var(--titulo);'
+  +   'letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}'
+  + '.bwPt{width:8px;height:8px;border-radius:50%;flex:none;background:rgba(255,255,255,.2)}'
+  + '.bwPt.on{background:var(--menta);box-shadow:0 0 9px var(--menta)}'
+  + '.bwPt.off{background:var(--sangue);box-shadow:0 0 9px var(--sangue)}'
+  + '.bwQr{background:rgba(57,220,255,.12);border-color:rgba(57,220,255,.32);color:var(--gelo)}'
+  + '.bwRes{margin-top:10px;display:none;white-space:pre-wrap;font:400 12.5px var(--mono);'
+  +   'line-height:1.55;padding:10px 12px;border-radius:10px}'
+  + '.bwRes.ver{display:block}'
+  + '.bwOk{background:rgba(61,255,164,.09);border:1px solid rgba(61,255,164,.24);color:var(--menta)}'
+  + '.bwEsp{background:rgba(255,194,51,.09);border:1px solid rgba(255,194,51,.24);color:var(--mel)}'
+  + '.bwMau{background:rgba(255,31,67,.09);border:1px solid rgba(255,31,67,.24);color:var(--sangue)}'
+  + '.bwQrcx{display:none;margin-top:13px;padding:14px;border-radius:13px;background:#fff}'
+  + '.bwQrcx.ver{display:block}'
+  + '.bwQrcx pre{margin:0;font:400 5px var(--mono);line-height:5px;color:#000;'
+  +   'text-align:center;overflow:hidden;white-space:pre}'
+  + '.bwQrpe{display:flex;justify-content:space-between;align-items:center;margin-top:11px;'
+  +   'padding-top:9px;border-top:1px solid rgba(0,0,0,.1);font:400 11px var(--corpo);color:#555}'
+  + '.bwConta{font:700 13px var(--mono);color:#c1121f}'
+  + '.bwCampo label{display:block;font:600 10px var(--titulo);letter-spacing:.12em;'
+  +   'text-transform:uppercase;color:var(--fumo);margin-bottom:6px}'
+  + '.bwCampo input{width:100%;font:400 15px var(--mono);padding:12px;border-radius:11px;'
+  +   'border:1px solid var(--borda);background:rgba(255,255,255,.05);color:var(--texto);margin-bottom:11px}'
+  + '.bwDuo{display:grid;grid-template-columns:1fr 1fr;gap:9px}'
+  + '.bwChk{display:flex;align-items:center;gap:11px;padding:12px;border-radius:11px;'
+  +   'background:rgba(255,255,255,.04);border:1px solid var(--borda);margin-bottom:12px;'
+  +   'font:400 12.5px var(--corpo)}'
+  + '.bwChk input{width:19px;height:19px;accent-color:var(--menta);flex:none}'
+  + '.bwChk small{display:block;color:var(--fumo);font-size:11px;margin-top:2px}';
+
+  var HTML = ''
+  + '<div class="cartao" id="bwCartaoBots">'
+  +   '<div class="faixa" style="background:linear-gradient(90deg,var(--volt),var(--gelo))"></div>'
+  +   '<h3>Bots do WhatsApp</h3>'
+  +   '<p class="funcao">reiniciar ou ler o QR — cada um na sua sessão</p>'
+  +   '<div class="bwLinha">'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtlacasa"></span> Bot LaCasa</div>'
+  +     '<div class="acoes g2">'
+  +       '<button class="acao" onclick="bwOrdem(\'lacasa\',\'reiniciar\',this)">Reiniciar</button>'
+  +       '<button class="acao bwQr" onclick="bwVerQR(\'lacasa\',this)">Ver QR</button></div>'
+  +     '<div class="bwRes" id="bwRlacasa"></div></div>'
+  +   '<div class="bwLinha">'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtlayra"></span> Bot Layra</div>'
+  +     '<div class="acoes g2">'
+  +       '<button class="acao" onclick="bwOrdem(\'layra\',\'reiniciar\',this)">Reiniciar</button>'
+  +       '<button class="acao bwQr" onclick="bwVerQR(\'layra\',this)">Ver QR</button></div>'
+  +     '<div class="bwRes" id="bwRlayra"></div></div>'
+  +   '<div class="bwQrcx" id="bwQrcx"><pre id="bwQrp"></pre>'
+  +     '<div class="bwQrpe"><span>WhatsApp → Dispositivos ligados</span>'
+  +     '<span class="bwConta" id="bwQrc">5:00</span></div></div>'
+  + '</div>'
+  + '<div class="cartao" id="bwCartaoRec">'
+  +   '<div class="faixa" style="background:linear-gradient(90deg,var(--menta),var(--folha))"></div>'
+  +   '<h3>Recolher comprovativos</h3>'
+  +   '<p class="funcao">lê a caixa de SMS e apanha o que o sistema não registou</p>'
+  +   '<div class="bwCampo"><label>Dia</label><input type="date" id="bwDia">'
+  +     '<div class="bwDuo">'
+  +       '<div><label>Das</label><input type="time" id="bwH1" value="09:00"></div>'
+  +       '<div><label>Até</label><input type="time" id="bwH2" value="18:00"></div></div></div>'
+  +   '<label class="bwChk"><input type="checkbox" id="bwFila" checked>'
+  +     '<span>Pôr na fila de entrega<small>sem isto só mostra, não despacha</small></span></label>'
+  +   '<div class="acoes"><button class="acao forte" onclick="bwRecolher(this)">Recolher agora</button></div>'
+  +   '<div class="bwRes" id="bwRrec"></div>'
+  + '</div>';
+
+  /* o estilo entra uma vez */
+  var st = document.createElement('style'); st.textContent = CSS;
+  document.head.appendChild(st);
+
+  /* IMPORTANTE: os cartões NÃO entram em #cPainel.
+     Esse é reescrito pela pintarConsultasB() a toda a hora, e daí
+     o piscar. Entram na zona fixa da secção, ao pé do separador
+     "Sistema e bot" — que ninguém redesenha. Entram uma vez e ficam. */
+  /* Procura a âncora no documento inteiro, com várias alternativas.
+     Se nenhuma servir, diz-o em vez de falhar em silêncio.        */
+  function acharAncora(){
+    var i, e;
+    /* 1) o separador "Sistema e bot" */
+    var seps = document.querySelectorAll('.sepR');
+    for (i = 0; i < seps.length; i++)
+      if ((seps[i].textContent||'').indexOf('Sistema e bot') >= 0) return {no:seps[i], como:'separador'};
+    /* 2) o cartão do "Estado geral" */
+    var h3 = document.querySelectorAll('h3');
+    for (i = 0; i < h3.length; i++)
+      if ((h3[i].textContent||'').indexOf('Estado geral') >= 0) {
+        e = h3[i].closest ? h3[i].closest('.cartao') : null;
+        if (e) return {no:e, como:'estado geral', antes:true};
+      }
+    /* 3) o cartão do "Fechar pop-ups" */
+    for (i = 0; i < h3.length; i++)
+      if ((h3[i].textContent||'').indexOf('Fechar pop') >= 0) {
+        e = h3[i].closest ? h3[i].closest('.cartao') : null;
+        if (e) return {no:e, como:'pop-ups', antes:true};
+      }
+    /* 4) a secção dos Ajustes, no fim */
+    e = document.getElementById('s-consultas');
+    if (e) return {no:e, como:'fim da secção', dentro:true};
+    return null;
+  }
+
+  function meter(){
+    if (document.getElementById('bwCartaoBots')) return true;
+    var a = acharAncora();
+    if (!a) return false;
+
+    var cx = document.createElement('div'); cx.innerHTML = HTML;
+    var pecas = [];
+    while (cx.firstChild) pecas.push(cx.removeChild(cx.firstChild));
+
+    if (a.dentro) {
+      for (var k = 0; k < pecas.length; k++) a.no.appendChild(pecas[k]);
+    } else if (a.antes) {
+      for (var k2 = 0; k2 < pecas.length; k2++) a.no.parentNode.insertBefore(pecas[k2], a.no);
+    } else {
+      var ref = a.no;
+      for (var k3 = 0; k3 < pecas.length; k3++) {
+        ref.parentNode.insertBefore(pecas[k3], ref.nextSibling);
+        ref = pecas[k3];
+      }
+    }
+    /* o site esconde tudo o que não tem bloco (.bl-fora). Marcar já. */
+    for (var m = 0; m < pecas.length; m++)
+      if (pecas[m].dataset) { pecas[m].dataset.bloco = 'sistema'; pecas[m].classList.remove('bl-fora'); }
+    /* obrigar o site a refazer as contas dos blocos */
+    var sec0 = document.getElementById('s-consultas');
+    if (sec0 && sec0.dataset) sec0.dataset.blocos = '';
+    if (typeof marcarBlocos === 'function') { try { marcarBlocos(); } catch(e){} }
+    console.log('[bots] cartões postos via ' + a.como);
+    var d = new Date(), z = function(n){ return String(n).padStart(2,'0'); };
+    var e2 = document.getElementById('bwDia');
+    if (e2) e2.value = d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+    return true;
+  }
+
+  var tentativas = 0;
+  if (!meter()) {
+    var t = setInterval(function(){
+      tentativas++;
+      if (meter() || tentativas > 40) clearInterval(t);
+    }, 500);
+  }
+  /* se ao fim de 25s não conseguiu, avisa em vez de ficar calado */
+  setTimeout(function(){
+    if (!document.getElementById('bwCartaoBots')) {
+      var av = document.createElement('div');
+      av.style.cssText = 'position:fixed;left:10px;right:10px;bottom:80px;z-index:99999;'
+        + 'background:#ff1f43;color:#fff;padding:12px 14px;border-radius:12px;'
+        + 'font:600 13px system-ui;box-shadow:0 8px 24px rgba(0,0,0,.5)';
+      av.textContent = 'Bots: não encontrei onde encaixar os cartões. Toca para fechar.';
+      av.onclick = function(){ av.remove(); };
+      document.body.appendChild(av);
+    }
+  }, 25000);
+})();
+
+var BW_SB="https://wjebxekgzzmdikabwyqw.supabase.co";
+var BW_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqZWJ4ZWtnenptZGlrYWJ3eXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTI1NjAsImV4cCI6MjA5OTg2ODU2MH0.VsKJKIeeKtZkfLuQLZCTP81U-TK13b2MgxEcmhJmwyQ";
+async function bwRpc(fn,args){
+  var r=await fetch(BW_SB+"/rest/v1/rpc/"+fn,{method:"POST",
+    headers:{apikey:BW_KEY,Authorization:"Bearer "+BW_KEY,"Content-Type":"application/json"},
+    body:JSON.stringify(args||{})});
+  var t=await r.text();
+  if(!r.ok) throw new Error(t.slice(0,120));
+  try{ return JSON.parse(t); }catch(e){ return t.replace(/^"|"$/g,""); }
+}
+function bwMsg(id,txt,tipo){
+  var e=document.getElementById(id); if(!e) return;
+  e.textContent=txt; e.className="bwRes ver bw"+(tipo||"Ok");
+}
+function bwPonto(bot,est){
+  var p=document.getElementById("bwPt"+bot); if(p) p.className="bwPt "+(est||"");
+}
+var bwDorme=function(ms){ return new Promise(function(f){ setTimeout(f,ms); }); };
+
+async function bwOrdem(bot,acao,b){
+  var rot=b.textContent; b.disabled=true; b.textContent="a pedir…";
+  try{
+    var r=await bwRpc("bot_pedir",{p_bot:bot,p_acao:acao});
+    if(String(r).indexOf("JA_HA_UMA")===0){ bwMsg("bwR"+bot,"já há uma ordem a correr","Esp"); return; }
+    if(String(r).indexOf("OK")!==0){ bwMsg("bwR"+bot,String(r),"Mau"); return; }
+    bwMsg("bwR"+bot,"ordem enviada · o telemóvel vai buscá-la","Esp");
+    b.textContent="a arrancar…";
+    for(var i=0;i<20;i++){
+      await bwDorme(3000);
+      var e=null; try{ e=await bwRpc("bot_estado_ordem",{p_bot:bot}); }catch(x){}
+      if(e&&e.feito){ bwMsg("bwR"+bot,e.resultado||"feito","Ok"); bwPonto(bot,"on");
+                      setTimeout(function(){ bwQrCalado(bot); },6000); return; }
+    }
+    bwMsg("bwR"+bot,"sem resposta — o vigia está a correr no telemóvel?","Esp");
+  }catch(e){ bwMsg("bwR"+bot,"não deu: "+e.message,"Mau"); bwPonto(bot,"off"); }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+var bwRelogio=null;
+function bwQrPor(txt,faltam){
+  document.getElementById("bwQrp").textContent=txt;
+  document.getElementById("bwQrcx").classList.add("ver");
+  clearInterval(bwRelogio);
+  var f=faltam||300, c=document.getElementById("bwQrc");
+  bwRelogio=setInterval(function(){
+    f--; c.textContent=Math.floor(f/60)+":"+String(f%60).padStart(2,"0");
+    if(f<=0){ clearInterval(bwRelogio);
+      document.getElementById("bwQrcx").classList.remove("ver");
+      document.getElementById("bwQrp").textContent=""; }
+  },1000);
+}
+async function bwQrCalado(bot){
+  try{ var q=await bwRpc("bot_qr_ver",{p_bot:bot}); if(q&&q.tem) bwQrPor(q.qr,q.faltam); }catch(e){}
+}
+async function bwVerQR(bot,b){
+  var rot=b.textContent; b.disabled=true; b.textContent="a pedir…";
+  try{
+    var q=await bwRpc("bot_qr_ver",{p_bot:bot});
+    if(q&&q.tem){ bwQrPor(q.qr,q.faltam); bwMsg("bwR"+bot,"QR no ecrã","Ok"); return; }
+    await bwRpc("bot_pedir",{p_bot:bot,p_acao:"qr"});
+    bwMsg("bwR"+bot,"a pedir o QR ao telemóvel…","Esp");
+    for(var i=0;i<12;i++){
+      await bwDorme(3000);
+      try{ q=await bwRpc("bot_qr_ver",{p_bot:bot}); }catch(x){}
+      if(q&&q.tem){ bwQrPor(q.qr,q.faltam); bwMsg("bwR"+bot,"QR no ecrã","Ok"); return; }
+    }
+    bwMsg("bwR"+bot,"sem QR — o bot deve estar ligado. Reinicia-o para gerar um novo.","Esp");
+  }catch(e){ bwMsg("bwR"+bot,"não deu: "+e.message,"Mau"); }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+async function bwRecolher(b){
+  var d=document.getElementById("bwDia").value;
+  if(!d){ bwMsg("bwRrec","escolhe o dia","Esp"); return; }
+  var p=d.split("-"), dia=p[2]+"/"+p[1]+"/"+p[0];
+  var de=dia+" "+document.getElementById("bwH1").value;
+  var ate=dia+" "+document.getElementById("bwH2").value;
+  var fila=document.getElementById("bwFila").checked;
+  var rot=b.textContent; b.disabled=true; b.textContent="a recolher…";
+  try{
+    var r=await bwRpc("recolha_pedir",{p_de:de,p_ate:ate,p_fila:fila});
+    if(String(r).indexOf("JA_HA_UMA")===0){ bwMsg("bwRrec","já há uma recolha a correr","Esp"); return; }
+    if(String(r).indexOf("OK")!==0){ bwMsg("bwRrec",String(r),"Mau"); return; }
+    bwMsg("bwRrec","ordem enviada · "+de+" até "+ate,"Esp");
+    for(var i=0;i<60;i++){
+      await bwDorme(3000);
+      var e=null; try{ e=await bwRpc("recolha_estado"); }catch(x){}
+      if(e&&e.feito){ bwMsg("bwRrec",(e.resultado||"terminada").replace(/ · /g,"\n"),"Ok"); return; }
+    }
+    bwMsg("bwRrec","ainda a correr — vê o vigia no telemóvel","Esp");
+  }catch(e){ bwMsg("bwRrec","não deu: "+e.message,"Mau"); }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+</script>
+
+
+
+
 </body>
 </html>
