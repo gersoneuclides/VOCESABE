@@ -148,6 +148,9 @@ section{display:none}section.ver{display:block}
 .acoes{display:grid;gap:8px;margin-top:10px}.g2{grid-template-columns:1fr 1fr}
 @media(max-width:560px){.duas{grid-template-columns:1fr}}
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px}
+
+
+
 .tile{border:1px solid var(--borda);border-radius:14px;background:var(--painel);padding:11px 8px;text-align:center;
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .tile b{display:block;font:800 20px/1.15 var(--mono);letter-spacing:-.02em}
@@ -1712,6 +1715,16 @@ html.claro #folhaOrdem{background:#fff;box-shadow:0 -12px 34px rgba(23,27,33,.16
 body.comOrdem #folhaOrdem{transform:none}
 body.comOrdem #veuDisp{opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){#folhaOrdem{transition:none}}
+#pqTxt{width:100%;border:0;border-radius:16px;padding:12px;resize:vertical;
+  font:500 12.5px/1.5 var(--mono);letter-spacing:-.01em}
+html:not(.claro) #pqTxt{background:#2E343C;color:var(--texto)}
+html.claro #pqTxt{background:#f1f4f7;color:#171b21}
+#pqTxt:focus-visible{outline:2px solid var(--menta);outline-offset:2px}
+.pqLinha{padding:10px 0;border-bottom:1px solid var(--borda)}
+.pqLinha:last-child{border-bottom:0}
+.pqId{font:600 12px var(--mono);color:var(--menta);word-break:break-all}
+.pqMeta{font-size:11.5px;color:var(--fumo);margin-top:3px}
+.pqSem{color:#ff9f6b;font-weight:600}
 #ordTxt{width:100%;border:0;border-radius:16px;padding:13px;resize:vertical;
   font:500 12.5px/1.55 var(--mono);letter-spacing:-.01em}
 html:not(.claro) #ordTxt{background:#2E343C;color:var(--texto)}
@@ -2272,8 +2285,10 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
 .botres.mau{background:rgba(255,31,67,.09);border:1px solid rgba(255,31,67,.22);color:var(--sangue)}
 .qrcx{display:none;margin-top:12px;padding:13px;border-radius:13px;background:#fff}
 .qrcx.ver{display:block}
-.qrcx pre{margin:0;font-family:ui-monospace,Menlo,monospace;font-size:5px;line-height:5px;
-  color:#000;text-align:center;overflow:hidden;letter-spacing:0;white-space:pre}
+.qrcx pre{margin:0 auto;font-family:ui-monospace,Menlo,monospace;
+  font-size:clamp(4px,1.55vw,7px);line-height:1;letter-spacing:0;
+  color:#000;text-align:center;white-space:pre;display:block;
+  max-height:62vh;overflow:auto;width:fit-content}
 .qrpe{display:flex;justify-content:space-between;align-items:center;margin-top:10px;
   padding-top:9px;border-top:1px solid rgba(0,0,0,.1);font-size:11px;color:#555}
 .qrconta{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;color:#c1121f}
@@ -2352,6 +2367,128 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
 .bTroca.urge:hover{background:linear-gradient(135deg,#ff4a68,#d81338);color:#fff}
 
 @media(max-width:340px){.barra{grid-template-columns:1fr}}
+
+/* interruptores da recolha automática */
+.bwAuto{margin-bottom:14px;padding:12px;border-radius:12px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.bwSw{display:flex;align-items:center;gap:12px;padding:9px 0;cursor:pointer;
+  border-top:1px solid rgba(255,255,255,.06)}
+.bwSw:first-child{border-top:0;padding-top:2px}
+.bwSwPt{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:13px;line-height:1;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);color:var(--fumo);
+  transition:background .18s,color .18s,border-color .18s}
+.bwSwPt.on{background:linear-gradient(135deg,#2fd9a4,#12b083);color:#08281f;
+  border-color:rgba(61,255,164,.5);box-shadow:0 0 12px -2px rgba(47,217,164,.6)}
+.bwSwTx{min-width:0;flex:1}
+.bwSwTx b{display:block;font:600 13px var(--corpo);color:var(--texto)}
+.bwSwTx small{display:block;color:var(--fumo);font-size:11px;margin-top:1px;line-height:1.4}
+.bwAutoPe{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);
+  font:400 11px var(--mono);color:var(--fumo)}
+
+/* cabeçalho da fila com o botão à direita */
+.cabFila{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.cabFila h3{margin:0 0 4px}
+.btRepro{flex:none;padding:11px 15px;border-radius:13px;cursor:pointer;
+  font:800 11.5px/1.25 var(--titulo);letter-spacing:.09em;text-transform:uppercase;
+  text-align:center;color:#7FD4FF;background:rgba(57,220,255,.09);
+  border:2px solid #39A9FF;
+  box-shadow:0 0 0 1px rgba(57,169,255,.18),0 4px 14px -6px rgba(57,169,255,.55);
+  transition:filter .16s ease,transform .1s ease}
+.btRepro:hover{filter:brightness(1.25)}
+.btRepro:active{transform:translateY(1px)}
+.btRepro:disabled{opacity:.5}
+.btRepro:focus-visible{outline:2px solid var(--gelo);outline-offset:3px}
+
+
+
+/* ═══ CARTÃO DO LUCRO · a sair do ecrã ═══
+   A sombra vai ATRÁS do cartão que já existe (#cxNeg). Não se cria
+   cartão nenhum novo — só se lhe dá altura.                        */
+#cxNeg{position:relative;cursor:pointer;margin-bottom:32px;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease;
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset,
+             0 12px 22px -10px rgba(0,0,0,.55),
+             0 30px 52px -20px rgba(18,176,131,.7) !important}
+#cxNeg::before{content:"";position:absolute;left:9%;right:9%;bottom:-17px;height:30px;
+  border-radius:50%;background:rgba(18,176,131,.6);filter:blur(21px);z-index:-2;
+  transition:all .2s cubic-bezier(.2,.8,.2,1)}
+#cxNeg::after{content:"";position:absolute;left:17%;right:17%;bottom:-9px;height:18px;
+  border-radius:50%;background:rgba(0,0,0,.6);filter:blur(13px);z-index:-2;
+  transition:all .2s cubic-bezier(.2,.8,.2,1)}
+#cxNeg:active{transform:scale(.978) translateY(4px);
+  box-shadow:0 1px 0 rgba(255,255,255,.22) inset,
+             0 5px 12px -6px rgba(0,0,0,.5),
+             0 14px 26px -16px rgba(18,176,131,.55) !important}
+#cxNeg:active::before{bottom:-9px;filter:blur(13px);opacity:.55}
+#cxNeg:active::after{bottom:-4px;filter:blur(8px);opacity:.45}
+#cxNeg:focus-visible{outline:2px solid var(--gelo);outline-offset:6px}
+.lucroToque{position:absolute;right:15px;bottom:11px;z-index:3;
+  font:700 9.5px var(--titulo);letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.85);display:flex;align-items:center;gap:5px;pointer-events:none}
+.lucroToque::after{content:"›";font-size:15px;line-height:1}
+
+/* ═══ FOLHA DOS DETALHES ═══ */
+#ndVeu{position:fixed;inset:0;z-index:9000;background:rgba(4,5,9,.6);
+  backdrop-filter:blur(16px) saturate(.85);-webkit-backdrop-filter:blur(16px) saturate(.85);
+  opacity:0;pointer-events:none;transition:opacity .26s ease}
+#ndVeu[data-ver]{opacity:1;pointer-events:auto}
+#ndFolha{position:fixed;left:0;right:0;bottom:0;z-index:9001;max-height:88vh;
+  overflow-y:auto;overscroll-behavior:contain;
+  padding:10px 16px calc(24px + env(safe-area-inset-bottom));
+  border-radius:26px 26px 0 0;border:1px solid transparent;border-bottom:0;
+  background:linear-gradient(180deg,#171A23,#101219) padding-box,
+             linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.04) 30%) border-box;
+  box-shadow:0 -20px 60px -20px rgba(0,0,0,.95);
+  transform:translateY(101%);transition:transform .3s cubic-bezier(.32,.72,0,1)}
+#ndFolha[data-ver]{transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){#ndFolha,#cxNeg{transition:none}}
+.ndPux{width:38px;height:4px;border-radius:99px;background:rgba(255,255,255,.22);margin:0 auto 14px}
+.ndTit{margin:0 0 3px;font:700 17px var(--titulo);letter-spacing:.1em;text-transform:uppercase}
+.ndSub{margin:0 0 16px;color:var(--fumo);font-size:12px}
+.ndFechar{width:100%;min-height:50px;margin-top:12px;border-radius:13px;
+  border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.03);color:var(--fumo);
+  font:700 11px var(--titulo);letter-spacing:.13em;text-transform:uppercase}
+
+/* ═══ FOLHA DO LUCRO · abas (direção 5) ═══ */
+.ndAbas{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;
+  border-radius:99px;background:#2E343C;margin-bottom:15px}
+.ndAbas button{border:0;border-radius:99px;min-height:40px;cursor:pointer;
+  font:700 9.5px var(--titulo);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--fumo);background:transparent;
+  transition:background .18s ease,color .18s ease}
+.ndAbas button.on{background:linear-gradient(135deg,#2fd9a4,#12b083);color:#08281f}
+.ndAbas button:focus-visible{outline:2px solid var(--gelo);outline-offset:2px}
+.ndPnl{display:none} .ndPnl.on{display:block}
+.ndGrande{font:300 34px/1 var(--mono);letter-spacing:-.03em;margin-bottom:5px;
+  font-variant-numeric:tabular-nums}
+.ndSob{color:var(--fumo);font-size:11.5px;margin-bottom:14px}
+.ndPar{display:flex;justify-content:space-between;gap:12px;padding:9px 0;
+  border-top:1px solid rgba(255,255,255,.06);font-size:12.5px}
+.ndPar:first-of-type{border-top:0}
+.ndPar span:first-child{color:var(--fumo)}
+.ndPar span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.bwPt.qr{background:var(--mel);box-shadow:0 0 9px var(--mel)}
+.bwEstado{margin-left:auto;font:600 9.5px var(--titulo);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--fumo)}
+.bwEstado.on{color:var(--menta)} .bwEstado.qr{color:var(--mel)} .bwEstado.off{color:var(--sangue)}
+
+/* ═══ cartões de contagem ═══════════════════════════════════════════
+   Ficam iguais aos botões AMBAS / NUVEM / SMS: cantos bem redondos,
+   fundo um tom acima da página e nenhum contorno. É essa a "borda" que
+   se vê neles — a forma, não uma linha à volta.
+   Vai no fim do ficheiro de propósito: há outras regras de .tile mais
+   abaixo, e algumas usam !important. */
+#filaContas .tile,#lyContas .tile{
+  border:0 !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  background:#2E343C !important;
+  padding:15px 9px 13px !important}
+html.claro #filaContas .tile,html.claro #lyContas .tile{
+  background:#f1f4f7 !important}
 </style>
 <script>(function(){try{var t=localStorage.getItem('wolf_tema');
 if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();</script>
@@ -2403,10 +2540,12 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
   <section id="s-fila">
     <div class="cabecalho"><h1>Fila em tempo real</h1><p>tudo o que entrou e saiu, minuto a minuto</p></div>
     <div class="tiles" id="filaContas"></div>
-    <div class="cartao"><h3>Pagamentos e entregas</h3><p class="funcao" id="filaHora">—</p>
+    <div class="cartao"><div class="cabFila"><div><h3>Pagamentos e entregas</h3>
+      <p class="funcao" id="filaHora">—</p></div>
+      <button class="btRepro" onclick="reproTodos(this)">Reprocessar<br>toda a fila</button></div>
       <input id="filaBusca" placeholder="pesquisar número, nome ou ID">
 <div id="filaLista" class="fumo">a carregar…</div></div>
-  <div class="sepR"><b>Fila do grupo · Layra</b><i></i></div><div class="tiles" id="lyContas"></div><div class="cartao"><h3>Pedidos do grupo</h3><p class="funcao" id="lyTotais">—</p><input id="lyBusca" placeholder="pesquisar número, nome ou cliente"><div id="lyLista" class="fumo">a carregar…</div></div></section>
+  <div class="sepR"><b>FILA WHATSAPP</b><i></i></div><div class="tiles" id="lyContas"></div><div class="cartao"><h3>Pedidos do grupo</h3><p class="funcao" id="lyTotais">—</p><input id="lyBusca" placeholder="pesquisar número, nome ou cliente"><div id="lyLista" class="fumo">a carregar…</div></div></section>
 
   <section id="s-fones"><div class="cabecalho"><h1>Dispositivos</h1><p>os dois que enviam megas e o que recebe os pagamentos</p></div>
     <div id="fones"></div>
@@ -2431,6 +2570,15 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
 
   <section id="s-ordens">
     <div class="cabecalho"><h1>Ordens</h1><p>o que mandei aos telefones e se já foi executado</p></div>
+    <div class="cartao"><div class="faixa" style="background-image:var(--rog)"></div>
+      <h3>Procurar comprovativo</h3>
+      <p class="funcao">as ordens somem do ecrã, a base não — procura por nome, ID, número, ou cola o comprovativo inteiro</p>
+      <textarea id="pqTxt" rows="2" placeholder="CARMONIO · DHO4LB93XZM · 849904376 · ou cola o SMS todo"></textarea>
+      <div class="acoes g2" style="margin-top:10px">
+        <button class="acao" onclick="pqProcurar(this)">Procurar</button>
+        <button class="acao" onclick="pqOrfaos(this)">Sem número (7 dias)</button>
+      </div>
+      <div id="pqRes" class="fumo" style="margin-top:12px"></div></div>
     <div class="cartao"><div class="faixa" style="background-image:var(--rog)"></div>
       <h3>Histórico</h3><p class="funcao">ficam “à espera” até o telefone as apanhar</p>
       <div id="cmdBox" class="fumo">—</div></div>
@@ -2735,7 +2883,7 @@ function desenhar(){
    <h3>Principal</h3><p class="funcao">recebe os SMS de pagamento · último ${seg(h.ultima||'—')}</p>
    <div class="grande">${h.hoje||0}<span class="eyebrow" style="margin-left:8px">pagamentos hoje</span></div>
    <div class="fumo num" style="margin-top:7px;font-size:12px">hélice: ${h.principal||0} do Principal · ${h.redmis||0} dos Redmis · ${h.entregues||0} confirmadas</div>
-   <div class="acoes g2"><button class="acao" onclick="cmd('principal','reprocessar','',event)">Reprocessar fila</button>
+   <div class="acoes g2">
      <button class="acao" onclick="cmd('todos','sincronizar','',event)">Sincronizar todos</button></div></div>`;
  document.getElementById('sistemaBox').innerHTML=
   `<div style="display:flex;gap:7px;flex-wrap:wrap"><span class="pill ${at==='1'?'on':'off'}">${at==='1'?'ativo':'parado'}</span>
@@ -4050,36 +4198,47 @@ function reporSims(){
 }
 async function osDois(dev, acao){
  const rot = acao==='consultar_sim' ? 'consultar' : 'recolher';
- const bs = document.querySelectorAll('.gTodos button');
+ const bs = document.querySelectorAll('.gTodos button, .barra button');
  bs.forEach(function(b){ if(b.dataset && !b.dataset.rot0) b.dataset.rot0=b.textContent; b.disabled = true; });
- /* Em vez de esperar um tempo fixo, espera pela RESPOSTA do telemóvel.
-    Ele devolve saldo_simN quando acaba; aí manda-se logo o segundo. */
- const rotulo = function(t){ const b0=bs[0]; if(b0) b0.textContent=t; };
+ /* Pede e sai. A nuvem trata da sequência: manda o SIM 1, espera a
+    resposta e manda o SIM 2 sozinha. As vendas passam à frente.
+    Assim podes fechar o site que o trabalho continua. */
  try{
-  const r1 = await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'1',p_valor:''});
-  if(String(r1).indexOf('USSD_OCUPADO')===0){ aviso(String(r1),'bad'); return; }
-  aviso('SIM 1 a '+rot+'… assim que responder, vai o SIM 2.','ok');
-
-  let livre=false;
-  for(let i=0;i<21;i++){                       // até ~60 segundos
-    await new Promise(function(r){ setTimeout(r,3000); });
-    let est=null;
-    try{ est = await rpc('ussd_estado',{p_dev:dev}); }catch(e){}
-    if(est && est.ocupado===false){ livre=true; break; }
-    rotulo('SIM 1 a responder… '+((est&&est.ha_seg)||'')+'s');
-  }
-  if(!livre){ aviso('O SIM 1 não respondeu em 1 min. Tenta o SIM 2 à mão em Mais acções.','bad'); return; }
-
-  rotulo('a pedir SIM 2…');
-  const r2 = await rpc('cmd_criar',{p_dev:dev,p_acao:acao+'2',p_valor:''});
-  if(String(r2).indexOf('USSD_OCUPADO')===0){ aviso(String(r2),'bad'); return; }
-  aviso('Pedido de '+rot+' enviado aos dois cartões.','ok');
-  setTimeout(function(){ if(typeof carregarFones==='function') carregarFones(); },8000);
+  const r = await rpc('ussd_pedir_ambos',{p_dev:dev,p_acao:acao});
+  const t = String(r);
+  if(t.indexOf('JA_HA_UMA')===0){ aviso('Já há uma '+rot+' em curso neste aparelho.','bad'); return; }
+  if(t.indexOf('EM_ESPERA')===0){ aviso(t.replace('EM_ESPERA: ','A '+rot+' fica à espera: '),'ok'); }
+  else if(t.indexOf('OK')===0){ aviso('SIM 1 a '+rot+'. O SIM 2 segue sozinho quando este responder.','ok'); }
+  else { aviso(t,'bad'); return; }
+  ussdSeguir(dev, rot);
  }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
  finally{
    bs.forEach(function(b){ if(b.dataset && b.dataset.rot0) b.textContent=b.dataset.rot0; });
-   setTimeout(function(){ bs.forEach(function(b){ b.disabled=false; }); },2000);
+   setTimeout(function(){ bs.forEach(function(b){ b.disabled=false; }); },1500);
  }
+}
+
+/* acompanha em segundo plano, só para ires vendo — sem prender o botão */
+var _ussdRel = {};
+function ussdSeguir(dev, rot){
+  clearInterval(_ussdRel[dev]);
+  var voltas = 0;
+  _ussdRel[dev] = setInterval(async function(){
+    voltas++;
+    if(voltas > 40){ clearInterval(_ussdRel[dev]); return; }
+    try{
+      var f = await rpc('ussd_fila_ver',{p_dev:dev});
+      if(!f.por_fazer){
+        clearInterval(_ussdRel[dev]);
+        aviso(rot.charAt(0).toUpperCase()+rot.slice(1)+' dos dois cartões terminada.','ok');
+        if(typeof carregarFones==='function') carregarFones();
+        return;
+      }
+      var l = f.livre || {};
+      if(l.livre===false && l.porque==='venda a decorrer')
+        aviso('SIM '+f.sim+' à espera — há uma venda a decorrer. Continua sozinho.','ok');
+    }catch(e){ clearInterval(_ussdRel[dev]); }
+  }, 8000);
 }
 
 /* v23: trava geral — nenhum botão aceita dois toques seguidos */
@@ -4164,25 +4323,50 @@ document.addEventListener('click', function(ev){
   +   '<h3>Bots do WhatsApp</h3>'
   +   '<p class="funcao">reiniciar ou ler o QR — cada um na sua sessão</p>'
   +   '<div class="bwLinha">'
-  +     '<div class="bwCab"><span class="bwPt" id="bwPtlacasa"></span> Bot LaCasa</div>'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtlacasa"></span> Bot LaCasa<span class="bwEstado" id="bwEstlacasa"></span></div>'
   +     '<div class="acoes g2">'
   +       '<button class="acao" onclick="bwOrdem(\'lacasa\',\'reiniciar\',this)">Reiniciar</button>'
   +       '<button class="acao bwQr" onclick="bwVerQR(\'lacasa\',this)">Ver QR</button></div>'
   +     '<div class="bwRes" id="bwRlacasa"></div></div>'
   +   '<div class="bwLinha">'
-  +     '<div class="bwCab"><span class="bwPt" id="bwPtlayra"></span> Bot Layra</div>'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtvigia"></span> Vigia'
+  +       '<span id="bwVigiaTxt" style="font:400 11px var(--mono);color:var(--fumo);'
+  +       'text-transform:none;letter-spacing:0;margin-left:auto"></span></div>'
+  +     '<div class="acoes g2">'
+  +       '<button class="acao" onclick="bwVerVigia(this)">Ver estado</button>'
+  +       '<button class="acao" onclick="bwOrdem(\'vigia\',\'reiniciar_vigia\',this)">Reiniciar</button></div>'
+  +     '<div class="bwRes" id="bwRvigia"></div></div>'
+  +   '<div class="bwLinha">'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtlayra"></span> Bot Layra<span class="bwEstado" id="bwEstlayra"></span></div>'
   +     '<div class="acoes g2">'
   +       '<button class="acao" onclick="bwOrdem(\'layra\',\'reiniciar\',this)">Reiniciar</button>'
   +       '<button class="acao bwQr" onclick="bwVerQR(\'layra\',this)">Ver QR</button></div>'
   +     '<div class="bwRes" id="bwRlayra"></div></div>'
+  +   '<div class="bwLinha">'
+  +     '<div class="bwCab"><span class="bwPt" id="bwPtwolf"></span> Bot Cliente (Wolf)<span class="bwEstado" id="bwEstwolf"></span></div>'
+  +     '<div class="acoes g2">'
+  +       '<button class="acao" onclick="bwOrdem(\'wolf\',\'reiniciar\',this)">Reiniciar</button>'
+  +       '<button class="acao bwQr" onclick="bwVerQR(\'wolf\',this)">Ver QR</button></div>'
+  +     '<div class="bwRes" id="bwRwolf"></div></div>'
   +   '<div class="bwQrcx" id="bwQrcx"><pre id="bwQrp"></pre>'
   +     '<div class="bwQrpe"><span>WhatsApp → Dispositivos ligados</span>'
-  +     '<span class="bwConta" id="bwQrc">5:00</span></div></div>'
+  +     '<span class="bwConta" id="bwQrc">1:00</span></div></div>'
   + '</div>'
   + '<div class="cartao" id="bwCartaoRec">'
   +   '<div class="faixa" style="background:linear-gradient(90deg,var(--menta),var(--folha))"></div>'
   +   '<h3>Recolher comprovativos</h3>'
   +   '<p class="funcao">lê a caixa de SMS e apanha o que o sistema não registou</p>'
+  +   '<div class="bwAuto" id="bwAutoCx">'
+  +     '<div class="bwSw" onclick="bwTrocar(\'ligada\')">'
+  +       '<span class="bwSwPt" id="bwSwLigada">▶</span>'
+  +       '<span class="bwSwTx"><b>Recolha automática</b>'
+  +       '<small id="bwSwLigadaTx">de 2 em 2 minutos</small></span></div>'
+  +     '<div class="bwSw" onclick="bwTrocar(\'fila\')">'
+  +       '<span class="bwSwPt" id="bwSwFila">▶</span>'
+  +       '<span class="bwSwTx"><b>Pôr na fila</b>'
+  +       '<small id="bwSwFilaTx">o que apanhar segue para a automação</small></span></div>'
+  +     '<div class="bwAutoPe" id="bwAutoPe">—</div>'
+  +   '</div>'
   +   '<div class="bwCampo"><label>Dia</label><input type="date" id="bwDia">'
   +     '<div class="bwDuo">'
   +       '<div><label>Das</label><input type="time" id="bwH1" value="09:00"></div>'
@@ -4321,15 +4505,87 @@ async function bwOrdem(bot,acao,b){
   finally{ b.disabled=false; b.textContent=rot; }
 }
 var bwRelogio=null;
+/* ── do desenho de blocos para módulos verdadeiros ──
+   O qrcode-terminal escreve para um terminal de fundo escuro: o bloco cheio
+   é o módulo CLARO e o vazio é o ESCURO. E cada letra vale meia altura.
+   Mostrar isso tal e qual dá um QR em negativo e esticado — ilegível.
+   Aqui refaz-se a matriz e desenha-se quadrada, na cor certa. */
+var QR_CIMA  = {"\u2588":1,"\u2580":1,"\u2584":0," ":0};
+var QR_BAIXO = {"\u2588":1,"\u2580":0,"\u2584":1," ":0};
+
+function bwQrMatriz(txt){
+  var linhas=String(txt||"").split("\n").filter(function(l){ return /[\u2588\u2580\u2584]/.test(l); });
+  if(linhas.length<8) return null;
+  var larg=0; linhas.forEach(function(l){ if(l.length>larg) larg=l.length; });
+  var m=[];
+  linhas.forEach(function(l){
+    while(l.length<larg) l+=" ";
+    var a=[],b=[];
+    for(var i=0;i<larg;i++){
+      var c=l.charAt(i);
+      a.push(1-(QR_CIMA[c]||0));      /* bloco = claro, logo escuro = 1 - bloco */
+      b.push(1-(QR_BAIXO[c]||0));
+    }
+    m.push(a); m.push(b);
+  });
+  return m;
+}
+
+/* recortar pelos três cantos do QR — é o único jeito fiável, porque a
+   moldura à volta traz meias-linhas de fundo que enganam qualquer corte simples */
+function bwQrRecortar(m){
+  var P=["1111111","1000001","1011101","1011101","1011101","1000001","1111111"];
+  function canto(y,x){
+    if(y+7>m.length||x+7>m[0].length) return false;
+    for(var dy=0;dy<7;dy++) for(var dx=0;dx<7;dx++)
+      if(m[y+dy][x+dx]!==+P[dy].charAt(dx)) return false;
+    return true;
+  }
+  var fs=[];
+  for(var y=0;y<m.length;y++) for(var x=0;x<m[0].length;x++) if(canto(y,x)) fs.push([y,x]);
+  if(fs.length<3) return null;
+  var y0=Math.min.apply(null,fs.map(function(f){return f[0];}));
+  var x0=Math.min.apply(null,fs.map(function(f){return f[1];}));
+  var y1=Math.max.apply(null,fs.map(function(f){return f[0];}))+6;
+  var x1=Math.max.apply(null,fs.map(function(f){return f[1];}))+6;
+  var r=[];
+  for(var y=y0;y<=y1;y++) r.push(m[y].slice(x0,x1+1));
+  return r;
+}
+
+function bwQrDesenhar(txt){
+  var pre=document.getElementById("bwQrp");
+  var m=bwQrMatriz(txt); if(m) m=bwQrRecortar(m);
+  var cv=document.getElementById("bwQrCv");
+  if(!cv){
+    cv=document.createElement("canvas"); cv.id="bwQrCv";
+    cv.style.cssText="display:block;margin:0 auto;max-width:100%;height:auto;image-rendering:pixelated";
+    pre.parentNode.insertBefore(cv,pre);
+  }
+  if(!m){                       /* não é desenho de QR (por exemplo um código) */
+    cv.style.display="none"; pre.style.display="block"; pre.textContent=txt; return;
+  }
+  var n=m.length, marg=4, lado=n+marg*2, px=6;
+  cv.width=cv.height=lado*px;
+  cv.style.width=Math.min(300,lado*px)+"px";
+  var g=cv.getContext("2d");
+  g.fillStyle="#fff"; g.fillRect(0,0,cv.width,cv.height);
+  g.fillStyle="#000";
+  for(var y=0;y<n;y++) for(var x=0;x<m[y].length;x++)
+    if(m[y][x]) g.fillRect((x+marg)*px,(y+marg)*px,px,px);
+  cv.style.display="block"; pre.style.display="none"; pre.textContent="";
+}
+
 function bwQrPor(txt,faltam){
-  document.getElementById("bwQrp").textContent=txt;
+  bwQrDesenhar(txt);
   document.getElementById("bwQrcx").classList.add("ver");
   clearInterval(bwRelogio);
-  var f=faltam||300, c=document.getElementById("bwQrc");
+  var f=faltam||60, c=document.getElementById("bwQrc");
   bwRelogio=setInterval(function(){
     f--; c.textContent=Math.floor(f/60)+":"+String(f%60).padStart(2,"0");
     if(f<=0){ clearInterval(bwRelogio);
       document.getElementById("bwQrcx").classList.remove("ver");
+      var cv=document.getElementById("bwQrCv"); if(cv) cv.style.display="none";
       document.getElementById("bwQrp").textContent=""; }
   },1000);
 }
@@ -4339,19 +4595,99 @@ async function bwQrCalado(bot){
 async function bwVerQR(bot,b){
   var rot=b.textContent; b.disabled=true; b.textContent="a pedir…";
   try{
+    /* 1 · já há um QR vivo? */
     var q=await bwRpc("bot_qr_ver",{p_bot:bot});
     if(q&&q.tem){ bwQrPor(q.qr,q.faltam); bwMsg("bwR"+bot,"QR no ecrã","Ok"); return; }
+
+    /* 2 · pedir ao telemóvel para procurar no log */
     await bwRpc("bot_pedir",{p_bot:bot,p_acao:"qr"});
-    bwMsg("bwR"+bot,"a pedir o QR ao telemóvel…","Esp");
-    for(var i=0;i<12;i++){
+    bwMsg("bwR"+bot,"a procurar QR no telemóvel…","Esp");
+    for(var i=0;i<7;i++){
       await bwDorme(3000);
       try{ q=await bwRpc("bot_qr_ver",{p_bot:bot}); }catch(x){}
       if(q&&q.tem){ bwQrPor(q.qr,q.faltam); bwMsg("bwR"+bot,"QR no ecrã","Ok"); return; }
     }
-    bwMsg("bwR"+bot,"sem QR — o bot deve estar ligado. Reinicia-o para gerar um novo.","Esp");
+
+    /* 3 · não há QR porque o bot está ligado — trocar de número? */
+    var nome = bot==="lacasa" ? "LaCasa" : bot==="wolf" ? "Cliente (Wolf)" : "Layra";
+    if(!confirm("O bot "+nome+" está ligado, por isso não há QR.\n\n"
+      +"Queres DESLIGÁ-LO do WhatsApp e gerar um QR novo, para ligar outro número?\n\n"
+      +"Enquanto não leres o QR, o bot fica sem WhatsApp.")){
+      bwMsg("bwR"+bot,"O bot continua ligado. Nada mudou.","Ok"); return;
+    }
+
+    b.textContent="a gerar…";
+    await bwRpc("bot_pedir",{p_bot:bot,p_acao:"novo_qr"});
+    bwMsg("bwR"+bot,"a desligar e a gerar QR novo… pode levar meio minuto","Esp");
+    bwPonto(bot,"off");
+    for(var j2=0;j2<25;j2++){
+      await bwDorme(3000);
+      try{ q=await bwRpc("bot_qr_ver",{p_bot:bot}); }catch(x){}
+      if(q&&q.tem){ bwQrPor(q.qr,q.faltam);
+        bwMsg("bwR"+bot,"QR novo — lê no WhatsApp do número que queres ligar","Ok");
+        return; }
+    }
+    bwMsg("bwR"+bot,"não apareceu QR. Vê o log do bot no telemóvel.","Mau");
   }catch(e){ bwMsg("bwR"+bot,"não deu: "+e.message,"Mau"); }
   finally{ b.disabled=false; b.textContent=rot; }
 }
+
+/* ─── procurar comprovativo na base ───────────────────────────────────
+   O ecrã das Ordens mostra o que é recente. Isto vai à base, que guarda
+   tudo: ordens mandadas aos telefones, notificações e movimentos das
+   carteiras. Serve para achar um pagamento de há semanas — sobretudo os
+   que ficaram sem número Vodacom no conteúdo e por isso nunca foram
+   entregues sozinhos. */
+function pqEscapar(t){ return String(t==null?"":t)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function pqDesenhar(linhas, vazio){
+  var cx=document.getElementById("pqRes");
+  if(!linhas || !linhas.length){ cx.textContent = vazio; return; }
+  var h="";
+  linhas.forEach(function(l){
+    var q=new Date(l.quando).toLocaleString("pt-PT",{day:"2-digit",month:"2-digit",
+          hour:"2-digit",minute:"2-digit"});
+    var quem=(l.quem||"").trim() || "sem nome";
+    var num=(l.numero||l.pagou_de||"").trim();
+    var val=(l.valor||"").trim();
+    var semNum = (l.tem_numero===false);
+    h+='<div class="pqLinha">'
+      +  '<div class="pqId">'+pqEscapar(l.comprovativo||"(sem ID)")+'</div>'
+      +  '<div class="pqMeta">'+q+'  ·  <b>'+pqEscapar(quem)+'</b>'
+      +    (num?'  ·  '+pqEscapar(num):'')
+      +    (val?'  ·  '+pqEscapar(val)+' MT':'')
+      +    (l.origem?'  ·  '+pqEscapar(l.origem):'')
+      +    (l.estado?'  ·  '+pqEscapar(l.estado):'')
+      +    (semNum?'  ·  <span class="pqSem">sem número Vodacom</span>':'')
+      +  '</div></div>';
+  });
+  cx.innerHTML=h;
+}
+
+async function pqProcurar(b){
+  var termo=(document.getElementById("pqTxt").value||"").trim();
+  if(!termo){ document.getElementById("pqRes").textContent="Escreve o que queres procurar."; return; }
+  var rot=b.textContent; b.disabled=true; b.textContent="a procurar…";
+  document.getElementById("pqRes").textContent="a procurar na base…";
+  try{
+    var r=await bwRpc("procurar_comprovativo",{p_termo:termo,p_limite:40});
+    pqDesenhar(r, "Não encontrei nada com isso.");
+  }catch(e){ document.getElementById("pqRes").textContent="não deu: "+e.message; }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+
+async function pqOrfaos(b){
+  var rot=b.textContent; b.disabled=true; b.textContent="a ver…";
+  document.getElementById("pqRes").textContent="a procurar os que ficaram sem número…";
+  try{
+    var r=await bwRpc("comprovativos_orfaos",{p_dias:7,p_limite:60});
+    (r||[]).forEach(function(l){ l.tem_numero=false; });
+    pqDesenhar(r, "Nenhum pagamento ficou sem número nos últimos 7 dias.");
+  }catch(e){ document.getElementById("pqRes").textContent="não deu: "+e.message; }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+
 async function bwRecolher(b){
   var d=document.getElementById("bwDia").value;
   if(!d){ bwMsg("bwRrec","escolhe o dia","Esp"); return; }
@@ -4374,6 +4710,218 @@ async function bwRecolher(b){
   }catch(e){ bwMsg("bwRrec","não deu: "+e.message,"Mau"); }
   finally{ b.disabled=false; b.textContent=rot; }
 }
+
+async function bwVerVigia(b){
+  var rot=b?b.textContent:''; if(b){b.disabled=true;b.textContent='a ver…';}
+  try{
+    var v=await bwRpc('vigia_estado');
+    var t=document.getElementById('bwVigiaTxt');
+    if(t) t.textContent=v.texto||'';
+    bwPonto('vigia', v.vivo?'on':'off');
+    bwMsg('bwRvigia', v.vivo
+      ? 'a correr · último sinal há '+v.ha_seg+'s'
+      : (v.nunca ? 'nunca deu sinal — arranca-o no Termux'
+                 : v.texto+' — o guardião levanta-o dentro de 1 min'),
+      v.vivo?'Ok':'Esp');
+  }catch(e){ bwMsg('bwRvigia','não deu: '+e.message,'Mau'); }
+  finally{ if(b){b.disabled=false;b.textContent=rot;} }
+}
+setTimeout(function(){ if(document.getElementById('bwPtvigia')) bwVerVigia(null); }, 2500);
+setInterval(function(){ if(document.getElementById('bwPtvigia')) bwVerVigia(null); }, 30000);
+
+/* ── interruptores da recolha automática ── */
+async function bwAutoVer(){
+  try{
+    var v=await bwRpc('recolha_auto_ver');
+    var l=document.getElementById('bwSwLigada'), f=document.getElementById('bwSwFila');
+    if(l){ l.className='bwSwPt'+(v.ligada?' on':''); l.textContent=v.ligada?'▶':'■'; }
+    if(f){ f.className='bwSwPt'+(v.fila?' on':'');   f.textContent=v.fila?'▶':'■'; }
+    var lt=document.getElementById('bwSwLigadaTx'), ft=document.getElementById('bwSwFilaTx');
+    if(lt) lt.textContent = v.ligada ? 'de 2 em 2 minutos, desde '+v.desde
+                                     : 'desligada — não apanha nada';
+    if(ft) ft.textContent = v.fila ? 'o que apanhar segue para a automação'
+                                   : 'só regista, esperas na fila e decides tu';
+    var pe=document.getElementById('bwAutoPe');
+    if(pe) pe.textContent='última recolha '+v.ultima+
+      (v.espera>0 ? ' · '+v.espera+' por fazer' : ' · nada à espera');
+  }catch(e){}
+}
+async function bwTrocar(campo){
+  try{
+    var v=await bwRpc('recolha_auto_ver');
+    var novo = campo==='ligada' ? !v.ligada : !v.fila;
+    await bwRpc('recolha_auto_por',{p_campo:campo,p_valor:novo});
+    await bwAutoVer();
+    bwMsg('bwRrec', campo==='ligada'
+      ? (novo?'Recolha automática LIGADA':'Recolha automática DESLIGADA')
+      : (novo?'O que for apanhado vai para a automação'
+             :'O que for apanhado fica só na fila — decides tu'), 'Ok');
+  }catch(e){ bwMsg('bwRrec','não deu: '+e.message,'Mau'); }
+}
+setTimeout(function(){ if(document.getElementById('bwAutoCx')) bwAutoVer(); }, 2600);
+setInterval(function(){ if(document.getElementById('bwAutoCx')) bwAutoVer(); }, 30000);
+
+/* reprocessar toda a fila, a partir do cabeçalho */
+async function reproTodos(b){
+  var rot=b.innerHTML; b.disabled=true; b.textContent='a mandar…';
+  try{
+    if(typeof negTodos==='function'){ negTodos(); aviso('Toda a fila reprocessada.','ok'); }
+    else { await rpc('cmd_criar',{p_dev:'principal',p_acao:'reprocessar',p_valor:''});
+           aviso('Pedido de reprocessar enviado ao Principal.','ok'); }
+  }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
+  finally{ setTimeout(function(){ b.disabled=false; b.innerHTML=rot; },1200); }
+}
+
+/* ═══ DETALHES DO LUCRO ═══
+   O #negTop reescreve-se sozinho, por isso o clique é apanhado no
+   documento (delegação) — assim nunca se perde num repintar.        */
+(function(){
+  function montar(){
+    var top=document.getElementById('negTop'),
+        tiras=document.getElementById('negTiras');
+    if(!top||!tiras) return false;
+
+    /* o cartão que já existe passa a ser o botão — nada de novo por cima */
+    var cx=document.getElementById('cxNeg');
+    if(cx){
+      cx.setAttribute('role','button');
+      cx.setAttribute('tabindex','0');
+      cx.setAttribute('aria-label','Ver o dia ao pormenor');
+      if(!cx.querySelector('.lucroToque')){
+        var d=document.createElement('span');
+        d.className='lucroToque'; d.textContent='ver detalhes';
+        cx.appendChild(d);
+      }
+    }
+
+    if(!document.getElementById('ndFolha')){
+      var v=document.createElement('div'); v.id='ndVeu'; v.onclick=ndFechar;
+      var f=document.createElement('div'); f.id='ndFolha';
+      f.setAttribute('role','dialog'); f.setAttribute('aria-modal','true');
+      f.innerHTML='<div class="ndPux" aria-hidden="true"></div>'
+        +'<h2 class="ndTit">O dia ao pormenor</h2>'
+        +'<p class="ndSub">entregas, comparação, clientes e movimento</p>'
+        +'<div id="ndCorpo"></div>'
+        +'<button class="ndFechar" type="button" onclick="ndFechar()">Fechar</button>';
+      document.body.appendChild(v); document.body.appendChild(f);
+    }
+    var corpo=document.getElementById('ndCorpo');
+    if(corpo && tiras.parentNode!==corpo){ corpo.appendChild(tiras); tiras.style.display='none'; }
+    ndAbasMontar();
+    return true;
+  }
+
+  /* delegação: funciona mesmo depois de o cartão se redesenhar */
+  document.addEventListener('click', function(e){
+    var alvo=e.target.closest ? e.target.closest('#cxNeg') : null;
+    if(alvo) ndAbrir();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var a=document.activeElement;
+    if(a && a.id==='cxNeg'){ e.preventDefault(); ndAbrir(); }
+  });
+
+  montar();
+  var t=setInterval(montar, 1500);           /* repõe se o painel repintar */
+  setTimeout(function(){ clearInterval(t); }, 60000);
+})();
+
+var _ndFoco=null;
+function ndAbrir(){
+  var v=document.getElementById('ndVeu'), f=document.getElementById('ndFolha');
+  if(!v||!f) return;
+  _ndFoco=document.activeElement;
+  v.setAttribute('data-ver',''); f.setAttribute('data-ver','');
+  document.body.style.overflow='hidden';
+}
+function ndFechar(){
+  var v=document.getElementById('ndVeu'), f=document.getElementById('ndFolha');
+  if(v) v.removeAttribute('data-ver');
+  if(f) f.removeAttribute('data-ver');
+  document.body.style.overflow='';
+  if(_ndFoco&&_ndFoco.focus) _ndFoco.focus();
+}
+document.addEventListener('keydown',function(e){
+  var f=document.getElementById('ndFolha');
+  if(e.key==='Escape'&&f&&f.hasAttribute('data-ver')) ndFechar();
+});
+
+/* ── as quatro tiras viram abas, com o número em grande ── */
+function ndAbasMontar(){
+  var tiras=document.getElementById('negTiras'), corpo=document.getElementById('ndCorpo');
+  if(!tiras||!corpo) return;
+  var det=tiras.querySelectorAll('details.nTira');
+  if(!det.length) return;
+
+  var curto={'Entregas':'Entreg','Comparação':'Ontem','Clientes':'Client','Movimento':'Movim'};
+  var abas='', pnls='';
+  for(var i=0;i<det.length;i++){
+    var t=det[i].querySelector('.t'), r=det[i].querySelector('.r'),
+        c=det[i].querySelector('.corpo');
+    var nome=t?t.textContent.trim():('#'+i);
+    var resumo=r?r.textContent.trim():'';
+    /* o número grande é a primeira parte do resumo */
+    var m=resumo.match(/([0-9][0-9\s.,]*[a-zA-Z0-9]*)/);
+    var grande=m?m[1].trim():resumo;
+    var sob=resumo.replace(grande,'').trim().replace(/^[·\-\s]+/,'') || nome.toLowerCase();
+
+    abas+='<button class="'+(i===0?'on':'')+'" onclick="ndAba(this,'+i+')">'
+        + (curto[nome]||nome.slice(0,6)) + '</button>';
+
+    var pares='';
+    if(c){
+      var ps=c.querySelectorAll('.nPar');
+      for(var j=0;j<ps.length;j++){
+        var k=ps[j].querySelector('.k'), v=ps[j].querySelector('.v');
+        pares+='<div class="ndPar"><span>'+(k?k.textContent:'')+'</span>'
+             + '<span'+(v&&v.style.color?' style="color:'+v.style.color+'"':'')+'>'
+             + (v?v.textContent:'')+'</span></div>';
+      }
+    }
+    pnls+='<div class="ndPnl'+(i===0?' on':'')+'">'
+        + '<div class="ndGrande">'+grande+'</div>'
+        + '<div class="ndSob">'+sob+'</div>'+pares+'</div>';
+  }
+  var cx=document.getElementById('ndAbasCx');
+  if(!cx){
+    cx=document.createElement('div'); cx.id='ndAbasCx';
+    corpo.insertBefore(cx, corpo.firstChild);
+  }
+  var novo='<div class="ndAbas">'+abas+'</div>'+pnls;
+  if(cx.innerHTML!==novo){
+    var ativa=0, b=cx.querySelector('.ndAbas button.on');
+    if(b) ativa=Array.prototype.indexOf.call(cx.querySelectorAll('.ndAbas button'), b);
+    cx.innerHTML=novo;
+    if(ativa>0){ var bs=cx.querySelectorAll('.ndAbas button'); if(bs[ativa]) ndAba(bs[ativa],ativa); }
+  }
+}
+function ndAba(b,i){
+  var cx=document.getElementById('ndAbasCx'); if(!cx) return;
+  cx.querySelectorAll('.ndAbas button').forEach(function(x){ x.classList.remove('on'); });
+  b.classList.add('on');
+  cx.querySelectorAll('.ndPnl').forEach(function(p,j){ p.classList.toggle('on', j===i); });
+}
+
+/* ── estado verdadeiro dos bots: ligado, à espera de QR, ou parado ── */
+async function bwEstadoVer(){
+  try{
+    var e=await bwRpc('bots_estado');
+    ['lacasa','layra','wolf'].forEach(function(b){
+      var d=e[b]; if(!d) return;
+      var pt=document.getElementById('bwPt'+b);
+      var tx=document.getElementById('bwEst'+b);
+      var cls = d.qrPendente ? 'qr' : (d.ligado ? 'on' : 'off');
+      if(pt) pt.className='bwPt '+cls;
+      if(tx){ tx.textContent=d.estado||''; tx.className='bwEstado '+cls; }
+      if(d.qrPendente){
+        bwMsg('bwR'+b,'Este bot está SEM WhatsApp — à espera que leias o QR.','Esp');
+      }
+    });
+  }catch(x){}
+}
+setTimeout(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 2800);
+setInterval(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 20000);
 </script>
 
 
