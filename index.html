@@ -2476,19 +2476,92 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
 .bwEstado.on{color:var(--menta)} .bwEstado.qr{color:var(--mel)} .bwEstado.off{color:var(--sangue)}
 
 /* ═══ cartões de contagem ═══════════════════════════════════════════
-   Ficam iguais aos botões AMBAS / NUVEM / SMS: cantos bem redondos,
-   fundo um tom acima da página e nenhum contorno. É essa a "borda" que
-   se vê neles — a forma, não uma linha à volta.
-   Vai no fim do ficheiro de propósito: há outras regras de .tile mais
-   abaixo, e algumas usam !important. */
+   Forma dos botões AMBAS / NUVEM / SMS: cantos de 18px, fundo um tom
+   acima da página, sem contorno e sem brilho.
+   Cada um leva a sua imagem por baixo, esbatida o suficiente para os
+   números continuarem a ler-se de relance — que é para o que servem.
+   Vai no fim do ficheiro de propósito: há regras de .tile mais acima
+   que usam !important. */
+:root{
+  --bgFilaAbstrato:url('data:image/webp;base64,UklGRrYEAABXRUJQVlA4IKoEAAAQIwCdASqgAJ8APslapU2ntyupKlSLwuAZCWIYil8I8lsZk5vX/gz+Dznotn+Y0+4d56Lzt/UA/yXUAc/L7KX7h+kBhlz/cPwoNwKphJnxz3CjnEN5rYWsQLpPmOx02DCoR/+ijBf9qJqBzqsNGBJjT6fq7gCOco7V6HTLh4kY6v/dlAe4TxpvQ0c/ytXDGgYJb6Hm0j1+dhH6UCKYn7JKI7n3/+IUfHDOW9lthhqNWoBb04HEAYgQJAEy3tF7NzcEZN8E1OyOXOoXiYUqaX5ksARa+841gRPx1F5D8oxpvd4pdTV1aOV0IMOIEvgFA0knMi9Yl/OXo31AHxQ3CqLjC9pswJLXQYoXozl53q4Exa2lavg8tfeS0DnPFQ22s5DAAP70guOdaTcPlkJ/OBY9mVOyiinmr2Na1NQKs1lUkS24xl0ZwnNXJSrxtFsk/0+X8UzsHa4uVK/NhBSN8BDg5rtzZKwMfu5uncljSws++UDReYDTvnUmHD09ePgsBgWfBnOFYYxb3e2p1goID9RseShbzVETXbqduZ+PFXbne0NFoGwkgg2GyVHfOP1P09LwXOf+dCshMWTvla6ng8+ASfMUmXuIvdacHugV6lmK8L9FcY2ysbDmJ0gwv7sMBvEgZVMN68qL6/kElwHIPGaKO/2oX0rGeXTY9QJddxfDpXyZ2rGCOmlG2EC0oLnFur1Md/W7DwIrmtOabERWvZtSJF48MrjCecyi0lkpS+H2s4QyusggzalX1/aMVq2ICvUp3P0LsLEbEHWAGl6DwbSG4BcN2ATZ6qXFwJiTdL3VwZs+hDQJcnQqNBS1pybK6AXZ5YlzlLyX3HoaSm4QXSawdlpxAbVh6CwvyPqsIO7hQRLSOMdDSQUePYU4nFTKYN/Yz1qKuSZT9BaFoNkZ4hah8DBuIl2Yn9hpOCn7iDJyrmKMuzlEKNRkWpUvvEzZ5AEmvFUtPaTnxl0ZhMuwq/jYiqQxyxKN0yRH4er84KvvM4blBceLcnIfV3VedxqyY4N+xJuGaOCDIU1xNwZWQaPgMAg5urzS7z4cbYS9p3THt5MxztI195k6YkEqlRccWwvrTp8qS5brBfW3+3czq63yE0bHbYiSGFpjEwpQqfVM36RGB9jjMI9DVUPYmceRM6GejNM2Z00ltopz57SvxgSBDl/++pepy/Zim2YRNx07cQ2pR+aqU9H6R/XXEhpcq/ikotz7EepWBH7qmMoXXGSbqaVfDOPLE+crbsQXC2iPOAXLu2Qqpd1q/2s4hckGKk7EOw6wEIzLek95w2WibBSEi+OsndgPfOnThXR02qJ/BiPCLikhLz9l+MY0h3m7uD876lBgIfj/N6pAk1qCfk6torwBSLrjGPH8SM/LvtY01iHLUf8eWl5r3DfboHNzAFd1ujmxxwK2sTe1lWvgPJaKdlq+EbAwS/h2xIMwZQUifsxg0/BvO2P2+yJa3pKxrQQQMU4TXrJJ8wKeoPWlm2epCxgZxaM8pJXce1lBtLqxJGP1TEAGXFap59gBi2IFZRvZql8aAO5nygxY6bxG+vEui0sylhoS/236pzaF/lBHSPgOAyBmIt7oAAA=')}
+
 #filaContas .tile,#lyContas .tile{
   border:0 !important;
   border-radius:18px !important;
   box-shadow:none !important;
   background:#2E343C !important;
-  padding:15px 9px 13px !important}
+  padding:15px 9px 13px !important;
+  position:relative;overflow:hidden;isolation:isolate}
+
+/* a imagem vive numa camada por baixo do texto */
+#filaContas .tile::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background-position:center;background-repeat:no-repeat;background-size:cover;
+  opacity:.30}
+#filaContas .tile:nth-child(1)::before{background-image:var(--icMpesa);background-size:contain;opacity:.22}
+#filaContas .tile:nth-child(2)::before{background-image:var(--icEmola);background-size:contain;opacity:.22}
+#filaContas .tile:nth-child(3)::before,
+#filaContas .tile:nth-child(4)::before{background-image:var(--bgFilaAbstrato)}
+
+/* os logos já apareciam num canto; com o fundo ficariam a dobrar */
+#filaContas .tile:nth-child(1)::after,
+#filaContas .tile:nth-child(2)::after{display:none !important}
+
+/* um véu escuro por cima da imagem, para os números não perderem contraste */
+#filaContas .tile:nth-child(1),#filaContas .tile:nth-child(2),
+#filaContas .tile:nth-child(3),#filaContas .tile:nth-child(4){
+  background-image:linear-gradient(rgba(27,31,36,.55),rgba(27,31,36,.72)) !important}
+
 html.claro #filaContas .tile,html.claro #lyContas .tile{
   background:#f1f4f7 !important}
+html.claro #filaContas .tile:nth-child(1),html.claro #filaContas .tile:nth-child(2),
+html.claro #filaContas .tile:nth-child(3),html.claro #filaContas .tile:nth-child(4){
+  background-image:linear-gradient(rgba(255,255,255,.72),rgba(255,255,255,.82)) !important}
+html.claro #filaContas .tile::before{opacity:.20}
+
+/* ═══ cartão do lucro — só o anel e o "ver detalhes" ═══════════════
+   Saem os três números da esquerda (vendas / MT / na fila) e a linha
+   "x de y entregues · z%" por baixo do anel. Fica o lucro e o atalho.
+   As bolhas são desenhadas em CSS, na paleta do eFootball, e não a
+   imagem original — essa tem fotos de jogadores e marca da Konami, que
+   não pode ir para dentro do teu painel. Assim também pesam zero.
+   Ficam só na metade esquerda, longe do círculo do lucro. */
+#negTop .nTres{display:none !important}
+#cxNeg .anelBox::after{content:"" !important;display:none !important}
+#negTop{justify-content:flex-end !important;padding-right:4px}
+
+#cxNeg{
+  background-image:
+    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.55) 0 13px, transparent 14px),
+    radial-gradient(circle at 14% 68%, rgba(230,77,255,.42) 0 20px, transparent 21px),
+    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.34) 0 8px,  transparent 9px),
+    radial-gradient(circle at 22% 26%, rgba(77,107,255,.38) 0 10px, transparent 11px),
+    radial-gradient(circle at 29% 62%, rgba(77,216,255,.30) 0 16px, transparent 17px),
+    radial-gradient(circle at 36% 18%, rgba(255,255,255,.26) 0 6px,  transparent 7px),
+    radial-gradient(circle at 19% 44%, rgba(230,77,255,.24) 0 7px,  transparent 8px),
+    radial-gradient(circle at 41% 74%, rgba(77,216,255,.22) 0 11px, transparent 12px),
+    radial-gradient(circle at 9% 48%,  rgba(77,107,255,.26) 0 5px,  transparent 6px),
+    radial-gradient(circle at 33% 40%, rgba(255,255,255,.18) 0 4px,  transparent 5px),
+    radial-gradient(circle at 45% 34%, rgba(230,77,255,.16) 0 9px,  transparent 10px),
+    radial-gradient(circle at 25% 84%, rgba(77,216,255,.20) 0 6px,  transparent 7px),
+    linear-gradient(135deg,#2fd9a4 0%,#22c9a2 45%,#12b083 100%) !important}
+
+html.claro #cxNeg{
+  background-image:
+    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.42) 0 13px, transparent 14px),
+    radial-gradient(circle at 14% 68%, rgba(255,120,240,.34) 0 20px, transparent 21px),
+    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.30) 0 8px,  transparent 9px),
+    radial-gradient(circle at 22% 26%, rgba(120,150,255,.32) 0 10px, transparent 11px),
+    radial-gradient(circle at 29% 62%, rgba(77,216,255,.24) 0 16px, transparent 17px),
+    radial-gradient(circle at 36% 18%, rgba(255,255,255,.22) 0 6px,  transparent 7px),
+    radial-gradient(circle at 19% 44%, rgba(255,120,240,.20) 0 7px,  transparent 8px),
+    radial-gradient(circle at 41% 74%, rgba(77,216,255,.18) 0 11px, transparent 12px),
+    radial-gradient(circle at 9% 48%,  rgba(120,150,255,.22) 0 5px,  transparent 6px),
+    radial-gradient(circle at 33% 40%, rgba(255,255,255,.16) 0 4px,  transparent 5px),
+    radial-gradient(circle at 45% 34%, rgba(255,120,240,.14) 0 9px,  transparent 10px),
+    radial-gradient(circle at 25% 84%, rgba(77,216,255,.16) 0 6px,  transparent 7px),
+    linear-gradient(150deg,#e60000,#b30000) !important}
+
 </style>
 <script>(function(){try{var t=localStorage.getItem('wolf_tema');
 if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();</script>
