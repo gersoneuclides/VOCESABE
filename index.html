@@ -2493,31 +2493,28 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
   padding:15px 9px 13px !important;
   position:relative;overflow:hidden;isolation:isolate}
 
-/* a imagem vive numa camada por baixo do texto */
+/* A imagem ocupa o cartão inteiro. Antes estava a 22% e ainda levava um
+   véu escuro por cima: dava um fantasma que não se via. Agora vê-se, e o
+   contraste dos números garante-se com sombra no texto, não apagando a
+   foto. */
 #filaContas .tile::before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background-position:center;background-repeat:no-repeat;background-size:cover;
-  opacity:.30}
-#filaContas .tile:nth-child(1)::before{background-image:var(--icMpesa);background-size:contain;opacity:.22}
-#filaContas .tile:nth-child(2)::before{background-image:var(--icEmola);background-size:contain;opacity:.22}
+  background-position:center;background-repeat:no-repeat;background-size:cover}
+#filaContas .tile:nth-child(1)::before{background-image:var(--icMpesa);
+  background-size:74% auto;opacity:.85}
+#filaContas .tile:nth-child(2)::before{background-image:var(--icEmola);
+  background-size:74% auto;opacity:.85}
 #filaContas .tile:nth-child(3)::before,
-#filaContas .tile:nth-child(4)::before{background-image:var(--bgFilaAbstrato)}
+#filaContas .tile:nth-child(4)::before{background-image:var(--bgFilaAbstrato);opacity:.92}
 
-/* os logos já apareciam num canto; com o fundo ficariam a dobrar */
+/* os logos apareciam num cantinho; com a foto no fundo ficavam a dobrar */
 #filaContas .tile:nth-child(1)::after,
 #filaContas .tile:nth-child(2)::after{display:none !important}
 
-/* um véu escuro por cima da imagem, para os números não perderem contraste */
-#filaContas .tile:nth-child(1),#filaContas .tile:nth-child(2),
-#filaContas .tile:nth-child(3),#filaContas .tile:nth-child(4){
-  background-image:linear-gradient(rgba(27,31,36,.55),rgba(27,31,36,.72)) !important}
-
-html.claro #filaContas .tile,html.claro #lyContas .tile{
-  background:#f1f4f7 !important}
-html.claro #filaContas .tile:nth-child(1),html.claro #filaContas .tile:nth-child(2),
-html.claro #filaContas .tile:nth-child(3),html.claro #filaContas .tile:nth-child(4){
-  background-image:linear-gradient(rgba(255,255,255,.72),rgba(255,255,255,.82)) !important}
-html.claro #filaContas .tile::before{opacity:.20}
+/* os números por cima da foto */
+#filaContas .tile b{text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 12px rgba(0,0,0,.7) !important}
+#filaContas .tile span{color:#e8ecf0 !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.9) !important}
 
 /* ═══ cartão do lucro — só o anel e o "ver detalhes" ═══════════════
    Saem os três números da esquerda (vendas / MT / na fila) e a linha
@@ -2530,38 +2527,167 @@ html.claro #filaContas .tile::before{opacity:.20}
 #cxNeg .anelBox::after{content:"" !important;display:none !important}
 #negTop{justify-content:flex-end !important;padding-right:4px}
 
-#cxNeg{
-  background-image:
-    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.55) 0 13px, transparent 14px),
-    radial-gradient(circle at 14% 68%, rgba(230,77,255,.42) 0 20px, transparent 21px),
-    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.34) 0 8px,  transparent 9px),
-    radial-gradient(circle at 22% 26%, rgba(77,107,255,.38) 0 10px, transparent 11px),
-    radial-gradient(circle at 29% 62%, rgba(77,216,255,.30) 0 16px, transparent 17px),
-    radial-gradient(circle at 36% 18%, rgba(255,255,255,.26) 0 6px,  transparent 7px),
-    radial-gradient(circle at 19% 44%, rgba(230,77,255,.24) 0 7px,  transparent 8px),
-    radial-gradient(circle at 41% 74%, rgba(77,216,255,.22) 0 11px, transparent 12px),
-    radial-gradient(circle at 9% 48%,  rgba(77,107,255,.26) 0 5px,  transparent 6px),
-    radial-gradient(circle at 33% 40%, rgba(255,255,255,.18) 0 4px,  transparent 5px),
-    radial-gradient(circle at 45% 34%, rgba(230,77,255,.16) 0 9px,  transparent 10px),
-    radial-gradient(circle at 25% 84%, rgba(77,216,255,.20) 0 6px,  transparent 7px),
-    linear-gradient(135deg,#2fd9a4 0%,#22c9a2 45%,#12b083 100%) !important}
 
-html.claro #cxNeg{
-  background-image:
-    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.42) 0 13px, transparent 14px),
-    radial-gradient(circle at 14% 68%, rgba(255,120,240,.34) 0 20px, transparent 21px),
-    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.30) 0 8px,  transparent 9px),
-    radial-gradient(circle at 22% 26%, rgba(120,150,255,.32) 0 10px, transparent 11px),
-    radial-gradient(circle at 29% 62%, rgba(77,216,255,.24) 0 16px, transparent 17px),
-    radial-gradient(circle at 36% 18%, rgba(255,255,255,.22) 0 6px,  transparent 7px),
-    radial-gradient(circle at 19% 44%, rgba(255,120,240,.20) 0 7px,  transparent 8px),
-    radial-gradient(circle at 41% 74%, rgba(77,216,255,.18) 0 11px, transparent 12px),
-    radial-gradient(circle at 9% 48%,  rgba(120,150,255,.22) 0 5px,  transparent 6px),
-    radial-gradient(circle at 33% 40%, rgba(255,255,255,.16) 0 4px,  transparent 5px),
-    radial-gradient(circle at 45% 34%, rgba(255,120,240,.14) 0 9px,  transparent 10px),
-    radial-gradient(circle at 25% 84%, rgba(77,216,255,.16) 0 6px,  transparent 7px),
-    linear-gradient(150deg,#e60000,#b30000) !important}
 
+
+
+
+/* barra de acções da pesquisa de comprovativos */
+.pqAcoes{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.pqNum{flex:0 1 160px;min-width:130px;padding:8px 11px;border-radius:11px;
+  border:1px solid var(--borda);background:rgba(255,255,255,.05);
+  color:var(--texto);font:600 13px var(--mono);letter-spacing:.02em}
+html.claro .pqNum{background:#fff;border-color:#e6e8ec;color:#14161d}
+.pqBt{padding:8px 15px;border-radius:11px;border:0;cursor:pointer;
+  background:rgba(47,217,164,.16);color:var(--menta);
+  font:700 11px var(--titulo);letter-spacing:.14em;text-transform:uppercase}
+.pqBt:disabled{opacity:.55;cursor:default}
+.pqAviso{font:500 11.5px var(--corpo);color:var(--fumo)}
+.pqAviso.bom{color:var(--menta)} .pqAviso.mau{color:var(--erro,#ff5c63)}
+.pqSemAcao{margin-top:8px;font:500 11.5px var(--corpo);color:var(--fumo);opacity:.75}
+.pqOk{color:var(--menta);font-weight:600}
+
+
+
+/* ─── consultas: a cor é um aviso de repetição, não decoração ───────
+   Número consultado uma só vez fica como sempre esteve. Só quando há
+   repetição é que aparece cor — verde na última, azul nas anteriores. */
+.consl.consNova{box-shadow:inset 0 0 0 2px rgba(47,217,164,.85) !important;
+  background:rgba(47,217,164,.10) !important}
+.consl.consNova .num,.consl.consNova .cop{color:#3dffa4 !important}
+.consl.consVelha{box-shadow:inset 0 0 0 2px rgba(120,190,255,.55) !important;
+  background:rgba(120,190,255,.06) !important}
+.consl.consVelha .num,.consl.consVelha .cop{color:#9fd0ff !important}
+.consRep{font:700 9.5px var(--titulo);letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;flex:none;white-space:nowrap}
+.consNova .consRep{background:rgba(47,217,164,.20);color:#3dffa4}
+.consVelha .consRep{background:rgba(120,190,255,.16);color:#9fd0ff}
+html.claro .consl.consNova{box-shadow:inset 0 0 0 2px rgba(0,135,90,.75) !important;
+  background:rgba(0,135,90,.08) !important}
+html.claro .consl.consNova .num,html.claro .consl.consNova .cop{color:#00875a !important}
+html.claro .consl.consVelha{box-shadow:inset 0 0 0 2px rgba(31,111,191,.45) !important;
+  background:rgba(31,111,191,.05) !important}
+html.claro .consNova .consRep{background:rgba(0,135,90,.14);color:#00875a}
+html.claro .consVelha .consRep{background:rgba(31,111,191,.12);color:#1f6fbf}
+
+/* campo do destino na folha das Ordens */
+.ordDestCx{margin:12px 0 4px}
+.ordDestCx label{display:block;font:700 10px var(--titulo);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fumo);margin-bottom:7px}
+.ordDestLinha{display:flex;gap:8px}
+#ordDest{flex:1;min-width:0;padding:12px 14px;border-radius:14px;border:1px solid var(--borda);
+  background:rgba(255,255,255,.05);color:var(--texto);
+  font:800 17px var(--mono);letter-spacing:.06em}
+html.claro #ordDest{background:#fff;border-color:#e6e8ec;color:#14161d}
+#ordDestBt{flex:none;white-space:nowrap}
+.ordDestCx small{display:block;margin-top:7px;font:400 11.5px var(--corpo);
+  color:var(--fumo);line-height:1.45}
+
+/* quando falta o destino, o campo pede-o em vez de sugerir o pagador */
+.pqAcoes.pqFalta .pqNum{border-color:rgba(255,176,32,.65);background:rgba(255,176,32,.07)}
+.pqAcoes.pqFalta .pqNum::placeholder{color:rgba(255,176,32,.85)}
+.pqNota{flex-basis:100%;margin-top:5px;font:400 11px var(--corpo);
+  color:rgba(255,176,32,.9);line-height:1.4}
+
+/* ═══ linhas da fila — opção 4 escolhida ════════════════════════════
+   Contorno azul, cantos redondos e um halo por baixo. Substitui os
+   cantinhos vermelho/violeta que existiam: eram dois traços soltos em
+   diagonal, e a linha nunca chegava a parecer uma peça inteira. */
+.f7r{border:1px solid rgba(47,125,255,.55) !important;
+  border-radius:14px !important;
+  background:rgba(47,125,255,.05) !important;
+  box-shadow:0 6px 18px -10px #2f7dff !important;
+  margin-bottom:9px !important}
+.f7r::before,.f7r::after{display:none !important}
+html.claro .f7r{background:rgba(47,125,255,.055) !important;
+  border-color:rgba(47,125,255,.42) !important;
+  box-shadow:0 4px 14px -10px #2f7dff !important}
+
+/* ═══ botões da fila — opção 3 escolhida ════════════════════════════
+   Cheios e com cor por função. Os dois não são igualmente perigosos:
+   o ▶ faz avançar, o ↻ reenvia e apaga o guardado — repetir por engano
+   custa megas. Verde para seguir, âmbar para repetir, e um pouco
+   maiores, que 26px é pequeno para o polegar. */
+.f7par button{width:30px !important;height:30px !important;border-radius:9px !important;
+  background:rgba(47,217,164,.92) !important;color:#08281f !important;
+  border:0 !important;font-size:13px !important;line-height:1 !important;
+  display:inline-flex !important;align-items:center;justify-content:center;
+  margin-left:5px;cursor:pointer}
+.f7par button.rev{background:rgba(255,176,32,.92) !important;color:#2a1c00 !important}
+.f7par button:active{transform:scale(.93)}
+.f7par button.rev:hover{color:#2a1c00 !important}
+
+/* ═══ fila — lista densa, opção 7, com detalhe por toque ════════════
+   Cabe quase o dobro dos registos no ecrã. O que sai da linha aparece
+   ao tocar: um toque abre, outro fecha. */
+.f7r{padding:7px 9px !important;border-radius:11px !important;
+  margin-bottom:4px !important;gap:7px !important;
+  flex-wrap:wrap !important;cursor:pointer}
+.f7marca{width:17px !important;height:17px !important;border-radius:5px !important}
+.f7esq{display:flex !important;align-items:baseline;flex:1.6 !important;min-width:0;gap:7px}
+.f7nome{font-size:11.5px !important;flex:none;max-width:44%}
+.f7sub{margin:0 !important;display:inline-flex !important}
+.f7id{font-size:9.5px !important} .f7num{font-size:9.5px !important}
+.f7mb{font-size:11px !important} .f7mt{font-size:9px !important}
+.f7tempos{min-width:84px !important}
+.f7t{line-height:1.28 !important}
+.f7par button{width:25px !important;height:25px !important;font-size:11px !important;
+  border-radius:7px !important;margin-left:4px}
+
+/* o painel: fechado não ocupa nada */
+.f7det{display:none;flex:1 1 100%;margin-top:7px;padding-top:8px;
+  border-top:1px dashed rgba(47,125,255,.45)}
+.f7r.aberta .f7det{display:block}
+.f7r.aberta{background:rgba(47,125,255,.10) !important;
+  border-color:rgba(47,125,255,.85) !important}
+.f7dl{display:flex;gap:10px;align-items:baseline;padding:3px 0}
+.f7dr{flex:none;width:96px;font:600 9px var(--titulo);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--fumo);opacity:.85}
+.f7dv{font:600 11.5px var(--mono);color:var(--texto);word-break:break-all}
+.f7dv.bom{color:var(--relva)} .f7dv.mau{color:var(--erro,#ff5c63)}
+.f7dbt{display:flex;gap:7px;margin-top:9px}
+.f7dbt button{flex:1;padding:8px 6px;border-radius:9px;border:1px solid rgba(47,125,255,.5);
+  background:rgba(47,125,255,.10);color:#8fbaff;cursor:pointer;
+  font:700 9.5px var(--titulo);letter-spacing:.13em;text-transform:uppercase}
+html.claro .f7dbt button{background:rgba(47,125,255,.07);color:#1f5fd0}
+html.claro .f7dv{color:#14161d}
+
+/* ═══ cascata do dia, no Dashboard ══════════════════════════════════ */
+.cascTopo{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:9px;margin-bottom:12px}
+.cascTopo>div{background:rgba(255,255,255,.04);border-radius:16px;padding:13px 11px;text-align:center}
+.cascTopo b{display:block;font:800 22px/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cascTot b{color:#3dffa4} .cascCnt b{color:var(--texto)}
+.cascTopo span{display:block;font:600 9.5px var(--corpo);color:var(--fumo);margin-top:5px}
+html.claro .cascTopo>div{background:rgba(16,19,28,.05)}
+
+.cascLista{display:flex;flex-direction:column;gap:4px}
+.cascP{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:11px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);min-width:0}
+html.claro .cascP{background:rgba(16,19,28,.035)}
+.cascM{width:15px;height:15px;border-radius:4px;flex:none}
+.cascP.mpesa .cascM{background:#ff2b3d} .cascP.emola .cascM{background:#ff9a1f}
+.cascN{font:700 11.5px var(--corpo);flex:1.3;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.cascNum{font:700 10px var(--mono);color:var(--fumo);flex:1;min-width:0}
+.cascMb{font:800 10.5px var(--mono);color:#3dffa4;width:56px;text-align:right}
+.cascMt{font:800 11.5px var(--mono);width:34px;text-align:right}
+.cascMt::after{content:" MT";font-size:8px;font-weight:600;color:var(--fumo)}
+.cascH{font:600 9.5px var(--mono);color:var(--fumo);width:36px;text-align:right}
+.cascE{font:700 8px var(--titulo);letter-spacing:.11em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;flex:none}
+.cascP.ok .cascE{background:rgba(47,217,164,.16);color:#3dffa4}
+.cascP.espera .cascE{background:rgba(63,157,255,.16);color:#3f9dff}
+.cascP.mau .cascE{background:rgba(255,176,32,.16);color:#ffb020}
+.cascP.mau{border-color:rgba(255,176,32,.4)}
+
+/* a queda: cada peça entra de cima, com um ressalto no fim */
+.cascP.cai{opacity:0;animation:cascCai .46s cubic-bezier(.22,1.4,.36,1) forwards}
+@keyframes cascCai{
+  0%  {opacity:0;transform:translateY(-38px) scale(.94)}
+  70% {opacity:1;transform:translateY(3px)  scale(1.01)}
+  100%{opacity:1;transform:translateY(0)    scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .cascP.cai{opacity:1;animation:none}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('wolf_tema');
 if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();</script>
@@ -2606,8 +2732,8 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
 <div id="negTiras"></div>
 <div class="sepR"><b>Dispositivos</b><i></i></div>
 <div id="negFones"></div>
-<div class="sepR"><b>Fila</b><i></i></div>
-<div id="negFila" class="fumo">a carregar…</div>
+<div class="sepR"><b>Hoje</b><i></i></div>
+<div id="negCascata"></div>
 </section>
 
   <section id="s-fila">
@@ -3019,6 +3145,7 @@ function pintarFila(it,onde,lim){
 let CONS={};
 async function carregarConsultas(){ try{pintarConsultasB();}catch(e){} try{pintarVel();}catch(e){}
  try{CONS=await rpc('consultas_lista',{p_n:60});}catch(e){CONS={};}
+ try{consMarcarFrescas((CONS&&CONS.dias)||[]);}catch(e){}
  const cx=document.getElementById('consBox'); if(!cx) return;
  const rz=document.getElementById('consResumo');
  if(rz) rz.textContent=(CONS.total_hoje||0)+' hoje · '+(CONS.total||0)+' no total';
@@ -3057,9 +3184,9 @@ function pintarHistorico(dias){
   const mostra=it.slice(0,Math.max(0,LIM-vistos));
   vistos+=mostra.length;
   corpo+=`<div class="consdia">${seg(d.dia)}</div>`+mostra.map(i=>
-   `<div class="consl" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
+   `<div class="consl ${consClasse(i)}" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
     <span class="h">${seg(i.h)}</span><span class="num">${seg(i.numero)}</span>
-    <span class="quem">${i.titular?seg(i.titular):'sem titular'}</span>
+    <span class="quem">${i.titular?seg(i.titular):'sem titular'}</span>${consSelo(i)}
     <span class="tag">${seg(i.dev)} · sim ${seg(i.sim)}</span><span class="cop">⧉</span></div>`).join('');
  });
  cx.innerHTML = corpo || '<div class="fumo" style="padding:14px;text-align:center">nada encontrado</div>';
@@ -3070,6 +3197,70 @@ function pintarHistorico(dias){
   else mais.style.display='none';
  }
 }
+/* ─── avisar quando o mesmo número já foi consultado ─────────────────
+   O objectivo aqui não é enfeitar: é o Euclides perceber, de relance,
+   que está a consultar um número que já consultou — pode ser um cartão
+   já usado, ou distracção.
+   Por isso a cor só aparece quando há repetição. Um número consultado
+   uma única vez fica neutro; se tudo tivesse cor, a cor deixava de
+   avisar seja o que for.
+     verde      → a consulta mais recente de um número repetido
+     azul claro → as consultas anteriores desse mesmo número
+     neutro     → número consultado uma só vez (a maioria)
+   O contador diz de que vez se trata, e o intervalo mostra quão
+   depressa se repetiu — "12 min depois" é o sinal de distracção. */
+function consChave(i){ return String(i.numero||'').replace(/\D/g,''); }
+function _consMin(h){
+  var m = String(h||'').match(/(\d{1,2}):(\d{2})/);
+  return m ? (+m[1])*60 + (+m[2]) : null;
+}
+function consMarcarFrescas(dias){
+  var porNum = {};
+  // os dias vêm do mais recente para o mais antigo, e dentro do dia
+  // as horas também; percorro ao contrário para ficar cronológico
+  var lista = [];
+  (dias||[]).forEach(function(d, di){
+    (d.itens||[]).forEach(function(i, ii){
+      i.__dia = d.dia; i.__pos = di + ':' + ii;
+      lista.push(i);
+    });
+  });
+  lista.slice().reverse().forEach(function(i){
+    var k = consChave(i);
+    if(!k) return;
+    (porNum[k] = porNum[k] || []).push(i);
+  });
+  Object.keys(porNum).forEach(function(k){
+    var seq = porNum[k];
+    seq.forEach(function(i, n){
+      i.__vezes = seq.length;
+      i.__ordem = n + 1;
+      i.__ultima = (n === seq.length - 1);
+      i.__gap = null;
+      if(n > 0){
+        var ant = seq[n-1];
+        if(ant.__dia === i.__dia){
+          var a = _consMin(ant.h), b = _consMin(i.h);
+          if(a !== null && b !== null && b >= a) i.__gap = b - a;
+        }
+      }
+    });
+  });
+}
+function consClasse(i){
+  if(!i || !i.__vezes || i.__vezes < 2) return 'consUnica';
+  return i.__ultima ? 'consNova' : 'consVelha';
+}
+function consSelo(i){
+  if(!i || !i.__vezes || i.__vezes < 2) return '';
+  var t = i.__ordem + 'ª de ' + i.__vezes;
+  if(i.__gap !== null && i.__gap !== undefined){
+    t += i.__gap < 60 ? ' · ' + i.__gap + ' min depois'
+                      : ' · ' + Math.floor(i.__gap/60) + 'h' + String(i.__gap%60).padStart(2,'0') + ' depois';
+  }
+  return '<span class="consRep">' + t + '</span>';
+}
+
 function _consAntigo(){ const dias=[];
  return dias.map(d=>`<div class="consdia">${seg(d.dia)}</div>`+
    (d.itens||[]).map(i=>`<div class="consl" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
@@ -3238,9 +3429,73 @@ function pintarFila7(){
    '<span class="f7par">'+
      '<button title="Mudar estado" onclick="f7avanca(\''+seg(x.refid)+'\',\''+x.st+'\')">&#9654;</button>'+
      '<button class="rev" title="Reenviar — apaga o guardado" onclick="f7reenvia(\''+seg(x.refid)+'\',\''+seg(x.num)+'\')">&#10227;</button>'+
-   '</span></div>').join('')
-  : '<div class="fumo" style="font-size:12px;padding:18px 2px;text-align:center">nenhum aqui</div>';}
-function f7aba(s){F7ABA=s;pintarFila7();if(typeof negFila==='function'&&document.getElementById('negFila'))negFila();}
+   '</span>'+
+   f7detalhe(x)+'</div>').join('')
+  : '<div class="fumo" style="font-size:12px;padding:18px 2px;text-align:center">nenhum aqui</div>';
+ try{ f7reabrir(); }catch(e){} }
+/* ─── detalhe por toque ──────────────────────────────────────────────
+   A lista ficou densa de propósito: numa fila de vinte pessoas o que
+   importa é ver tudo de uma vez. O que não cabe na linha não se perde —
+   um toque na borda abre o resto.
+   Os refids abertos ficam guardados no F7ABERTOS: a fila repinta-se
+   sozinha de poucos em poucos segundos, e sem isto o painel fechava-se
+   na cara de quem estava a lê-lo. */
+var F7ABERTOS = {};
+
+function f7lin(rot, val, cor){
+  if(val===undefined||val===null||val==='') return '';
+  return '<div class="f7dl"><span class="f7dr">'+rot+'</span>'+
+         '<span class="f7dv'+(cor?' '+cor:'')+'">'+seg(String(val))+'</span></div>';
+}
+
+function f7detalhe(x){
+  var esperou = (x.t_pago && x.t_entregue) ? f7dur(x.t_entregue-x.t_pago) : null;
+  var canal = x.canal==='mpesa' ? 'M-Pesa' : (x.canal==='emola' ? 'e-Mola' : (x.canal||''));
+  var estado = x.st==='enviado' ? 'entregue' : (x.st==='enviar' ? 'a enviar' : 'na fila');
+  return '<div class="f7det">'+
+    f7lin('comprovativo', x.refid)+
+    f7lin('pagou de', x.pagou)+
+    f7lin('recebe', x.num)+
+    f7lin('nome', x.nome||'sem nome')+
+    f7lin('pacote', (x.mb?x.mb+' MB':'')+(x.mt?'  ·  '+x.mt+' MT':''))+
+    f7lin('via', canal)+
+    f7lin('estado', estado, x.st==='enviado'?'bom':(x.falhou?'mau':''))+
+    f7lin('pago às', (x.d?x.d+' ':'')+(x.t_pago?f7hh(x.t_pago):(x.h||'')))+
+    f7lin('entregue às', x.t_entregue?((x.d_entregue?x.d_entregue+' ':'')+f7hh(x.t_entregue)):null, 'bom')+
+    f7lin('demorou', esperou)+
+    (x.falhou?'<div class="f7dl"><span class="f7dr">aviso</span><span class="f7dv mau">passou do tempo sem confirmação</span></div>':'')+
+    (x.exacto===false?'<div class="f7dl"><span class="f7dr">nota</span><span class="f7dv">casado pelo número e megas, não pelo ID</span></div>':'')+
+    '<div class="f7dbt"><button onclick="f7copiar(event,\''+seg(x.refid)+'\')">copiar ID</button>'+
+    '<button onclick="f7copiar(event,\''+seg(x.num)+'\')">copiar número</button></div>'+
+    '</div>';
+}
+
+function f7copiar(ev, t){
+  ev.stopPropagation();
+  if(typeof copiar==='function') copiar(t); else aviso('Copiado: '+t,'ok');
+}
+
+/* um toque na linha abre ou fecha. Os botões da direita não contam:
+   quem carrega no ▶ quer avançar, não quer abrir nada. */
+document.addEventListener('click', function(ev){
+  var r = ev.target.closest && ev.target.closest('.f7r');
+  if(!r) return;
+  if(ev.target.closest('.f7par') || ev.target.closest('.f7dbt')) return;
+  var id = r.querySelector('.f7id');
+  id = id ? id.textContent.trim() : '';
+  var abriu = r.classList.toggle('aberta');
+  if(id){ if(abriu) F7ABERTOS[id]=1; else delete F7ABERTOS[id]; }
+});
+
+function f7reabrir(){
+  document.querySelectorAll('.f7r').forEach(function(r){
+    var id = r.querySelector('.f7id');
+    id = id ? id.textContent.trim() : '';
+    if(id && F7ABERTOS[id]) r.classList.add('aberta');
+  });
+}
+
+function f7aba(s){F7ABA=s;pintarFila7();if(typeof cascataPintar==='function')cascataPintar();}
 async function f7avanca(id,st){
  const prox=st==='fila'?'enviar':(st==='enviar'?'enviado':'fila');
  try{
@@ -3649,7 +3904,12 @@ function negPintar(){
 
  negFila();
 }
-function negFila(){
+/* O Dashboard copiava a secção inteira da Fila — cartões, lista e a
+   FILA WHATSAPP — o que dava duas vezes a mesma coisa na mesma app.
+   Passou a mostrar a cascata do dia. A função fica, vazia, porque é
+   chamada de vários sítios. */
+function negFila(){ return; }
+function negFilaAntigo(){
  var c=document.getElementById('negFila'); if(!c) return;
  var real=document.getElementById('s-fila');
  if(!real){ c.textContent='fila indisponivel'; return; }
@@ -4044,6 +4304,12 @@ setTimeout(negCiclo, 900);
       '<div class="f7abas" id="ordDev">'+
       '<button data-d="redmi8"><span class="r">Redmi 8</span></button>'+
       '<button data-d="redmi13"><span class="r">Redmi 13c</span></button></div>'+
+      '<div class="ordDestCx"><label for="ordDest">Número de destino</label>'+
+      '<div class="ordDestLinha"><input id="ordDest" inputmode="numeric" maxlength="9" '+
+      'placeholder="8XXXXXXXX" autocomplete="off">'+
+      '<button class="acao" id="ordDestBt">Só o destino</button></div>'+
+      '<small>Muda o número que <b>recebe</b> os megas, dentro do conteúdo. '+
+      'Não toca no número de quem transferiu.</small></div>'+
       '<div class="acoes"><button class="acao" id="ordId">Trocar o último dígito do ID</button>'+
       '<button class="acao forte" id="ordEnviar">Corrigir e enviar</button></div>'+
       '<p class="folhaP" style="margin-top:12px">Corrige o que falta — normalmente o número '+
@@ -4061,6 +4327,25 @@ setTimeout(negCiclo, 900);
       t.value=n;
       if(typeof aviso==='function') aviso('ID trocado','ok');
     });
+    document.getElementById('ordDestBt').addEventListener('click',async function(){
+      var d=(document.getElementById('ordDest').value||'').replace(/\D/g,'');
+      if(d.length!==9){ aviso('O destino tem de ter 9 algarismos','bad'); return; }
+      if(!ORD_REFID){ aviso('Não sei de que comprovativo se trata','bad'); return; }
+      if(!confirm('Mudar o destino para '+d+' e reenviar?\n\nO comprovativo é o mesmo — fica corrigido, não se cria outro.')) return;
+      this.disabled=true;
+      try{
+        var r=String(await rpc('fila_corrigir_destino',
+              {p_refid:ORD_REFID,p_destino:d,p_dev:ORD_DEV})||'');
+        if(r.indexOf('OK')===0){
+          aviso(r.replace(/^OK:\s*/,'Destino: '),'ok');
+          fecharOrdem();
+          if(typeof carregar==='function') carregar();
+          if(typeof carregarFila7==='function') carregarFila7();
+        }else aviso(explicaErro(r),'bad');
+      }catch(e){ aviso('Falhou: '+(e&&e.message?e.message:e),'bad'); }
+      this.disabled=false;
+    });
+
     document.getElementById('ordEnviar').addEventListener('click',async function(){
       var v=document.getElementById('ordTxt').value.trim();
       if(!v){ aviso('Não há nada para enviar','bad'); return; }
@@ -4081,11 +4366,24 @@ setTimeout(negCiclo, 900);
     });
   }
 
+  /* Lê o destino tal como o destino_do() da base: primeiro "Conteudo:",
+     depois "na conta", e só em último caso o número de quem pagou. Se as
+     duas leituras divergissem, o painel mostrava um número e o telefone
+     entregava a outro. */
+  function destinoDe(t){
+    t=String(t||'');
+    var m=t.match(/Conteudo:\s*(\d{9})/); if(m) return m[1];
+    m=t.match(/na conta\s*(\d{9})/);      if(m) return m[1];
+    m=t.match(/(\d{9})/);                  return m?m[1]:'';
+  }
+
   function abrirOrdem(dev,txt){
     montarFolhaOrdem();
     ORD_DEV=(dev==='redmi13'||dev==='redmi8')?dev:'redmi8';
     pintarOrdDev();
     ORD_REFID=refidDe(txt);
+    var cd=document.getElementById('ordDest');
+    if(cd) cd.value=destinoDe(txt);
     var t=document.getElementById('ordTxt'); if(t) t.value=txt;
     document.body.classList.add('comOrdem');
   }
@@ -4714,6 +5012,59 @@ async function bwVerQR(bot,b){
 function pqEscapar(t){ return String(t==null?"":t)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+/* ─── agir sobre um resultado da pesquisa ────────────────────────────
+   A pesquisa encontrava o pagamento de há meses mas não deixava mexer
+   nele. Agora cada linha traz o destino editável e dois botões:
+   reenviar como está, ou corrigir o número e reenviar.
+   O refid vem da própria pesquisa; sem ele não há nada a fazer, e a
+   barra não aparece (é o caso das entregas que chegaram sem ID). */
+function pqAccoes(l){
+  var ref=(l.refid||l.comprovativo||"").trim();
+  if(!ref) return '<div class="pqSemAcao">sem ID — não dá para reenviar por aqui</div>';
+  var dest=(l.destino||"").trim();
+  var falta=(l.falta_destino===true)||!dest;
+  var id=ref.replace(/[^A-Za-z0-9]/g,"");
+  return '<div class="pqAcoes'+(falta?' pqFalta':'')+'">'
+    +  '<input class="pqNum" id="pqN_'+id+'" value="'+pqEscapar(falta?"":dest)+'" '
+    +        'inputmode="numeric" maxlength="9" '
+    +        'placeholder="'+(falta?"falta o número — escreve":"número de destino")+'">'
+    +  '<button class="pqBt" onclick="pqReenviar(this,\''+pqEscapar(ref)+'\',\''+id+'\')">'
+    +      (falta?'preencher e enviar':'reenviar')+'</button>'
+    +  '<span class="pqAviso" id="pqM_'+id+'"></span>'
+    + (falta?'<div class="pqNota">o cliente não escreveu o destino — escreve-o tu, '
+            +'e ele passa a fazer parte do comprovativo</div>':'')
+    + '</div>';
+}
+
+async function pqReenviar(b, ref, id){
+  var campo=document.getElementById("pqN_"+id);
+  var msg=document.getElementById("pqM_"+id);
+  var dest=(campo && campo.value || "").replace(/\D/g,"");
+  if(dest.length < 9){ if(msg){msg.textContent="número curto"; msg.className="pqAviso mau";} return; }
+  if(!confirm("Reenviar "+ref+" para "+dest+" ?")) return;
+  var rot=b.textContent; b.disabled=true; b.textContent="a enviar…";
+  if(msg){ msg.textContent=""; msg.className="pqAviso"; }
+  try{
+    /* fila_corrigir_destino escreve o número dentro do conteúdo do
+       comprovativo (a seguir a "Conteudo:" ou "na conta") e só depois
+       reenvia. É o mesmo ID: corrige-se o que existe, não se cria outro.
+       O fila_reenviar simples não servia aqui — mandava para um número
+       solto e deixava o comprovativo com o destino errado lá dentro. */
+    var r=await bwRpc("fila_corrigir_destino",{p_refid:ref, p_destino:dest, p_dev:null});
+    var t=(typeof r==="string"?r:JSON.stringify(r))||"";
+    var bom=/^OK/i.test(t);
+    if(msg){
+      msg.textContent = bom ? t.replace(/^OK:\s*/,"").slice(0,64) :
+        (/NAO_ENCONTRADO/i.test(t)  ? "não achei o pagamento" :
+         /NUMERO_INVALIDO/i.test(t) ? "número tem de ter 9 algarismos" :
+         /SEM_ALTERACAO/i.test(t)   ? "já estava esse número" :
+         /FALTA_REFID/i.test(t)     ? "sem ID" : t.slice(0,60));
+      msg.className = "pqAviso " + (bom ? "bom" : "mau");
+    }
+  }catch(e){ if(msg){ msg.textContent="não deu: "+e.message.slice(0,50); msg.className="pqAviso mau"; } }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+
 function pqDesenhar(linhas, vazio){
   var cx=document.getElementById("pqRes");
   if(!linhas || !linhas.length){ cx.textContent = vazio; return; }
@@ -4733,7 +5084,11 @@ function pqDesenhar(linhas, vazio){
       +    (l.origem?'  ·  '+pqEscapar(l.origem):'')
       +    (l.estado?'  ·  '+pqEscapar(l.estado):'')
       +    (semNum?'  ·  <span class="pqSem">sem número Vodacom</span>':'')
-      +  '</div></div>';
+      +    (l.entregue===true?'  ·  <span class="pqOk">entregue</span>':'')
+      +    (l.entregue===false&&l.refid?'  ·  <span class="pqSem">por entregar</span>':'')
+      +  '</div>'
+      +  pqAccoes(l)
+      +  '</div>';
   });
   cx.innerHTML=h;
 }
@@ -4995,6 +5350,137 @@ async function bwEstadoVer(){
 }
 setTimeout(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 2800);
 setInterval(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 20000);
+
+/* ─── bolhas do eFootball no cartão do lucro ─────────────────────────
+   Foram tentadas primeiro por background-image e não apareceram, mesmo
+   com a regra a ganhar a cascata. Agora são elementos a sério com
+   estilo em linha: se o JS corre, elas existem — não há folha de
+   estilo que as apague.
+   Cores tiradas da imagem que o Euclides enviou: magenta #f000f0,
+   ciano #00f0f0, azul #000090 e branco.
+   Ficam só na metade esquerda, longe do anel do lucro à direita. */
+var BOLHAS = [
+  [6,22,15,"240,0,240",.80],   [14,68,23,"0,240,240",.62],
+  [3,78,10,"255,255,255",.55], [22,26,12,"0,0,144",.70],
+  [29,62,18,"240,0,240",.48],  [36,18,8,"0,240,240",.58],
+  [19,44,9,"255,255,255",.42], [41,74,13,"0,0,144",.46],
+  [9,48,6,"0,240,240",.66],    [33,40,5,"255,255,255",.40],
+  [45,34,10,"240,0,240",.34],  [25,84,7,"0,240,240",.44],
+  [11,12,5,"240,0,240",.50],   [38,54,6,"0,0,144",.38]
+];
+function porBolhas(){
+  var cx = document.getElementById("cxNeg");
+  if(!cx || cx.querySelector(".bolhaEF")) return;
+  var capa = document.createElement("div");
+  capa.className = "bolhasEF";
+  capa.style.cssText = "position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;border-radius:inherit";
+  BOLHAS.forEach(function(b){
+    var d = document.createElement("span");
+    d.className = "bolhaEF";
+    d.style.cssText = "position:absolute;border-radius:50%;pointer-events:none"
+      + ";left:" + b[0] + "%;top:" + b[1] + "%"
+      + ";width:" + (b[2]*2) + "px;height:" + (b[2]*2) + "px"
+      + ";margin-left:" + (-b[2]) + "px;margin-top:" + (-b[2]) + "px"
+      + ";background:rgba(" + b[3] + "," + b[4] + ")";
+    capa.appendChild(d);
+  });
+  if(getComputedStyle(cx).position === "static") cx.style.position = "relative";
+  cx.insertBefore(capa, cx.firstChild);
+  // o conteúdo tem de ficar por cima da camada das bolhas
+  Array.prototype.forEach.call(cx.children, function(el){
+    if(el === capa) return;
+    if(getComputedStyle(el).position === "static") el.style.position = "relative";
+    el.style.zIndex = "2";
+  });
+}
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", porBolhas);
+else porBolhas();
+setTimeout(porBolhas, 1200);
+
+
+/* ═══ cascata do dia ═══════════════════════════════════════════════
+   Cada pagamento de hoje cai do topo, um a seguir ao outro, e o total
+   sobe à medida que cada um aterra. Desde as 00h até ao segundo em que
+   se abriu o Dashboard.
+   Só corre a primeira vez que se abre — repetir a queda a cada
+   actualização seria bonito uma vez e irritante à décima. Depois disso
+   as peças novas entram sozinhas, sem refazer as antigas. */
+var CASC_JAVIU = false, CASC_VISTOS = {};
+
+function cascHora(ep){ var d=new Date(ep*1000);
+  return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+
+function cascPeca(x, i, animar){
+  var canal = x.canal==='emola' ? 'emola' : 'mpesa';
+  var st = x.st==='enviado' ? 'ok' : (x.falhou ? 'mau' : 'espera');
+  var rot = st==='ok' ? 'entregue' : (st==='mau' ? 'por entregar' : 'a caminho');
+  return '<div class="cascP '+canal+' '+st+(animar?' cai':'')+'"'+
+         (animar?' style="animation-delay:'+(i*85)+'ms"':'')+'>'+
+    '<span class="cascM"></span>'+
+    '<span class="cascN">'+seg(x.nome||'sem nome')+'</span>'+
+    '<span class="cascNum">'+seg(x.num||'')+'</span>'+
+    '<span class="cascMb">'+seg(x.mb||0)+' MB</span>'+
+    '<span class="cascMt">'+seg(x.mt||0)+'</span>'+
+    '<span class="cascH">'+(x.t_pago?cascHora(x.t_pago):seg(x.h||''))+'</span>'+
+    '<span class="cascE">'+rot+'</span>'+
+  '</div>';
+}
+
+function cascContar(el, ate, ms){
+  var de = 0, t0 = null;
+  function passo(t){
+    if(!t0) t0 = t;
+    var p = Math.min(1, (t-t0)/ms);
+    var v = Math.round(de + (ate-de) * (1-Math.pow(1-p,3)));
+    el.textContent = v.toLocaleString('pt-PT');
+    if(p<1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+function cascataPintar(){
+  var cx = document.getElementById('negCascata'); if(!cx) return;
+  var itens = (NEGQ && NEGQ.itens) ? NEGQ.itens.slice() : [];
+  // do mais antigo para o mais recente: cai pela ordem em que o dia aconteceu
+  itens.sort(function(a,b){ return (a.t_pago||0) - (b.t_pago||0); });
+
+  var total = 0, entregues = 0;
+  itens.forEach(function(x){ total += Number(x.mt)||0; if(x.st==='enviado') entregues++; });
+
+  var lento = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var animar = !CASC_JAVIU && !lento;
+
+  if(!CASC_JAVIU){
+    cx.innerHTML =
+      '<div class="cascTopo"><div class="cascTot"><b id="cascMt">0</b><span>MT hoje</span></div>'+
+      '<div class="cascCnt"><b id="cascQt">0</b><span>pagamentos</span></div>'+
+      '<div class="cascCnt"><b id="cascEnt">0</b><span>entregues</span></div></div>'+
+      '<div class="cascLista" id="cascLista"></div>';
+    var lista = document.getElementById('cascLista');
+    lista.innerHTML = itens.map(function(x,i){ CASC_VISTOS[x.refid]=1; return cascPeca(x,i,animar); }).join('');
+    var ms = animar ? Math.max(700, itens.length*85) : 320;
+    cascContar(document.getElementById('cascMt'),  total, ms);
+    cascContar(document.getElementById('cascQt'),  itens.length, ms);
+    cascContar(document.getElementById('cascEnt'), entregues, ms);
+    CASC_JAVIU = true;
+    return;
+  }
+
+  // já viu a queda: só entram os que ainda não estavam
+  var lista = document.getElementById('cascLista'); if(!lista) { CASC_JAVIU=false; return cascataPintar(); }
+  var novos = itens.filter(function(x){ return !CASC_VISTOS[x.refid]; });
+  novos.forEach(function(x,i){
+    CASC_VISTOS[x.refid]=1;
+    var d = document.createElement('div');
+    d.innerHTML = cascPeca(x, i, !lento);
+    lista.appendChild(d.firstChild);
+  });
+  var mt=document.getElementById('cascMt'), qt=document.getElementById('cascQt'), en=document.getElementById('cascEnt');
+  if(mt) cascContar(mt, total, 500);
+  if(qt) cascContar(qt, itens.length, 500);
+  if(en) cascContar(en, entregues, 500);
+}
+
 </script>
 
 
