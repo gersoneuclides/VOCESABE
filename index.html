@@ -5061,8 +5061,8 @@ document.addEventListener('click', function(ev){
   +   '</div>'
   +   '<div class="bwCampo"><label>Dia</label><input type="date" id="bwDia">'
   +     '<div class="bwDuo">'
-  +       '<div><label>Das</label><input type="time" id="bwH1" value="09:00"></div>'
-  +       '<div><label>Até</label><input type="time" id="bwH2" value="18:00"></div></div></div>'
+  +       '<div><label>Das</label><input type="time" id="bwH1" value="00:00"></div>'
+  +       '<div><label>Até</label><input type="time" id="bwH2" value="23:59"></div></div></div>'
   +   '<label class="bwChk"><input type="checkbox" id="bwFila" checked>'
   +     '<span>Pôr na fila de entrega<small>sem isto só mostra, não despacha</small></span></label>'
   +   '<div class="acoes"><button class="acao forte" onclick="bwRecolher(this)">Recolher agora</button></div>'
@@ -5135,6 +5135,11 @@ document.addEventListener('click', function(ev){
     var d = new Date(), z = function(n){ return String(n).padStart(2,'0'); };
     var e2 = document.getElementById('bwDia');
     if (e2) e2.value = d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+    /* a recolha cobre o dia todo até agora: das 00:00 à hora a que se abre.
+       Antes vinha 09:00-18:00 fixo e deixava de fora as vendas da noite. */
+    var h1 = document.getElementById('bwH1'), h2 = document.getElementById('bwH2');
+    if (h1) h1.value = '00:00';
+    if (h2) h2.value = z(d.getHours())+':'+z(d.getMinutes());
     return true;
   }
 
