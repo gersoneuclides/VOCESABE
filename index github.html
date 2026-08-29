@@ -3310,6 +3310,21 @@ function ligado(x){const s=String(x==null?'':x).trim().toLowerCase();
 function alternar(n){tocados[n]=1; ativos[n]=!ativos[n];const el=document.getElementById('A'+n);if(el)el.classList.toggle('lig',ativos[n]);}
 
 function desenhar(){
+ /* 1) nunca repintar por baixo de quem esta a escrever numa das caixas
+    2) so repintar quando os dados mudaram mesmo; se o ecra estiver vazio
+       repinta na mesma, para nada ficar em branco por engano */
+ try{
+  var _f=document.activeElement;
+  if(_f&&(_f.tagName==='INPUT'||_f.tagName==='TEXTAREA')&&_f.closest&&
+     _f.closest('#tbPrecos,#tbNums,#dinheiro,#sistemaBox,#lucroBox,#fones,#principal')) return;
+  var _ass=JSON.stringify([D&&D.telefones,D&&D.resumo_painel,D&&D.helice,D&&D.bot,
+                           D&&D.ativo,D&&D.lucro,D&&D.tarifas,D&&D.numeros,
+                           typeof F!=='undefined'&&F&&F.contagens]);
+  var _ch=document.getElementById('chips'), _ti=document.getElementById('tiles');
+  var _cheio=_ch&&_ch.innerHTML&&_ti&&_ti.innerHTML;
+  if(_cheio&&desenhar._ass===_ass) return;
+  desenhar._ass=_ass;
+ }catch(e){}
  const t=D.telefones||{},rp=D.resumo_painel||{},h=D.helice||{},b=D.bot||{},at=(D.ativo||{}).ativo,L=D.lucro||{};
  const c=F.contagens||{},meta=n0(L.MetaDia)||META_PADRAO;
  document.getElementById('chips').innerHTML=
@@ -3392,6 +3407,13 @@ function canalDe(i){
  return x.startsWith('PP')?'emola':'mpesa';}  /* o M-Pesa muda de prefixo (DG->DH->...): so o e-Mola e reconhecido, o resto e M-Pesa */
 function pintarFila(it,onde,lim){
  const el=document.getElementById(onde); if(!el) return;
+ /* mesma regra: so repinta se houver diferenca */
+ try{
+  var _a=onde+'|'+lim+'|'+JSON.stringify((it||[]).slice(0,lim));
+  pintarFila._a=pintarFila._a||{};
+  if(pintarFila._a[onde]===_a&&el.innerHTML) return;
+  pintarFila._a[onde]=_a;
+ }catch(e){}
  if(!it.length){el.innerHTML='<span class="fumo">sem movimento</span>'; return;}
  el.innerHTML='<div class="zebra">'+it.slice(0,lim).map(i=>{
   const pag=i.tipo==='pagamento', c=pag?canalDe(i):'entrega';
@@ -3402,7 +3424,7 @@ function pintarFila(it,onde,lim){
     <span class="q">${quem}</span><span class="selo">${selo}</span></div>`}).join('')+'</div>';}
 let CONS={};
 async function carregarConsultas(){ try{pintarConsultasB();}catch(e){} try{pintarVel();}catch(e){}
- try{CONS=await rpc('consultas_lista',{p_n:60});}catch(e){CONS={};}
+ try{var _r=await rpc('consultas_lista',{p_n:60}); if(_r) CONS=_r;}catch(e){/* fica o ultimo bom */}
  try{consMarcarFrescas((CONS&&CONS.dias)||[]);}catch(e){}
  const cx=document.getElementById('consBox'); if(!cx) return;
  const rz=document.getElementById('consResumo');
@@ -3547,7 +3569,7 @@ async function carregarFila(n){
     +' · '+(c.ult_hora||0)+' na última hora · '+(c.ult_15min||0)+' nos 15 min';
   pintarFila(it,'ultimos',6); if(secao==='s-fila') carregarFila7();
   if(secao==='s-consultas') carregarConsultas();
- }catch(e){const el=document.getElementById('filaLista'); if(el) el.innerHTML='<span class="fumo">sem ligação</span>';}}
+ }catch(e){const fh=document.getElementById('filaHora'); if(fh) fh.textContent='sem ligação — a tentar outra vez';}}
 /* ===== memória local: abre cheio antes de a rede responder ===== */
 const MEM='wolf_mem_v1';
 function memGuardar(){
@@ -3583,8 +3605,16 @@ setTimeout(function(){
     try{pintarBalao();}catch(e){}  try{pintarVia();}catch(e){} } }catch(e){}
 },60);
 async function carregar(){
- try{D=await rpc('painel_resumo'); try{memGuardar();}catch(e){} await carregarFila(secao==='s-fila'?30:6); comEstado(desenhar);}
- catch(e){document.getElementById('chips').innerHTML='<span class="pill off">sem ligação</span>';}
+ /* Cada passo cai por si. Antes, se o painel_resumo falhasse, a fila e o
+    desenho do ecra nem chegavam a correr, e os chips eram substituidos
+    por "sem ligacao" -- outro pisca-pisca de 5 em 5 segundos. */
+ var _ok=true;
+ try{D=await rpc('painel_resumo'); try{memGuardar();}catch(e){}}catch(e){_ok=false;}
+ try{await carregarFila(secao==='s-fila'?30:6);}catch(e){}
+ try{comEstado(desenhar);}catch(e){}
+ if(!_ok){var _ch=document.getElementById('chips');
+   /* so escreve se nao houver nada: o ultimo bom vale mais que um aviso */
+   if(_ch&&!_ch.innerHTML) _ch.innerHTML='<span class="pill off">sem ligação</span>';}
  /* A cascata e o pulso pertencem ao Dashboard e é este o ciclo que corre
     sempre — o negCarregar() só é chamado depois de acções (guardar saldo,
     zerar contadores), e por isso nada aparecia ao abrir a aplicação. */
@@ -3662,14 +3692,29 @@ pintarBotaoTema();
 
 let G7={contas:{},itens:[]},F7T=null; if(G7&&G7.agora) F7DELTA=G7.agora-Math.floor(Date.now()/1000);
 async function carregarFila7(){
+ /* A lista nao se apaga por causa da rede: se o pedido falhar, fica o
+    ultimo bom. Antes um pedido falhado punha G7 vazio e a fila
+    desaparecia ate ao ciclo seguinte -- era o piscar.
+    O ferrolho evita que os dois ciclos (2 s e 5 s) peçam ao mesmo tempo. */
+ if(carregarFila7._ocupado) return;
+ carregarFila7._ocupado=true;
  try{const q=((document.getElementById('filaBusca')||{}).value||'').trim();
-  G7=await rpc('fila_lista',{p_n:60,p_q:q||null});
- }catch(e){G7={contas:{},itens:[]};}
+  const r=await rpc('fila_lista',{p_n:60,p_q:q||null});
+  if(r&&r.itens) G7=r;
+ }catch(e){/* fica o que ja la estava */}
+ finally{carregarFila7._ocupado=false;}
  pintarFila7();}
+carregarFila7._ocupado=false;
 let F7ABA='fila';
 function pintarFila7(){
  const cx=document.getElementById('filaLista'); if(!cx) return;
  const it=G7.itens||[], c=G7.contas||{};
+ /* so se repinta quando ha diferenca: sem isto o innerHTML das 130 linhas
+    era reescrito de 2 em 2 segundos, e isso pisca no telemovel */
+ var _ass=F7ABA+'|'+JSON.stringify(c)+'|'+it.map(function(x){
+   return x.refid+x.st+(x.falhou?1:0)+(x.t_entregue||'');}).join(',');
+ if(pintarFila7._ass===_ass && cx.innerHTML) return;
+ pintarFila7._ass=_ass;
  const ROT={fila:'Na fila',enviar:'A enviar',enviado:'Enviado'};
  const ORD=['fila','enviar','enviado'];
  let ab=document.getElementById('filaAbas');
@@ -4130,8 +4175,8 @@ function nDur(s){s=Math.max(0,Math.round(s||0));
 function nMb(v){var n=n0(v);return n>=1024?(n/1024).toFixed(n%1024?1:0)+' GB':Math.round(n)+' MB';}
 
 async function negCarregar(){
- try{ NEG=await rpc('negocio_resumo',{}); }catch(e){ NEG=null; }
- try{ NEGQ=await rpc('fila_lista',{p_n:40,p_q:null}); }catch(e){ NEGQ=null; }
+ try{ var _r=await rpc('negocio_resumo',{}); if(_r) NEG=_r; }catch(e){/* fica o ultimo bom */}
+ try{ var _q=await rpc('fila_lista',{p_n:40,p_q:null}); if(_q&&_q.itens) NEGQ=_q; }catch(e){/* fica o ultimo bom */}
  negPintar();
  /* A cascata e o pulso vivem no Dashboard, por isso é aqui que são
     pintados. Estavam presos ao f7aba — a função que troca os separadores
@@ -4141,7 +4186,7 @@ async function negCarregar(){
  try{ if(typeof pulsoPintar==='function') await pulsoPintar(); }catch(e){ console.log('pulso:',e.message); }
 }
 function negPintar(){
- if(!NEG){var t=document.getElementById('negTop'); if(t)t.textContent='sem ligação';return;}
+ if(!NEG){var t=document.getElementById('negTop'); if(t&&!t.innerHTML)t.textContent='sem ligação';return;}
  var d=NEG.dia||{}, en=NEG.entrega||{}, on=NEG.ontem||{}, me=NEG.mes||{}, tp=NEG.top||{};
  var meta=n0((D.lucro||{}).MetaDia)||2000, luc=n0(d.lucro), pct=meta>0?Math.min(luc/meta,1):0;
  var C=2*Math.PI*50;
@@ -4805,12 +4850,12 @@ function lyDur(s){s=Math.max(0,Math.round(s||0));
 function lyMb(v){var n=n0(v);return n>=1024?(n/1024).toFixed(n%1024?1:0)+' GB':Math.round(n)+' MB';}
 async function lyCarregar(){
  var b=document.getElementById('lyBusca');
- try{ LYD=await rpc('layra_fila',{p_n:60,p_q:(b&&b.value||'').trim()||null}); }catch(e){ LYD=null; }
+ try{ var _l=await rpc('layra_fila',{p_n:60,p_q:(b&&b.value||'').trim()||null}); if(_l) LYD=_l; }catch(e){/* fica o ultimo bom */}
  lyPintar();
 }
 function lyPintar(){
  var cx=document.getElementById('lyLista'); if(!cx) return;
- if(!LYD){ cx.textContent='sem ligação'; return; }
+ if(!LYD){ if(!cx.innerHTML) cx.textContent='sem ligação'; return; }
  var c=LYD.contas||{}, t=LYD.totais||{};
  var tl=document.getElementById('lyContas');
  if(tl) tl.innerHTML=
@@ -5774,7 +5819,7 @@ async function cascataPintar(){
   /* Não depende de quem a chamou ter carregado o NEGQ: se estiver vazio,
      vai ela própria buscar a fila. */
   if(!NEGQ || !NEGQ.itens){
-    try{ NEGQ = await rpc('fila_lista',{p_n:60,p_q:null}); }catch(e){ NEGQ = null; }
+    try{ var _q2 = await rpc('fila_lista',{p_n:60,p_q:null}); if(_q2&&_q2.itens) NEGQ = _q2; }catch(e){/* fica o ultimo bom */}
   }
   var itens = (NEGQ && NEGQ.itens) ? NEGQ.itens.slice() : [];
   // do mais antigo para o mais recente: cai pela ordem em que o dia aconteceu
@@ -6131,7 +6176,7 @@ async function pulsoPintar(){
   var entrou = (PULSO_SEC !== 's-resumo') || !cx.firstChild;
   PULSO_SEC = sec;
 
-  try{ PULSO = await rpc('negocio_vivo', {}); }catch(e){ PULSO = null; }
+  try{ var _p = await rpc('negocio_vivo', {}); if(_p) PULSO = _p; }catch(e){/* fica o ultimo bom */}
   if(!PULSO){ if(!cx.innerHTML) cx.innerHTML = '<div class="pvVazio">sem ligação</div>'; return; }
 
   if(!entrou){ pulsoAtualizar(PULSO); return; }      /* já estava aberto: só os números */
