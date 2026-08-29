@@ -3565,8 +3565,11 @@ async function carregarFila(n){
     ['entregas hoje',c.ent_hoje,'var(--relva)'],['MT hoje',c.mt_hoje,'#fff']]
    .map(x=>`<div class="tile"><b style="color:${x[2]}">${x[1]||0}</b><span>${x[0]}</span></div>`).join('');
   const fh=document.getElementById('filaHora');
+  /* a nuvem manda ultima_hora/ultimos_15; o painel lia ult_hora/ult_15min
+     e por isso mostrava sempre zero */
   if(fh) fh.textContent=(it.length?'último às '+it[0].h:'sem movimento')
-    +' · '+(c.ult_hora||0)+' na última hora · '+(c.ult_15min||0)+' nos 15 min';
+    +' · '+(c.ult_hora||c.ultima_hora||0)+' na última hora · '
+    +(c.ult_15min||c.ultimos_15||0)+' nos 15 min';
   pintarFila(it,'ultimos',6); if(secao==='s-fila') carregarFila7();
   if(secao==='s-consultas') carregarConsultas();
  }catch(e){const fh=document.getElementById('filaHora'); if(fh) fh.textContent='sem ligação — a tentar outra vez';}}
@@ -4328,7 +4331,12 @@ var NEGV=0;
 async function negCiclo(){
  if(!document.getElementById('negTop')) return;
  /* a MESMA carga que a aba da Fila usa: um so pedido para as duas */
- if(typeof carregarFila7==='function'){ try{ await carregarFila7(); }catch(e){} }
+ /* A fila e o pedido mais pesado do painel (~46 KB). No ecra da Fila o
+    ciclo de 5 s ja a vai buscar; aqui basta de 6 em 6 s, e so quando se
+    esta noutro ecra. Antes saia de 2 em 2 segundos, sempre. */
+ if(typeof carregarFila7==='function'
+    && (typeof secao==='undefined' || secao!=='s-fila')
+    && NEGV%3===0){ try{ await carregarFila7(); }catch(e){} }
  if(NEGV%2===0){ try{ NEG=await rpc('negocio_resumo',{}); }catch(e){} }
  if(NEGV%5===0){ if(typeof carregarFila==='function'){ try{ await carregarFila(6); }catch(e){} } }
  NEGV++; negPintar();
