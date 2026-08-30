@@ -3704,6 +3704,10 @@ async function carregarFila7(){
  try{const q=((document.getElementById('filaBusca')||{}).value||'').trim();
   const r=await rpc('fila_lista',{p_n:60,p_q:q||null});
   if(r&&r.itens) G7=r;
+  /* a nuvem manda a sua hora em r.agora; sem isto os tempos eram
+     contados pelo relogio do telemovel e, se estivesse adiantado,
+     davam negativo e ficavam presos em 0s */
+  if(r&&r.agora) F7DELTA=Number(r.agora)-Math.floor(Date.now()/1000);
  }catch(e){/* fica o que ja la estava */}
  finally{carregarFila7._ocupado=false;}
  pintarFila7();}
@@ -3924,12 +3928,21 @@ function f7temposCurto(x){
           (x.t_entregue&&x.t_pago ? '<span class="f7tval fraco">'+f7dur(x.t_entregue-x.t_pago)+'</span>' : '');
  }
  if(x.st==='enviar'){
-   return '<span class="pip"></span><span class="f7tval correndo" '+
-          (x.t_despacho?'data-vivo="'+x.t_despacho+'"':'')+'>'+
-          (x.t_despacho ? f7dur(ag-x.t_despacho) : 'a enviar')+'</span>';
+   /* sem hora de despacho contava-se nada e ficava a palavra "a enviar"
+      parada; agora conta desde o pagamento */
+   const base = x.t_despacho || x.t_pago || 0;
+   return '<span class="pip"></span><span class="f7tval correndo"'+
+          (base?' data-vivo="'+base+'"':'')+'>'+
+          (base ? f7dur(ag-base) : 'a enviar')+'</span>';
  }
+ /* Faltava aqui o que mais interessa a quem olha para a fila: ha quanto
+    tempo esta pessoa espera. So dizia "na fila". */
+ const desde = x.t_pago || 0;
  return '<span class="f7tval">'+pago+'</span>'+
-        '<span class="f7tval fraco">'+(x.falhou?'parada':'na fila')+'</span>';
+        '<span class="f7seta">\u2192</span>'+
+        (desde ? '<span class="f7tval espera" data-vivo="'+desde+'">'+
+                 f7dur(ag-desde)+'</span>' : '')+
+        '<span class="f7tval fraco">'+(x.falhou?'parada':'a espera')+'</span>';
 }
 
 function f7tempos(x){
@@ -3957,8 +3970,12 @@ function f7tempos(x){
 /* faz os relogios andarem sem repintar a lista toda */
 function f7tique(){
  const ag=Math.floor(Date.now()/1000)+F7DELTA;
- document.querySelectorAll('.f7t[data-vivo]').forEach(function(e){
-  const b=e.querySelector('.f7tval');
+ /* O desenho antigo punha o data-vivo no .f7t; o actual poe-o no proprio
+    .f7tval. O selector so apanhava o antigo, por isso nada andava: o
+    numero so mudava quando a lista se repintava, aos 2 s e aos 5 s.
+    Era isso o 0s - 2s - 5s. */
+ document.querySelectorAll('[data-vivo]').forEach(function(e){
+  const b=e.classList.contains('f7tval') ? e : e.querySelector('.f7tval');
   if(b) b.textContent=f7dur(ag-Number(e.getAttribute('data-vivo')));
  });
 }
@@ -5247,6 +5264,8 @@ async function bwOrdem(bot,acao,b){
     for(var i=0;i<20;i++){
       await bwDorme(3000);
       var e=null; try{ e=await bwRpc("bot_estado_ordem",{p_bot:bot}); }catch(x){}
+      /* a ordem morreu na nuvem: o telemovel nunca a foi buscar */
+      if(e&&e.expirou){ bwMsg("bwR"+bot,e.resultado||"a ordem expirou","Mau"); bwPonto(bot,"off"); return; }
       if(e&&e.feito){ bwMsg("bwR"+bot,e.resultado||"feito","Ok"); bwPonto(bot,"on");
                       setTimeout(function(){ bwQrCalado(bot); },6000); return; }
     }
@@ -6205,5 +6224,10 @@ async function pulsoPintar(){
 
 
 
+<style>
+/* o contador de espera da fila, em brasa — a mesma cor do estado */
+.f7r .f7g3 .f7tval.espera{color:#ffd08a !important;font-weight:700 !important}
+html.claro .f7r .f7g3 .f7tval.espera{color:#a86a00 !important}
+</style>
 </body>
 </html>
