@@ -3741,6 +3741,7 @@ function pintarFila7(){
      encosta à direita, e o ID vai para o rodapé com os tempos — é o
      que menos se lê e o que mais espaço ocupava. */
   '<div class="f7r e-'+x.st+' '+x.canal+'">'+
+   '<div class="f7g0">'+f7cabeca(x)+'</div>'+
    '<div class="f7g1"><span class="f7marca"></span>'+
      '<span class="f7nome">'+seg(x.nome||'sem nome')+'</span></div>'+
    '<div class="f7g2"><span class="f7mb">'+seg(x.mb)+' MB</span>'+
@@ -3917,34 +3918,35 @@ function f7dur(s){s=Math.max(0,Math.round(s));
 /* Versão de uma linha: pagou → entregue · levou. O rodapé da linha não
    tem altura para os três blocos com rótulo, e nesta organização o que
    importa é a passagem do tempo, não as etiquetas. */
-function f7temposCurto(x){
+/* O cabeçalho da linha, na forma do cartão «Velocidade de entrega»:
+   rótulo à esquerda em maiúsculas espaçadas, tempo à direita em mono.
+   O estado passa a estar escrito, e o tempo que interessa a cada estado
+   sobe para aqui — em baixo fica só a hora, sem repetições. */
+function f7cabeca(x){
  const ag=Math.floor(Date.now()/1000)+F7DELTA;
+ const ROT={fila:'NA FILA',enviar:'A SAIR',enviado:'ENTREGUE'};
+ let dir='';
+ if(x.st==='enviado'){
+   if(x.t_entregue&&x.t_pago) dir='levou <b>'+f7dur(x.t_entregue-x.t_pago)+'</b>';
+ }else{
+   const base=(x.st==='enviar' ? (x.t_despacho||x.t_pago) : x.t_pago)||0;
+   if(base) dir='há <b class="f7tval" data-vivo="'+base+'">'+f7dur(ag-base)+'</b>';
+ }
+ return '<span class="f7cab">'+(x.falhou?'PARADA':(ROT[x.st]||''))+'</span>'+
+        '<span class="f7cabv">'+dir+'</span>';
+}
+
+/* O rodapé: só as horas e o ID. O contador vive no cabeçalho. */
+function f7temposCurto(x){
  const pago = x.t_pago ? f7hh(x.t_pago) : (x.h||'—');
  if(x.st==='enviado'){
    const ent = x.t_entregue ? f7hh(x.t_entregue) : (x.h_entregue||'—');
    return '<span class="f7tval">'+pago+'</span>'+
-          '<span class="f7seta">→</span>'+
-          '<span class="f7tval feito">'+ent+'</span>'+
-          (x.t_entregue&&x.t_pago ? '<span class="f7tval fraco">'+f7dur(x.t_entregue-x.t_pago)+'</span>' : '');
+          '<span class="f7seta">\u2192</span>'+
+          '<span class="f7tval feito">'+ent+'</span>';
  }
- if(x.st==='enviar'){
-   /* sem hora de despacho contava-se nada e ficava a palavra "a enviar"
-      parada; agora conta desde o pagamento */
-   const base = x.t_despacho || x.t_pago || 0;
-   return '<span class="pip"></span><span class="f7tval correndo"'+
-          (base?' data-vivo="'+base+'"':'')+'>'+
-          (base ? f7dur(ag-base) : 'a enviar')+'</span>';
- }
- /* Faltava aqui o que mais interessa a quem olha para a fila: ha quanto
-    tempo esta pessoa espera. So dizia "na fila". */
- const desde = x.t_pago || 0;
- return '<span class="f7tval">'+pago+'</span>'+
-        '<span class="f7seta">\u2192</span>'+
-        (desde ? '<span class="f7tval espera" data-vivo="'+desde+'">'+
-                 f7dur(ag-desde)+'</span>' : '')+
-        '<span class="f7tval fraco">'+(x.falhou?'parada':'a espera')+'</span>';
+ return '<span class="f7tval">'+pago+'</span>';
 }
-
 function f7tempos(x){
  const ag=Math.floor(Date.now()/1000)+F7DELTA;
  let t='<div class="f7t"><span class="f7trot">pagou</span>'+
@@ -6250,11 +6252,26 @@ html.claro .f7r.aberta{background:#f4f7ff !important;
 .f7r.vaiMudar{border-color:#4ef0a8 !important;box-shadow:none !important}
 html.claro .f7r.vaiMudar{border-color:#0a8f5c !important}
 
+/* ═══ cabeçalho da linha — opção 9 ═══════════════════════════════════
+   O mesmo par do cartão da velocidade: rótulo apagado à esquerda,
+   valor claro em mono à direita. O rótulo fica cinzento de propósito —
+   o estado está escrito, não precisa de cor a gritá-lo.              */
+.f7r .f7g0{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.f7r .f7cab{font:700 10px var(--titulo);letter-spacing:.15em;
+  text-transform:uppercase;color:#8fa6c4}
+.f7r .f7cabv{margin-left:auto;font:500 10.5px var(--corpo);color:#8fa6c4;white-space:nowrap}
+.f7r .f7cabv b{font:700 12px var(--mono);color:#dfe8f5}
+.f7r.e-fila .f7cab{color:#ffb020}
+html.claro .f7r .f7cab{color:#5a7aa8}
+html.claro .f7r .f7cabv{color:#5a7aa8}
+html.claro .f7r .f7cabv b{color:#22314a}
+html.claro .f7r.e-fila .f7cab{color:#a86a00}
+
 /* ═══ carimbo da versão ══════════════════════════════════════════════
    No fundo dos Ajustes, para se saber num relance qual dos ficheiros
    está publicado. Se esta linha não aparecer, o site está a correr
    uma versão antiga.                                                 */
-#s-sistema::after{content:"painel 30/08 · aro da velocidade";
+#s-sistema::after{content:"painel 30/08 · cabeçalho da velocidade";
   display:block;text-align:center;padding:22px 0 10px;
   font:700 10px var(--titulo);letter-spacing:.16em;text-transform:uppercase;
   color:var(--fumo);opacity:.5}
