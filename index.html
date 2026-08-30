@@ -6225,6 +6225,33 @@ async function pulsoPintar(){
 
 
 <style>
+/* ═══ borda da fila — opção 2: só fundo ═══════════════════════════════
+   O aro azul saiu. O estado entra como um véu de cor no cimo do cartão:
+   mel para na fila, gelo para a enviar, menta para entregue. A linha
+   deixa de ter um risco à volta a competir com os logótipos da M-Pesa
+   e da e-Mola, que são o elemento mais colorido do ecrã.
+   No modo claro o véu sozinho não segura o cartão contra o branco, por
+   isso leva uma sombra fina — foi a queixa antiga das bordas a 14%.
+   E como já não há borda, o "vai mudar" do arrasto passa a ser um anel
+   por dentro em vez de mudar a cor do aro.                            */
+.f7r{border:0 !important;box-shadow:none !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 34%),#1d2635 !important}
+.f7r.e-fila   {background:linear-gradient(180deg,rgba(255,194,51,.15),transparent 46%),#1d2635 !important}
+.f7r.e-enviar {background:linear-gradient(180deg,rgba(57,220,255,.15),transparent 46%),#1d2635 !important}
+.f7r.e-enviado{background:linear-gradient(180deg,rgba(61,255,164,.13),transparent 46%),#1d2635 !important}
+
+html.claro .f7r{box-shadow:0 1px 3px rgba(20,30,50,.10) !important;
+  background:linear-gradient(180deg,rgba(16,19,28,.05),transparent 34%),#ffffff !important}
+html.claro .f7r.e-fila   {background:linear-gradient(180deg,rgba(255,176,32,.26),transparent 46%),#ffffff !important}
+html.claro .f7r.e-enviar {background:linear-gradient(180deg,rgba(47,125,255,.20),transparent 46%),#ffffff !important}
+html.claro .f7r.e-enviado{background:linear-gradient(180deg,rgba(10,143,92,.18),transparent 46%),#ffffff !important}
+
+.f7r.aberta{background:linear-gradient(180deg,rgba(140,190,255,.20),transparent 46%),#243047 !important}
+html.claro .f7r.aberta{background:linear-gradient(180deg,rgba(47,125,255,.16),transparent 46%),#f4f7ff !important}
+
+.f7r.vaiMudar{box-shadow:0 0 0 2px #4ef0a8 inset !important}
+html.claro .f7r.vaiMudar{box-shadow:0 0 0 2px #0a8f5c inset !important}
+
 /* o contador de espera da fila, em brasa — a mesma cor do estado */
 .f7r .f7g3 .f7tval.espera{color:#ffd08a !important;font-weight:700 !important}
 html.claro .f7r .f7g3 .f7tval.espera{color:#a86a00 !important}
