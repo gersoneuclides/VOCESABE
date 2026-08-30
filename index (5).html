@@ -2493,31 +2493,28 @@ button.forte:active,.recDois:active{transform:scale(.97) !important}
   padding:15px 9px 13px !important;
   position:relative;overflow:hidden;isolation:isolate}
 
-/* a imagem vive numa camada por baixo do texto */
+/* A imagem ocupa o cartão inteiro. Antes estava a 22% e ainda levava um
+   véu escuro por cima: dava um fantasma que não se via. Agora vê-se, e o
+   contraste dos números garante-se com sombra no texto, não apagando a
+   foto. */
 #filaContas .tile::before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background-position:center;background-repeat:no-repeat;background-size:cover;
-  opacity:.30}
-#filaContas .tile:nth-child(1)::before{background-image:var(--icMpesa);background-size:contain;opacity:.22}
-#filaContas .tile:nth-child(2)::before{background-image:var(--icEmola);background-size:contain;opacity:.22}
+  background-position:center;background-repeat:no-repeat;background-size:cover}
+#filaContas .tile:nth-child(1)::before{background-image:var(--icMpesa);
+  background-size:74% auto;opacity:.85}
+#filaContas .tile:nth-child(2)::before{background-image:var(--icEmola);
+  background-size:74% auto;opacity:.85}
 #filaContas .tile:nth-child(3)::before,
-#filaContas .tile:nth-child(4)::before{background-image:var(--bgFilaAbstrato)}
+#filaContas .tile:nth-child(4)::before{background-image:var(--bgFilaAbstrato);opacity:.92}
 
-/* os logos já apareciam num canto; com o fundo ficariam a dobrar */
+/* os logos apareciam num cantinho; com a foto no fundo ficavam a dobrar */
 #filaContas .tile:nth-child(1)::after,
 #filaContas .tile:nth-child(2)::after{display:none !important}
 
-/* um véu escuro por cima da imagem, para os números não perderem contraste */
-#filaContas .tile:nth-child(1),#filaContas .tile:nth-child(2),
-#filaContas .tile:nth-child(3),#filaContas .tile:nth-child(4){
-  background-image:linear-gradient(rgba(27,31,36,.55),rgba(27,31,36,.72)) !important}
-
-html.claro #filaContas .tile,html.claro #lyContas .tile{
-  background:#f1f4f7 !important}
-html.claro #filaContas .tile:nth-child(1),html.claro #filaContas .tile:nth-child(2),
-html.claro #filaContas .tile:nth-child(3),html.claro #filaContas .tile:nth-child(4){
-  background-image:linear-gradient(rgba(255,255,255,.72),rgba(255,255,255,.82)) !important}
-html.claro #filaContas .tile::before{opacity:.20}
+/* os números por cima da foto */
+#filaContas .tile b{text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 12px rgba(0,0,0,.7) !important}
+#filaContas .tile span{color:#e8ecf0 !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.9) !important}
 
 /* ═══ cartão do lucro — só o anel e o "ver detalhes" ═══════════════
    Saem os três números da esquerda (vendas / MT / na fila) e a linha
@@ -2530,38 +2527,420 @@ html.claro #filaContas .tile::before{opacity:.20}
 #cxNeg .anelBox::after{content:"" !important;display:none !important}
 #negTop{justify-content:flex-end !important;padding-right:4px}
 
-#cxNeg{
-  background-image:
-    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.55) 0 13px, transparent 14px),
-    radial-gradient(circle at 14% 68%, rgba(230,77,255,.42) 0 20px, transparent 21px),
-    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.34) 0 8px,  transparent 9px),
-    radial-gradient(circle at 22% 26%, rgba(77,107,255,.38) 0 10px, transparent 11px),
-    radial-gradient(circle at 29% 62%, rgba(77,216,255,.30) 0 16px, transparent 17px),
-    radial-gradient(circle at 36% 18%, rgba(255,255,255,.26) 0 6px,  transparent 7px),
-    radial-gradient(circle at 19% 44%, rgba(230,77,255,.24) 0 7px,  transparent 8px),
-    radial-gradient(circle at 41% 74%, rgba(77,216,255,.22) 0 11px, transparent 12px),
-    radial-gradient(circle at 9% 48%,  rgba(77,107,255,.26) 0 5px,  transparent 6px),
-    radial-gradient(circle at 33% 40%, rgba(255,255,255,.18) 0 4px,  transparent 5px),
-    radial-gradient(circle at 45% 34%, rgba(230,77,255,.16) 0 9px,  transparent 10px),
-    radial-gradient(circle at 25% 84%, rgba(77,216,255,.20) 0 6px,  transparent 7px),
-    linear-gradient(135deg,#2fd9a4 0%,#22c9a2 45%,#12b083 100%) !important}
 
-html.claro #cxNeg{
-  background-image:
-    radial-gradient(circle at 6% 22%,  rgba(77,216,255,.42) 0 13px, transparent 14px),
-    radial-gradient(circle at 14% 68%, rgba(255,120,240,.34) 0 20px, transparent 21px),
-    radial-gradient(circle at 3% 78%,  rgba(255,255,255,.30) 0 8px,  transparent 9px),
-    radial-gradient(circle at 22% 26%, rgba(120,150,255,.32) 0 10px, transparent 11px),
-    radial-gradient(circle at 29% 62%, rgba(77,216,255,.24) 0 16px, transparent 17px),
-    radial-gradient(circle at 36% 18%, rgba(255,255,255,.22) 0 6px,  transparent 7px),
-    radial-gradient(circle at 19% 44%, rgba(255,120,240,.20) 0 7px,  transparent 8px),
-    radial-gradient(circle at 41% 74%, rgba(77,216,255,.18) 0 11px, transparent 12px),
-    radial-gradient(circle at 9% 48%,  rgba(120,150,255,.22) 0 5px,  transparent 6px),
-    radial-gradient(circle at 33% 40%, rgba(255,255,255,.16) 0 4px,  transparent 5px),
-    radial-gradient(circle at 45% 34%, rgba(255,120,240,.14) 0 9px,  transparent 10px),
-    radial-gradient(circle at 25% 84%, rgba(77,216,255,.16) 0 6px,  transparent 7px),
-    linear-gradient(150deg,#e60000,#b30000) !important}
 
+
+
+
+/* barra de acções da pesquisa de comprovativos */
+.pqAcoes{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.pqNum{flex:0 1 160px;min-width:130px;padding:8px 11px;border-radius:11px;
+  border:1px solid var(--borda);background:rgba(255,255,255,.05);
+  color:var(--texto);font:600 13px var(--mono);letter-spacing:.02em}
+html.claro .pqNum{background:#fff;border-color:#e6e8ec;color:#14161d}
+.pqBt{padding:8px 15px;border-radius:11px;border:0;cursor:pointer;
+  background:rgba(47,217,164,.16);color:var(--menta);
+  font:700 11px var(--titulo);letter-spacing:.14em;text-transform:uppercase}
+.pqBt:disabled{opacity:.55;cursor:default}
+.pqAviso{font:500 11.5px var(--corpo);color:var(--fumo)}
+.pqAviso.bom{color:var(--menta)} .pqAviso.mau{color:var(--erro,#ff5c63)}
+.pqSemAcao{margin-top:8px;font:500 11.5px var(--corpo);color:var(--fumo);opacity:.75}
+.pqOk{color:var(--menta);font-weight:600}
+
+
+
+/* ─── consultas: a cor é um aviso de repetição, não decoração ───────
+   Número consultado uma só vez fica como sempre esteve. Só quando há
+   repetição é que aparece cor — verde na última, azul nas anteriores. */
+.consl.consNova{box-shadow:inset 0 0 0 2px rgba(47,217,164,.85) !important;
+  background:rgba(47,217,164,.10) !important}
+.consl.consNova .num,.consl.consNova .cop{color:#3dffa4 !important}
+.consl.consVelha{box-shadow:inset 0 0 0 2px rgba(120,190,255,.55) !important;
+  background:rgba(120,190,255,.06) !important}
+.consl.consVelha .num,.consl.consVelha .cop{color:#9fd0ff !important}
+.consRep{font:700 9.5px var(--titulo);letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;flex:none;white-space:nowrap}
+.consNova .consRep{background:rgba(47,217,164,.20);color:#3dffa4}
+.consVelha .consRep{background:rgba(120,190,255,.16);color:#9fd0ff}
+html.claro .consl.consNova{box-shadow:inset 0 0 0 2px rgba(0,135,90,.75) !important;
+  background:rgba(0,135,90,.08) !important}
+html.claro .consl.consNova .num,html.claro .consl.consNova .cop{color:#00875a !important}
+html.claro .consl.consVelha{box-shadow:inset 0 0 0 2px rgba(31,111,191,.45) !important;
+  background:rgba(31,111,191,.05) !important}
+html.claro .consNova .consRep{background:rgba(0,135,90,.14);color:#00875a}
+html.claro .consVelha .consRep{background:rgba(31,111,191,.12);color:#1f6fbf}
+
+/* campo do destino na folha das Ordens */
+.ordDestCx{margin:12px 0 4px}
+.ordDestCx label{display:block;font:700 10px var(--titulo);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fumo);margin-bottom:7px}
+.ordDestLinha{display:flex;gap:8px}
+#ordDest{flex:1;min-width:0;padding:12px 14px;border-radius:14px;border:1px solid var(--borda);
+  background:rgba(255,255,255,.05);color:var(--texto);
+  font:800 17px var(--mono);letter-spacing:.06em}
+html.claro #ordDest{background:#fff;border-color:#e6e8ec;color:#14161d}
+#ordDestBt{flex:none;white-space:nowrap}
+.ordDestCx small{display:block;margin-top:7px;font:400 11.5px var(--corpo);
+  color:var(--fumo);line-height:1.45}
+
+/* quando falta o destino, o campo pede-o em vez de sugerir o pagador */
+.pqAcoes.pqFalta .pqNum{border-color:rgba(255,176,32,.65);background:rgba(255,176,32,.07)}
+.pqAcoes.pqFalta .pqNum::placeholder{color:rgba(255,176,32,.85)}
+.pqNota{flex-basis:100%;margin-top:5px;font:400 11px var(--corpo);
+  color:rgba(255,176,32,.9);line-height:1.4}
+
+/* ═══ linhas da fila — opção 4 escolhida ════════════════════════════
+   Contorno azul, cantos redondos e um halo por baixo. Substitui os
+   cantinhos vermelho/violeta que existiam: eram dois traços soltos em
+   diagonal, e a linha nunca chegava a parecer uma peça inteira. */
+/* Borda em gradiente: acende à esquerda e apaga para a direita. Feita
+   com duas camadas de fundo — uma para dentro da borda, outra para a
+   própria borda — porque o CSS não deixa pintar um contorno assim. */
+/* Vidro azul: o fundo carrega o peso, o contorno quase não se vê.
+   Com um fundo assim, os cinzentos do painel deixam de servir — cada
+   nível de texto foi subido até ficar legível sem gritar. */
+/* O azul translúcido lavava o texto: as letras ficavam a competir com
+   o fundo em vez de assentar nele. Agora o cartão é sólido e escuro, e
+   o azul vive só na borda — o contraste do texto sobe de 4:1 para mais
+   de 12:1, e nada mais foi preciso mexer para se ler. */
+.f7r{border:1px solid rgba(96,156,255,.45) !important;
+  border-radius:14px !important;
+  background:#1d2635 !important;
+  box-shadow:none !important;
+  margin-bottom:9px !important;
+  overflow:hidden}
+.f7r::before,.f7r::after{display:none !important}
+html.claro .f7r{background:#ffffff !important;
+  border-color:rgba(47,125,255,.35) !important;box-shadow:0 1px 3px rgba(20,30,50,.08) !important}
+
+/* ═══ botões da fila — opção 3 escolhida ════════════════════════════
+   Cheios e com cor por função. Os dois não são igualmente perigosos:
+   o ▶ faz avançar, o ↻ reenvia e apaga o guardado — repetir por engano
+   custa megas. Verde para seguir, âmbar para repetir, e um pouco
+   maiores, que 26px é pequeno para o polegar. */
+.f7par button{width:30px !important;height:30px !important;border-radius:9px !important;
+  background:rgba(47,217,164,.92) !important;color:#08281f !important;
+  border:0 !important;font-size:13px !important;line-height:1 !important;
+  display:inline-flex !important;align-items:center;justify-content:center;
+  margin-left:5px;cursor:pointer}
+.f7par button.rev{background:rgba(255,176,32,.92) !important;color:#2a1c00 !important}
+.f7par button:active{transform:scale(.93)}
+.f7par button.rev:hover{color:#2a1c00 !important}
+
+/* ═══ fila — lista densa, opção 7, com detalhe por toque ════════════
+   Cabe quase o dobro dos registos no ecrã. O que sai da linha aparece
+   ao tocar: um toque abre, outro fecha. */
+.f7r{padding:7px 9px !important;border-radius:11px !important;
+  margin-bottom:4px !important;gap:7px !important;
+  flex-wrap:wrap !important;cursor:pointer}
+.f7marca{width:17px !important;height:17px !important;border-radius:5px !important}
+.f7esq{display:flex !important;align-items:baseline;flex:1.6 !important;min-width:0;gap:7px}
+.f7nome{font-size:11.5px !important;flex:none;max-width:44%}
+.f7sub{margin:0 !important;display:inline-flex !important}
+.f7id{font-size:9.5px !important} .f7num{font-size:9.5px !important}
+.f7mb{font-size:11px !important} .f7mt{font-size:9px !important}
+.f7tempos{min-width:84px !important}
+.f7t{line-height:1.28 !important}
+.f7par button{width:25px !important;height:25px !important;font-size:11px !important;
+  border-radius:7px !important;margin-left:4px}
+
+/* o painel: fechado não ocupa nada */
+.f7det{display:none;flex:1 1 100%;margin-top:7px;padding-top:8px;
+  border-top:1px dashed rgba(47,125,255,.45)}
+.f7r.aberta .f7det{display:block}
+.f7r.aberta{background:#243047 !important;
+  border-color:rgba(140,190,255,.75) !important}
+.f7dl{display:flex;gap:10px;align-items:baseline;padding:3px 0}
+.f7dr{flex:none;width:96px;font:600 9px var(--titulo);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--fumo);opacity:.85}
+.f7dv{font:600 11.5px var(--mono);color:var(--texto);word-break:break-all}
+.f7dv.bom{color:var(--relva)} .f7dv.mau{color:var(--erro,#ff5c63)}
+.f7dbt{display:flex;gap:7px;margin-top:9px}
+.f7dbt button{flex:1;padding:8px 6px;border-radius:9px;border:1px solid rgba(47,125,255,.5);
+  background:rgba(47,125,255,.10);color:#8fbaff;cursor:pointer;
+  font:700 9.5px var(--titulo);letter-spacing:.13em;text-transform:uppercase}
+html.claro .f7dbt button{background:rgba(47,125,255,.07);color:#1f5fd0}
+html.claro .f7dv{color:#14161d}
+
+/* ═══ cascata do dia, no Dashboard ══════════════════════════════════ */
+.cascTopo{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:9px;margin-bottom:12px}
+.cascTopo>div{background:rgba(255,255,255,.04);border-radius:16px;padding:13px 11px;text-align:center}
+.cascTopo b{display:block;font:800 22px/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cascTot b{color:#3dffa4} .cascCnt b{color:var(--texto)}
+.cascTopo span{display:block;font:600 9.5px var(--corpo);color:var(--fumo);margin-top:5px}
+html.claro .cascTopo>div{background:rgba(16,19,28,.05)}
+
+.cascLista{display:flex;flex-direction:column;gap:4px}
+.cascP{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:11px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);min-width:0}
+html.claro .cascP{background:rgba(16,19,28,.035)}
+.cascM{width:15px;height:15px;border-radius:4px;flex:none}
+.cascP.mpesa .cascM{background:#ff2b3d} .cascP.emola .cascM{background:#ff9a1f}
+.cascN{font:700 11.5px var(--corpo);flex:1.3;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.cascNum{font:700 10px var(--mono);color:var(--fumo);flex:1;min-width:0}
+.cascMb{font:800 10.5px var(--mono);color:#3dffa4;width:56px;text-align:right}
+.cascMt{font:800 11.5px var(--mono);width:34px;text-align:right}
+.cascMt::after{content:" MT";font-size:8px;font-weight:600;color:var(--fumo)}
+.cascH{font:600 9.5px var(--mono);color:var(--fumo);width:36px;text-align:right}
+.cascE{font:700 8px var(--titulo);letter-spacing:.11em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;flex:none}
+.cascP.ok .cascE{background:rgba(47,217,164,.16);color:#3dffa4}
+.cascP.espera .cascE{background:rgba(63,157,255,.16);color:#3f9dff}
+.cascP.mau .cascE{background:rgba(255,176,32,.16);color:#ffb020}
+.cascP.mau{border-color:rgba(255,176,32,.4)}
+
+/* a queda: cada peça entra de cima, com um ressalto no fim */
+.cascP.cai{opacity:0;animation:cascCai .46s cubic-bezier(.22,1.4,.36,1) forwards}
+@keyframes cascCai{
+  0%  {opacity:0;transform:translateY(-38px) scale(.94)}
+  70% {opacity:1;transform:translateY(3px)  scale(1.01)}
+  100%{opacity:1;transform:translateY(0)    scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .cascP.cai{opacity:1;animation:none}}
+
+/* ═══ fila — organização 5: três faixas ═════════════════════════════
+   O nome deixou de disputar largura com os números e passa a caber
+   inteiro. Letras maiores: nome a 14px (era 11.5) e número a 12.5
+   (era 9.5) — no escuro os tamanhos antigos quase não se liam. */
+.f7r{display:block !important;padding:10px 12px !important}
+.f7g1,.f7g2,.f7g3{display:flex;align-items:center;gap:9px;min-width:0}
+.f7g1 .f7marca{width:16px;height:16px;border-radius:5px;flex:none}
+.f7g1 .f7nome{flex:1;min-width:0;font:700 14px var(--corpo) !important;
+  color:var(--texto) !important;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:none !important}
+.f7g1 .f7mb{flex:none;font:800 13px var(--mono) !important;color:#3dffa4 !important}
+.f7g2{margin-top:5px}
+.f7g2 .f7num{font:700 12.5px var(--mono) !important;color:#cfd6de !important;letter-spacing:.02em}
+.f7g2 .f7mt{font:700 12px var(--mono) !important;color:#cfd6de !important}
+.f7g2 .f7id{margin-left:auto;font:600 11px var(--mono) !important;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:46%}
+.f7g3{margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.07)}
+.f7g3 .f7tempos{flex:1;min-width:0;border-left:0 !important;padding-left:0 !important;
+  display:flex;gap:14px;justify-content:flex-start;text-align:left !important}
+.f7g3 .f7t{justify-content:flex-start}
+.f7g3 .f7trot{font-size:8.5px !important}
+.f7g3 .f7tval{font-size:11.5px !important;color:#cfd6de !important}
+.f7g3 .f7par{margin-left:auto;flex:none}
+html.claro .f7g1 .f7nome{color:#14161d !important}
+html.claro .f7g2 .f7num,html.claro .f7g2 .f7mt,html.claro .f7g3 .f7tval{color:#3d4653 !important}
+html.claro .f7g3{border-top-color:rgba(16,19,28,.10)}
+
+/* ─── letras sobre o vidro azul ──────────────────────────────────────
+   Três níveis, e só três: o nome manda, os números seguem, os rótulos
+   sussurram. Antes havia seis tamanhos diferentes a competir e nenhum
+   ganhava — era isso que fazia a linha parecer desarrumada. */
+.f7r .f7g1 .f7nome{font:700 15px/1.35 var(--corpo) !important;color:#ffffff !important}
+.f7r .f7g1 .f7mb{font:800 14px/1 var(--mono) !important;color:#4ef0a8 !important}
+.f7r .f7g2 .f7num{font:700 13px/1 var(--mono) !important;color:#ffffff !important;letter-spacing:.03em}
+.f7r .f7g2 .f7mt{font:600 12.5px/1 var(--mono) !important;color:#c8d6ea !important}
+.f7r .f7g2 .f7id{font:500 11px/1 var(--mono) !important;color:#8fb0dd !important}
+.f7r .f7g3 .f7trot{font:600 9px/1 var(--titulo) !important;color:#8fa6c4 !important;letter-spacing:.13em}
+.f7r .f7g3 .f7tval{font:600 12px/1 var(--mono) !important;color:#dfe8f5 !important}
+.f7r .f7g3 .f7t.feito .f7tval{color:#4ef0a8 !important}
+.f7r .f7g3 .f7t.correndo .f7tval{color:#6fb4ff !important;font-weight:700 !important}
+.f7r .f7g3{border-top:1px solid rgba(255,255,255,.12) !important}
+.f7r .f7falhou{color:#ffd08a !important;font:700 9.5px var(--titulo) !important;
+  letter-spacing:.1em;text-transform:uppercase}
+html.claro .f7r .f7g1 .f7nome{color:#0d1b33 !important}
+html.claro .f7r .f7g1 .f7mb{color:#0a8f5c !important}
+html.claro .f7r .f7g2 .f7num{color:#0d1b33 !important}
+html.claro .f7r .f7g2 .f7mt,html.claro .f7r .f7g3 .f7tval{color:#33465f !important}
+html.claro .f7r .f7g2 .f7id,html.claro .f7r .f7g3 .f7trot{color:#5a7aa8 !important}
+html.claro .f7r .f7g3 .f7t.feito .f7tval{color:#0a8f5c !important}
+html.claro .f7r .f7g3{border-top-color:rgba(16,19,28,.14) !important}
+
+/* o que se vê por baixo da linha enquanto se puxa */
+.f7r{position:relative}
+.f7r::after{content:attr(data-puxa);position:absolute;left:-150px;top:0;bottom:0;width:150px;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:16px;
+  font:700 10px var(--titulo);letter-spacing:.16em;color:#4ef0a8;pointer-events:none}
+.f7r.vaiMudar{border-color:#4ef0a8 !important}
+
+/* ─── folha da pessoa, com o painel desfocado por trás ─────────────── */
+body.comFolha #app,body.comFolha main,body.comFolha .conteudo{filter:blur(4px)}
+#pessoaFolha{position:fixed;inset:0;z-index:9000;display:none}
+#pessoaFolha.on{display:block}
+.pfFundo{position:absolute;inset:0;background:rgba(8,11,16,.62);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.pfCaixa{position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;
+  background:#1d2635;border-top:1px solid rgba(96,156,255,.45);
+  border-radius:20px 20px 0 0;padding:16px 14px 26px;
+  box-shadow:0 -14px 40px rgba(0,0,0,.55)}
+html.claro .pfCaixa{background:#fff;border-top-color:rgba(47,125,255,.35)}
+.pfTopo{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.pfNome{font:700 17px var(--corpo);color:#fff;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html.claro .pfNome{color:#0d1b33}
+.pfNum{font:700 13px var(--mono);color:#8fb0dd}
+.pfX{width:32px;height:32px;border-radius:50%;border:0;flex:none;
+  background:rgba(255,255,255,.10);color:#dfe8f5;font-size:14px;cursor:pointer}
+html.claro .pfX{background:rgba(16,19,28,.07);color:#33465f}
+.pfCartoes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
+.pfC{background:rgba(255,255,255,.05);border-radius:12px;padding:10px 6px;text-align:center}
+html.claro .pfC{background:rgba(16,19,28,.045)}
+.pfC b{display:block;font:800 17px var(--mono);color:#fff}
+html.claro .pfC b{color:#0d1b33}
+.pfC span{display:block;font:600 8.5px var(--corpo);color:#8fa6c4;margin-top:4px;line-height:1.25}
+.pfC.mau b{color:#ffb020}
+.pfLista{display:flex;flex-direction:column;gap:4px}
+.pfL{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:11px;
+  background:rgba(255,255,255,.035)}
+html.claro .pfL{background:rgba(16,19,28,.035)}
+.pfL.recebeu{background:rgba(78,240,168,.09)}
+.pfL.esta{outline:1.5px solid rgba(96,156,255,.75)}
+.pfH{font:600 11px var(--mono);color:#8fa6c4;flex:none;width:76px}
+.pfT{font:500 12.5px var(--corpo);color:#dfe8f5;flex:1;min-width:0}
+html.claro .pfT{color:#22314a}
+.pfT b{font:800 12.5px var(--mono);color:#fff}
+html.claro .pfT b{color:#0d1b33}
+.pfL.recebeu .pfT b{color:#4ef0a8}
+html.claro .pfL.recebeu .pfT b{color:#0a8f5c}
+.pfR{font:500 10px var(--mono);color:#8fb0dd;flex:none;max-width:34%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pfE{font:700 8px var(--titulo);letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;flex:none}
+.pfE.ok{background:rgba(78,240,168,.16);color:#4ef0a8}
+.pfE.falta{background:rgba(255,176,32,.16);color:#ffb020}
+.pfE.deduz{background:rgba(143,176,221,.16);color:#8fb0dd}
+.pfVazio{padding:26px 0;text-align:center;color:#8fa6c4;font-size:13px}
+
+/* ─── organização 3: nome dominante ────────────────────────────────── */
+.f7r .f7g1{gap:9px}
+.f7r .f7g1 .f7nome{flex:1;min-width:0;font:700 16px/1.3 var(--corpo) !important}
+.f7r .f7g2{margin-top:7px !important;gap:11px}
+.f7r .f7g2 .f7mb{flex:none}
+.f7r .f7g2 .f7mt{flex:none}
+.f7r .f7g2 .f7num{margin-left:auto !important;flex:none}
+.f7r .f7g3{margin-top:7px !important;padding-top:7px !important;gap:6px;align-items:baseline}
+.f7r .f7g3 .f7id{margin-left:auto;flex:none;max-width:42%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.f7r .f7g3 .f7seta{color:#8fa6c4;font-size:10px;margin:0 1px}
+.f7r .f7g3 .f7tval.fraco{color:#8fa6c4 !important;font-size:11px !important}
+.f7r .f7g3 .pip{width:5px;height:5px;border-radius:50%;background:#6fb4ff;
+  display:inline-block;align-self:center}
+
+/* ═══ pulso do negócio ═══════════════════════════════════════════════ */
+#negPulso{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px}
+.pvC{background:#1d2635;border:1px solid rgba(96,156,255,.28);border-radius:16px;
+  padding:13px 13px 12px;min-width:0;animation:pvEntra .45s ease both}
+.pvRitmoC{grid-column:1 / -1}
+.pvC:nth-child(2){animation-delay:.06s} .pvC:nth-child(3){animation-delay:.12s}
+.pvC:nth-child(4){animation-delay:.18s} .pvC:nth-child(5){animation-delay:.24s}
+.pvC:nth-child(6){animation-delay:.30s} .pvC:nth-child(7){animation-delay:.36s}
+@keyframes pvEntra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+html.claro .pvC{background:#fff;border-color:rgba(47,125,255,.22)}
+.pvC.alerta{border-color:rgba(255,176,32,.55)}
+.pvCab{display:flex;align-items:baseline;gap:8px;margin-bottom:9px}
+.pvTit{font:700 10.5px var(--titulo);letter-spacing:.15em;text-transform:uppercase;color:#8fa6c4}
+.pvSub{margin-left:auto;font:500 10.5px var(--corpo);color:#8fa6c4}
+.pvSub b{font:700 12px var(--mono);color:#dfe8f5}
+html.claro .pvSub b{color:#22314a}
+.pvDif{margin-left:auto;font:700 10px var(--titulo);letter-spacing:.08em;padding:3px 8px;border-radius:99px}
+.pvDif.sobe{background:rgba(78,240,168,.16);color:#4ef0a8}
+.pvDif.desce{background:rgba(255,120,120,.16);color:#ff9a9a}
+.pvSvg{width:100%;height:74px;display:block;overflow:visible}
+.pvHoje{fill:none;stroke:#4ef0a8;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;animation:pvRisca 1.5s ease forwards}
+@keyframes pvRisca{to{stroke-dashoffset:0}}
+.pvOntem{fill:none;stroke:#6b7f9c;stroke-width:1.4;stroke-dasharray:4 4;opacity:.8}
+.pvPt{fill:#4ef0a8;opacity:0;animation:pvApar .4s ease forwards;animation-delay:1.2s}
+@keyframes pvApar{to{opacity:1}}
+.pvLeg{display:flex;gap:14px;align-items:center;margin-top:9px;
+  font:500 10px var(--corpo);color:#8fa6c4}
+.pvLeg i{display:inline-block;width:12px;height:2px;margin-right:5px;vertical-align:middle}
+.pvLh{background:#4ef0a8} .pvLo{background:#6b7f9c}
+.pvPico{margin-left:auto;color:#8fb0dd;font-weight:600}
+.pvBarra{display:flex;height:9px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.06)}
+.pvBarra i{display:block;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.pvBarra .b1{background:#4ef0a8} .pvBarra .b2{background:#6fb4ff} .pvBarra .b3{background:#ffb020}
+.pvLeg3{display:flex;flex-direction:column;gap:4px;margin-top:9px;font:500 10.5px var(--corpo);color:#a8bad4}
+.pvLeg3 b{color:#fff;font:700 11px var(--mono)}
+html.claro .pvLeg3 b{color:#0d1b33}
+.pvLeg3 i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:6px}
+.p1{background:#4ef0a8} .p2{background:#6fb4ff} .p3{background:#ffb020}
+.pmp{background:#ff2b3d} .pem{background:#ff9a1f}
+.pvNota{margin-top:9px;font:500 10.5px var(--corpo);color:#8fa6c4;line-height:1.45}
+.pvNota b{color:#dfe8f5;font-family:var(--mono)}
+html.claro .pvNota b{color:#22314a}
+.pvGrande{display:flex;align-items:baseline;gap:6px}
+.pvGrande b{font:800 30px/1 var(--mono);color:#fff;letter-spacing:-.02em}
+html.claro .pvGrande b{color:#0d1b33}
+.pvC.alerta .pvGrande b{color:#ffb020}
+.pvGrande span{font:600 10px var(--corpo);color:#8fa6c4;line-height:1.2}
+.pvSplit{display:flex;height:9px;border-radius:99px;overflow:hidden;background:#ff9a1f}
+.pvSplit .mp{background:#ff2b3d;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.pvSplit .em{flex:1}
+.pvP{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pvPv{font:700 11px var(--mono);color:#dfe8f5;width:44px;flex:none}
+html.claro .pvPv{color:#22314a}
+.pvPb{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}
+.pvPb i{display:block;height:100%;border-radius:99px;
+  background:linear-gradient(90deg,#4ef0a8,#6fb4ff);width:0;animation:pvCresce .7s ease forwards}
+@keyframes pvCresce{to{width:var(--w,100%)}}
+.pvPn{font:600 10px var(--mono);color:#8fa6c4;width:26px;text-align:right;flex:none}
+.pvPr{font:700 10.5px var(--mono);color:#4ef0a8;width:52px;text-align:right;flex:none}
+.pvTres{display:flex;gap:10px}
+.pvTres div{flex:1;text-align:center}
+.pvTres b{display:block;font:800 20px/1 var(--mono);color:#fff}
+html.claro .pvTres b{color:#0d1b33}
+.pvTres span{display:block;font:600 9px var(--corpo);color:#8fa6c4;margin-top:5px}
+.pvVazio{grid-column:1/-1;padding:22px;text-align:center;color:#8fa6c4;font-size:12.5px}
+@media(max-width:380px){#negPulso{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  .pvC,.pvHoje,.pvPt,.pvPb i{animation:none !important;opacity:1;stroke-dashoffset:0}}
+
+/* ═══ Fila em tempo real — ecrã compacto ════════════════════════════
+   Cabeçalho numa linha, os quatro contadores numa faixa só, e o fundo
+   com o vermelho do M-Pesa e o laranja do e-Mola apagados nos cantos.
+   O que se ganha: quase um terço de ecrã que antes era título,
+   subtítulo e quatro caixas separadas. */
+#s-fila{position:relative;isolation:isolate}
+#s-fila::before{content:"";position:absolute;inset:-14px -12px;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(90% 40% at 0% 0%,rgba(255,43,61,.13),transparent 60%),
+    radial-gradient(90% 40% at 100% 0%,rgba(255,154,31,.12),transparent 60%),
+    radial-gradient(100% 40% at 50% 100%,rgba(78,240,168,.07),transparent 70%)}
+html.claro #s-fila::before{background:
+    radial-gradient(90% 40% at 0% 0%,rgba(255,43,61,.07),transparent 60%),
+    radial-gradient(90% 40% at 100% 0%,rgba(255,154,31,.07),transparent 60%),
+    radial-gradient(100% 40% at 50% 100%,rgba(47,125,255,.05),transparent 70%)}
+
+.cabFilaA{display:flex;align-items:center;gap:10px;margin:0 0 13px}
+.cabFilaA h1{font:700 18px var(--titulo);letter-spacing:.06em;margin:0;color:var(--texto)}
+.filaViv{margin-left:auto;display:flex;align-items:center;gap:6px;
+  font:700 9.5px var(--titulo);letter-spacing:.14em;text-transform:uppercase;
+  color:#4ef0a8;background:rgba(78,240,168,.12);padding:5px 10px;border-radius:99px}
+.filaViv i{width:6px;height:6px;border-radius:50%;background:#4ef0a8;
+  animation:filaBate 1.4s ease-in-out infinite}
+@keyframes filaBate{50%{opacity:.25}}
+html.claro .filaViv{color:#0a8f5c;background:rgba(10,143,92,.10)}
+html.claro .filaViv i{background:#0a8f5c}
+
+/* os quatro contadores viram uma faixa */
+#filaContas{display:flex !important;gap:0 !important;grid-template-columns:none !important;
+  background:rgba(255,255,255,.05);border-radius:14px;padding:9px 4px;margin-bottom:12px !important}
+#filaContas .tile{flex:1;border:0 !important;border-radius:0 !important;background:none !important;
+  padding:2px 4px !important;text-align:center;
+  border-right:1px solid rgba(255,255,255,.09) !important}
+#filaContas .tile:last-child{border-right:0 !important}
+#filaContas .tile::before{display:none !important}
+#filaContas .tile b{font:800 17px/1 var(--mono) !important}
+#filaContas .tile span{font:600 8.5px var(--corpo) !important;color:#8fa6c4 !important;margin-top:4px !important}
+html.claro #filaContas{background:rgba(16,19,28,.045)}
+html.claro #filaContas .tile{border-right-color:rgba(16,19,28,.10) !important}
+
+/* a Fila WhatsApp: três números numa linha, lista logo por baixo */
+#lyContas{display:flex !important;gap:6px !important;grid-template-columns:none !important;
+  margin-bottom:9px !important}
+#lyContas .tile{flex:1;border:0 !important;border-radius:12px !important;
+  background:rgba(37,211,102,.10) !important;padding:9px 5px !important;text-align:center}
+#lyContas .tile::before{display:none !important}
+#lyContas .tile b{font:800 15px/1 var(--mono) !important;color:#25d366 !important}
+#lyContas .tile span{font:600 8.5px var(--corpo) !important;color:#8fa6c4 !important;margin-top:3px !important}
+html.claro #lyContas .tile{background:rgba(37,211,102,.09) !important}
+#s-fila .sepR b{color:#25d366}
+#s-fila .sepR i{background:rgba(37,211,102,.30)}
 </style>
 <script>(function(){try{var t=localStorage.getItem('wolf_tema');
 if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();</script>
@@ -2606,12 +2985,14 @@ if(t==='claro')document.documentElement.classList.add('claro');}catch(e){}})();<
 <div id="negTiras"></div>
 <div class="sepR"><b>Dispositivos</b><i></i></div>
 <div id="negFones"></div>
-<div class="sepR"><b>Fila</b><i></i></div>
-<div id="negFila" class="fumo">a carregar…</div>
+<div class="sepR"><b>Pulso</b><i></i></div>
+<div id="negPulso"></div>
+<div class="sepR"><b>Hoje</b><i></i></div>
+<div id="negCascata"></div>
 </section>
 
   <section id="s-fila">
-    <div class="cabecalho"><h1>Fila em tempo real</h1><p>tudo o que entrou e saiu, minuto a minuto</p></div>
+    <div class="cabFilaA"><h1>FILA EM TEMPO REAL</h1><span class="filaViv"><i></i>ao vivo</span></div>
     <div class="tiles" id="filaContas"></div>
     <div class="cartao"><div class="cabFila"><div><h3>Pagamentos e entregas</h3>
       <p class="funcao" id="filaHora">—</p></div>
@@ -2803,6 +3184,9 @@ function ir(id,bg,nome){
  document.getElementById('fundo').style.backgroundImage=foto;
  document.getElementById('fundo2').style.backgroundImage=foto;
  document.getElementById('tituloArea').textContent=nome;
+ /* Ao sair do Dashboard esquece-se a cascata, para que ao voltar
+    ela caia outra vez — é uma entrada, não uma repetição. */
+ if(secao==='s-resumo' && id!=='s-resumo'){ try{ cascataRepor(); }catch(e){} }
  secao=id; document.body.dataset.sec=id; if(innerWidth<1000) gaveta(false);
  window.scrollTo({top:0,behavior:'instant'});
  if(id==='s-fila') carregarFila(30);
@@ -2926,6 +3310,21 @@ function ligado(x){const s=String(x==null?'':x).trim().toLowerCase();
 function alternar(n){tocados[n]=1; ativos[n]=!ativos[n];const el=document.getElementById('A'+n);if(el)el.classList.toggle('lig',ativos[n]);}
 
 function desenhar(){
+ /* 1) nunca repintar por baixo de quem esta a escrever numa das caixas
+    2) so repintar quando os dados mudaram mesmo; se o ecra estiver vazio
+       repinta na mesma, para nada ficar em branco por engano */
+ try{
+  var _f=document.activeElement;
+  if(_f&&(_f.tagName==='INPUT'||_f.tagName==='TEXTAREA')&&_f.closest&&
+     _f.closest('#tbPrecos,#tbNums,#dinheiro,#sistemaBox,#lucroBox,#fones,#principal')) return;
+  var _ass=JSON.stringify([D&&D.telefones,D&&D.resumo_painel,D&&D.helice,D&&D.bot,
+                           D&&D.ativo,D&&D.lucro,D&&D.tarifas,D&&D.numeros,
+                           typeof F!=='undefined'&&F&&F.contagens]);
+  var _ch=document.getElementById('chips'), _ti=document.getElementById('tiles');
+  var _cheio=_ch&&_ch.innerHTML&&_ti&&_ti.innerHTML;
+  if(_cheio&&desenhar._ass===_ass) return;
+  desenhar._ass=_ass;
+ }catch(e){}
  const t=D.telefones||{},rp=D.resumo_painel||{},h=D.helice||{},b=D.bot||{},at=(D.ativo||{}).ativo,L=D.lucro||{};
  const c=F.contagens||{},meta=n0(L.MetaDia)||META_PADRAO;
  document.getElementById('chips').innerHTML=
@@ -3008,6 +3407,13 @@ function canalDe(i){
  return x.startsWith('PP')?'emola':'mpesa';}  /* o M-Pesa muda de prefixo (DG->DH->...): so o e-Mola e reconhecido, o resto e M-Pesa */
 function pintarFila(it,onde,lim){
  const el=document.getElementById(onde); if(!el) return;
+ /* mesma regra: so repinta se houver diferenca */
+ try{
+  var _a=onde+'|'+lim+'|'+JSON.stringify((it||[]).slice(0,lim));
+  pintarFila._a=pintarFila._a||{};
+  if(pintarFila._a[onde]===_a&&el.innerHTML) return;
+  pintarFila._a[onde]=_a;
+ }catch(e){}
  if(!it.length){el.innerHTML='<span class="fumo">sem movimento</span>'; return;}
  el.innerHTML='<div class="zebra">'+it.slice(0,lim).map(i=>{
   const pag=i.tipo==='pagamento', c=pag?canalDe(i):'entrega';
@@ -3018,7 +3424,8 @@ function pintarFila(it,onde,lim){
     <span class="q">${quem}</span><span class="selo">${selo}</span></div>`}).join('')+'</div>';}
 let CONS={};
 async function carregarConsultas(){ try{pintarConsultasB();}catch(e){} try{pintarVel();}catch(e){}
- try{CONS=await rpc('consultas_lista',{p_n:60});}catch(e){CONS={};}
+ try{var _r=await rpc('consultas_lista',{p_n:60}); if(_r) CONS=_r;}catch(e){/* fica o ultimo bom */}
+ try{consMarcarFrescas((CONS&&CONS.dias)||[]);}catch(e){}
  const cx=document.getElementById('consBox'); if(!cx) return;
  const rz=document.getElementById('consResumo');
  if(rz) rz.textContent=(CONS.total_hoje||0)+' hoje · '+(CONS.total||0)+' no total';
@@ -3057,9 +3464,9 @@ function pintarHistorico(dias){
   const mostra=it.slice(0,Math.max(0,LIM-vistos));
   vistos+=mostra.length;
   corpo+=`<div class="consdia">${seg(d.dia)}</div>`+mostra.map(i=>
-   `<div class="consl" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
+   `<div class="consl ${consClasse(i)}" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
     <span class="h">${seg(i.h)}</span><span class="num">${seg(i.numero)}</span>
-    <span class="quem">${i.titular?seg(i.titular):'sem titular'}</span>
+    <span class="quem">${i.titular?seg(i.titular):'sem titular'}</span>${consSelo(i)}
     <span class="tag">${seg(i.dev)} · sim ${seg(i.sim)}</span><span class="cop">⧉</span></div>`).join('');
  });
  cx.innerHTML = corpo || '<div class="fumo" style="padding:14px;text-align:center">nada encontrado</div>';
@@ -3070,6 +3477,70 @@ function pintarHistorico(dias){
   else mais.style.display='none';
  }
 }
+/* ─── avisar quando o mesmo número já foi consultado ─────────────────
+   O objectivo aqui não é enfeitar: é o Euclides perceber, de relance,
+   que está a consultar um número que já consultou — pode ser um cartão
+   já usado, ou distracção.
+   Por isso a cor só aparece quando há repetição. Um número consultado
+   uma única vez fica neutro; se tudo tivesse cor, a cor deixava de
+   avisar seja o que for.
+     verde      → a consulta mais recente de um número repetido
+     azul claro → as consultas anteriores desse mesmo número
+     neutro     → número consultado uma só vez (a maioria)
+   O contador diz de que vez se trata, e o intervalo mostra quão
+   depressa se repetiu — "12 min depois" é o sinal de distracção. */
+function consChave(i){ return String(i.numero||'').replace(/\D/g,''); }
+function _consMin(h){
+  var m = String(h||'').match(/(\d{1,2}):(\d{2})/);
+  return m ? (+m[1])*60 + (+m[2]) : null;
+}
+function consMarcarFrescas(dias){
+  var porNum = {};
+  // os dias vêm do mais recente para o mais antigo, e dentro do dia
+  // as horas também; percorro ao contrário para ficar cronológico
+  var lista = [];
+  (dias||[]).forEach(function(d, di){
+    (d.itens||[]).forEach(function(i, ii){
+      i.__dia = d.dia; i.__pos = di + ':' + ii;
+      lista.push(i);
+    });
+  });
+  lista.slice().reverse().forEach(function(i){
+    var k = consChave(i);
+    if(!k) return;
+    (porNum[k] = porNum[k] || []).push(i);
+  });
+  Object.keys(porNum).forEach(function(k){
+    var seq = porNum[k];
+    seq.forEach(function(i, n){
+      i.__vezes = seq.length;
+      i.__ordem = n + 1;
+      i.__ultima = (n === seq.length - 1);
+      i.__gap = null;
+      if(n > 0){
+        var ant = seq[n-1];
+        if(ant.__dia === i.__dia){
+          var a = _consMin(ant.h), b = _consMin(i.h);
+          if(a !== null && b !== null && b >= a) i.__gap = b - a;
+        }
+      }
+    });
+  });
+}
+function consClasse(i){
+  if(!i || !i.__vezes || i.__vezes < 2) return 'consUnica';
+  return i.__ultima ? 'consNova' : 'consVelha';
+}
+function consSelo(i){
+  if(!i || !i.__vezes || i.__vezes < 2) return '';
+  var t = i.__ordem + 'ª de ' + i.__vezes;
+  if(i.__gap !== null && i.__gap !== undefined){
+    t += i.__gap < 60 ? ' · ' + i.__gap + ' min depois'
+                      : ' · ' + Math.floor(i.__gap/60) + 'h' + String(i.__gap%60).padStart(2,'0') + ' depois';
+  }
+  return '<span class="consRep">' + t + '</span>';
+}
+
 function _consAntigo(){ const dias=[];
  return dias.map(d=>`<div class="consdia">${seg(d.dia)}</div>`+
    (d.itens||[]).map(i=>`<div class="consl" onclick="copiar('${seg(i.numero)}')" title="copiar ${seg(i.numero)}">
@@ -3094,11 +3565,14 @@ async function carregarFila(n){
     ['entregas hoje',c.ent_hoje,'var(--relva)'],['MT hoje',c.mt_hoje,'#fff']]
    .map(x=>`<div class="tile"><b style="color:${x[2]}">${x[1]||0}</b><span>${x[0]}</span></div>`).join('');
   const fh=document.getElementById('filaHora');
+  /* a nuvem manda ultima_hora/ultimos_15; o painel lia ult_hora/ult_15min
+     e por isso mostrava sempre zero */
   if(fh) fh.textContent=(it.length?'último às '+it[0].h:'sem movimento')
-    +' · '+(c.ult_hora||0)+' na última hora · '+(c.ult_15min||0)+' nos 15 min';
+    +' · '+(c.ult_hora||c.ultima_hora||0)+' na última hora · '
+    +(c.ult_15min||c.ultimos_15||0)+' nos 15 min';
   pintarFila(it,'ultimos',6); if(secao==='s-fila') carregarFila7();
   if(secao==='s-consultas') carregarConsultas();
- }catch(e){const el=document.getElementById('filaLista'); if(el) el.innerHTML='<span class="fumo">sem ligação</span>';}}
+ }catch(e){const fh=document.getElementById('filaHora'); if(fh) fh.textContent='sem ligação — a tentar outra vez';}}
 /* ===== memória local: abre cheio antes de a rede responder ===== */
 const MEM='wolf_mem_v1';
 function memGuardar(){
@@ -3134,8 +3608,22 @@ setTimeout(function(){
     try{pintarBalao();}catch(e){}  try{pintarVia();}catch(e){} } }catch(e){}
 },60);
 async function carregar(){
- try{D=await rpc('painel_resumo'); try{memGuardar();}catch(e){} await carregarFila(secao==='s-fila'?30:6); comEstado(desenhar);}
- catch(e){document.getElementById('chips').innerHTML='<span class="pill off">sem ligação</span>';}}
+ /* Cada passo cai por si. Antes, se o painel_resumo falhasse, a fila e o
+    desenho do ecra nem chegavam a correr, e os chips eram substituidos
+    por "sem ligacao" -- outro pisca-pisca de 5 em 5 segundos. */
+ var _ok=true;
+ try{D=await rpc('painel_resumo'); try{memGuardar();}catch(e){}}catch(e){_ok=false;}
+ try{await carregarFila(secao==='s-fila'?30:6);}catch(e){}
+ try{comEstado(desenhar);}catch(e){}
+ if(!_ok){var _ch=document.getElementById('chips');
+   /* so escreve se nao houver nada: o ultimo bom vale mais que um aviso */
+   if(_ch&&!_ch.innerHTML) _ch.innerHTML='<span class="pill off">sem ligação</span>';}
+ /* A cascata e o pulso pertencem ao Dashboard e é este o ciclo que corre
+    sempre — o negCarregar() só é chamado depois de acções (guardar saldo,
+    zerar contadores), e por isso nada aparecia ao abrir a aplicação. */
+ try{ if(typeof cascataPintar==='function') await cascataPintar(); }catch(e){ console.log('cascata:',e.message); }
+ try{ if(typeof pulsoPintar==='function') await pulsoPintar(); }catch(e){ console.log('pulso:',e.message); }
+}
 var CMDOCUPADO = new Set();
 async function cmd(dev,acao,valor,ev){
  if(acao.startsWith('saldo_')&&!String(valor||'').trim()) return aviso('Escreve os megas do cartão','bad');
@@ -3207,14 +3695,33 @@ pintarBotaoTema();
 
 let G7={contas:{},itens:[]},F7T=null; if(G7&&G7.agora) F7DELTA=G7.agora-Math.floor(Date.now()/1000);
 async function carregarFila7(){
+ /* A lista nao se apaga por causa da rede: se o pedido falhar, fica o
+    ultimo bom. Antes um pedido falhado punha G7 vazio e a fila
+    desaparecia ate ao ciclo seguinte -- era o piscar.
+    O ferrolho evita que os dois ciclos (2 s e 5 s) peçam ao mesmo tempo. */
+ if(carregarFila7._ocupado) return;
+ carregarFila7._ocupado=true;
  try{const q=((document.getElementById('filaBusca')||{}).value||'').trim();
-  G7=await rpc('fila_lista',{p_n:60,p_q:q||null});
- }catch(e){G7={contas:{},itens:[]};}
+  const r=await rpc('fila_lista',{p_n:60,p_q:q||null});
+  if(r&&r.itens) G7=r;
+  /* a nuvem manda a sua hora em r.agora; sem isto os tempos eram
+     contados pelo relogio do telemovel e, se estivesse adiantado,
+     davam negativo e ficavam presos em 0s */
+  if(r&&r.agora) F7DELTA=Number(r.agora)-Math.floor(Date.now()/1000);
+ }catch(e){/* fica o que ja la estava */}
+ finally{carregarFila7._ocupado=false;}
  pintarFila7();}
+carregarFila7._ocupado=false;
 let F7ABA='fila';
 function pintarFila7(){
  const cx=document.getElementById('filaLista'); if(!cx) return;
  const it=G7.itens||[], c=G7.contas||{};
+ /* so se repinta quando ha diferenca: sem isto o innerHTML das 130 linhas
+    era reescrito de 2 em 2 segundos, e isso pisca no telemovel */
+ var _ass=F7ABA+'|'+JSON.stringify(c)+'|'+it.map(function(x){
+   return x.refid+x.st+(x.falhou?1:0)+(x.t_entregue||'');}).join(',');
+ if(pintarFila7._ass===_ass && cx.innerHTML) return;
+ pintarFila7._ass=_ass;
  const ROT={fila:'Na fila',enviar:'A enviar',enviado:'Enviado'};
  const ORD=['fila','enviar','enviado'];
  let ab=document.getElementById('filaAbas');
@@ -3225,22 +3732,115 @@ function pintarFila7(){
   (c[s]!=null?c[s]:it.filter(x=>x.st===s).length)+'</span></button>').join('');
  const li=it.filter(x=>x.st===F7ABA);
  cx.innerHTML = li.length ? li.map(x=>
+  /* Três faixas: quem (nome e megas), quanto (número, valor, ID) e
+     quando (tempos e botões). Cada uma com a sua linha, para o nome
+     nunca ter de ser cortado — era o que acontecia quando tudo
+     disputava a mesma largura. */
+  /* Nome dominante: sozinho no topo, a 16px, com toda a largura para
+     si. Os megas e o valor descem para a segunda faixa, o número
+     encosta à direita, e o ID vai para o rodapé com os tempos — é o
+     que menos se lê e o que mais espaço ocupava. */
   '<div class="f7r e-'+x.st+' '+x.canal+'">'+
-   '<span class="f7marca"></span>'+
-   '<div class="f7esq"><div class="f7nome">'+seg(x.nome||'sem nome')+'</div>'+
-    '<div class="f7sub"><span class="f7id">'+seg(x.refid)+'</span>'+
-    '<span class="f7pt">•</span><span class="f7num">'+seg(x.num)+'</span>'+
-    (x.falhou?'<span class="f7falhou">falhou</span>':'')+
-    (x.d?'<span class="f7pt">•</span><span class="f7num">'+seg(x.d)+'</span>':'')+'</div></div>'+
-   '<div class="f7dir"><div class="f7mb">'+seg(x.mb)+' MB</div>'+
-    '<div class="f7mt">'+seg(x.mt)+' MT</div></div>'+
-   f7tempos(x)+
-   '<span class="f7par">'+
-     '<button title="Mudar estado" onclick="f7avanca(\''+seg(x.refid)+'\',\''+x.st+'\')">&#9654;</button>'+
-     '<button class="rev" title="Reenviar — apaga o guardado" onclick="f7reenvia(\''+seg(x.refid)+'\',\''+seg(x.num)+'\')">&#10227;</button>'+
-   '</span></div>').join('')
-  : '<div class="fumo" style="font-size:12px;padding:18px 2px;text-align:center">nenhum aqui</div>';}
-function f7aba(s){F7ABA=s;pintarFila7();if(typeof negFila==='function'&&document.getElementById('negFila'))negFila();}
+   '<div class="f7g1"><span class="f7marca"></span>'+
+     '<span class="f7nome">'+seg(x.nome||'sem nome')+'</span></div>'+
+   '<div class="f7g2"><span class="f7mb">'+seg(x.mb)+' MB</span>'+
+     '<span class="f7mt">'+seg(x.mt)+' MT</span>'+
+     (x.falhou?'<span class="f7falhou">falhou</span>':'')+
+     '<span class="f7num">'+seg(x.num)+'</span></div>'+
+   /* Sem botões: o arrasto avança o estado e o toque duplo reenvia.
+      Dois alvos de 30px a menos por linha, e a largura toda para o que
+      interessa ler. Os detalhes deixaram de viver aqui dentro — abrem
+      na folha da pessoa, ao primeiro toque. */
+   '<div class="f7g3">'+f7temposCurto(x)+'<span class="f7id">'+seg(x.refid)+'</span></div>'+
+   '</div>').join('')
+  : '<div class="fumo" style="font-size:12px;padding:18px 2px;text-align:center">nenhum aqui</div>';
+ try{ f7reabrir(); }catch(e){} }
+/* ─── detalhe por toque ──────────────────────────────────────────────
+   A lista ficou densa de propósito: numa fila de vinte pessoas o que
+   importa é ver tudo de uma vez. O que não cabe na linha não se perde —
+   um toque na borda abre o resto.
+   Os refids abertos ficam guardados no F7ABERTOS: a fila repinta-se
+   sozinha de poucos em poucos segundos, e sem isto o painel fechava-se
+   na cara de quem estava a lê-lo. */
+var F7ABERTOS = {};
+
+function f7lin(rot, val, cor){
+  if(val===undefined||val===null||val==='') return '';
+  return '<div class="f7dl"><span class="f7dr">'+rot+'</span>'+
+         '<span class="f7dv'+(cor?' '+cor:'')+'">'+seg(String(val))+'</span></div>';
+}
+
+function f7detalhe(x){
+  var esperou = (x.t_pago && x.t_entregue) ? f7dur(x.t_entregue-x.t_pago) : null;
+  var canal = x.canal==='mpesa' ? 'M-Pesa' : (x.canal==='emola' ? 'e-Mola' : (x.canal||''));
+  var estado = x.st==='enviado' ? 'entregue' : (x.st==='enviar' ? 'a enviar' : 'na fila');
+  return '<div class="f7det">'+
+    f7lin('comprovativo', x.refid)+
+    f7lin('pagou de', x.pagou)+
+    f7lin('recebe', x.num)+
+    f7lin('nome', x.nome||'sem nome')+
+    f7lin('pacote', (x.mb?x.mb+' MB':'')+(x.mt?'  ·  '+x.mt+' MT':''))+
+    f7lin('via', canal)+
+    f7lin('estado', estado, x.st==='enviado'?'bom':(x.falhou?'mau':''))+
+    f7lin('pago às', (x.d?x.d+' ':'')+(x.t_pago?f7hh(x.t_pago):(x.h||'')))+
+    f7lin('entregue às', x.t_entregue?((x.d_entregue?x.d_entregue+' ':'')+f7hh(x.t_entregue)):null, 'bom')+
+    f7lin('demorou', esperou)+
+    (x.falhou?'<div class="f7dl"><span class="f7dr">aviso</span><span class="f7dv mau">passou do tempo sem confirmação</span></div>':'')+
+    (x.exacto===false?'<div class="f7dl"><span class="f7dr">nota</span><span class="f7dv">casado pelo número e megas, não pelo ID</span></div>':'')+
+    '<div class="f7dbt"><button onclick="f7copiar(event,\''+seg(x.refid)+'\')">copiar ID</button>'+
+    '<button onclick="f7copiar(event,\''+seg(x.num)+'\')">copiar número</button></div>'+
+    '</div>';
+}
+
+function f7copiar(ev, t){
+  ev.stopPropagation();
+  if(typeof copiar==='function') copiar(t); else aviso('Copiado: '+t,'ok');
+}
+
+/* Três gestos na mesma linha:
+     toque simples  → a história completa da pessoa, com o resto desfocado
+     toque duplo    → reenviar
+     arrastar →     → avançar de estado
+   O simples espera 320 ms para ver se vem um segundo. É esse o preço de
+   ter dois toques distintos, e é preferível a ter o reenvio — que gasta
+   megas — à distância de um toque só. */
+var F7TOQUE = { id:null, t:0, timer:null };
+
+document.addEventListener('click', function(ev){
+  var r = ev.target.closest && ev.target.closest('.f7r');
+  if(!r) return;
+  if(ev.target.closest('.f7par') || ev.target.closest('.f7dbt')) return;
+  if(r.dataset.engole) return;                    // veio de um arrasto
+
+  var el = r.querySelector('.f7id');
+  var id = el ? el.textContent.trim() : '';
+  var num = (r.querySelector('.f7num')||{}).textContent || '';
+  if(!id) return;
+
+  var agora = Date.now();
+  if(F7TOQUE.id === id && agora - F7TOQUE.t < 320){
+    clearTimeout(F7TOQUE.timer); F7TOQUE.id = null;
+    r.classList.remove('aberta');
+    f7reenvia(id, num.trim());                    // toque duplo
+    return;
+  }
+  F7TOQUE.id = id; F7TOQUE.t = agora;
+  clearTimeout(F7TOQUE.timer);
+  F7TOQUE.timer = setTimeout(function(){
+    F7TOQUE.id = null;
+    pessoaAbrir(num.trim(), id);                  // toque simples
+  }, 320);
+});
+
+function f7reabrir(){
+  document.querySelectorAll('.f7r').forEach(function(r){
+    var id = r.querySelector('.f7id');
+    id = id ? id.textContent.trim() : '';
+    if(id && F7ABERTOS[id]) r.classList.add('aberta');
+  });
+}
+
+function f7aba(s){F7ABA=s;pintarFila7();}
 async function f7avanca(id,st){
  const prox=st==='fila'?'enviar':(st==='enviar'?'enviado':'fila');
  try{
@@ -3314,6 +3914,37 @@ function f7dur(s){s=Math.max(0,Math.round(s));
  const m=Math.floor(s/60);
  if(m<60) return m+'m'+('0'+(s%60)).slice(-2)+'s';
  return Math.floor(m/60)+'h'+('0'+(m%60)).slice(-2);}
+/* Versão de uma linha: pagou → entregue · levou. O rodapé da linha não
+   tem altura para os três blocos com rótulo, e nesta organização o que
+   importa é a passagem do tempo, não as etiquetas. */
+function f7temposCurto(x){
+ const ag=Math.floor(Date.now()/1000)+F7DELTA;
+ const pago = x.t_pago ? f7hh(x.t_pago) : (x.h||'—');
+ if(x.st==='enviado'){
+   const ent = x.t_entregue ? f7hh(x.t_entregue) : (x.h_entregue||'—');
+   return '<span class="f7tval">'+pago+'</span>'+
+          '<span class="f7seta">→</span>'+
+          '<span class="f7tval feito">'+ent+'</span>'+
+          (x.t_entregue&&x.t_pago ? '<span class="f7tval fraco">'+f7dur(x.t_entregue-x.t_pago)+'</span>' : '');
+ }
+ if(x.st==='enviar'){
+   /* sem hora de despacho contava-se nada e ficava a palavra "a enviar"
+      parada; agora conta desde o pagamento */
+   const base = x.t_despacho || x.t_pago || 0;
+   return '<span class="pip"></span><span class="f7tval correndo"'+
+          (base?' data-vivo="'+base+'"':'')+'>'+
+          (base ? f7dur(ag-base) : 'a enviar')+'</span>';
+ }
+ /* Faltava aqui o que mais interessa a quem olha para a fila: ha quanto
+    tempo esta pessoa espera. So dizia "na fila". */
+ const desde = x.t_pago || 0;
+ return '<span class="f7tval">'+pago+'</span>'+
+        '<span class="f7seta">\u2192</span>'+
+        (desde ? '<span class="f7tval espera" data-vivo="'+desde+'">'+
+                 f7dur(ag-desde)+'</span>' : '')+
+        '<span class="f7tval fraco">'+(x.falhou?'parada':'a espera')+'</span>';
+}
+
 function f7tempos(x){
  const ag=Math.floor(Date.now()/1000)+F7DELTA;
  let t='<div class="f7t"><span class="f7trot">pagou</span>'+
@@ -3339,8 +3970,12 @@ function f7tempos(x){
 /* faz os relogios andarem sem repintar a lista toda */
 function f7tique(){
  const ag=Math.floor(Date.now()/1000)+F7DELTA;
- document.querySelectorAll('.f7t[data-vivo]').forEach(function(e){
-  const b=e.querySelector('.f7tval');
+ /* O desenho antigo punha o data-vivo no .f7t; o actual poe-o no proprio
+    .f7tval. O selector so apanhava o antigo, por isso nada andava: o
+    numero so mudava quando a lista se repintava, aos 2 s e aos 5 s.
+    Era isso o 0s - 2s - 5s. */
+ document.querySelectorAll('[data-vivo]').forEach(function(e){
+  const b=e.classList.contains('f7tval') ? e : e.querySelector('.f7tval');
   if(b) b.textContent=f7dur(ag-Number(e.getAttribute('data-vivo')));
  });
 }
@@ -3560,12 +4195,18 @@ function nDur(s){s=Math.max(0,Math.round(s||0));
 function nMb(v){var n=n0(v);return n>=1024?(n/1024).toFixed(n%1024?1:0)+' GB':Math.round(n)+' MB';}
 
 async function negCarregar(){
- try{ NEG=await rpc('negocio_resumo',{}); }catch(e){ NEG=null; }
- try{ NEGQ=await rpc('fila_lista',{p_n:40,p_q:null}); }catch(e){ NEGQ=null; }
+ try{ var _r=await rpc('negocio_resumo',{}); if(_r) NEG=_r; }catch(e){/* fica o ultimo bom */}
+ try{ var _q=await rpc('fila_lista',{p_n:40,p_q:null}); if(_q&&_q.itens) NEGQ=_q; }catch(e){/* fica o ultimo bom */}
  negPintar();
+ /* A cascata e o pulso vivem no Dashboard, por isso é aqui que são
+    pintados. Estavam presos ao f7aba — a função que troca os separadores
+    da Fila — e por isso só corriam se alguém tocasse num separador.
+    Ao abrir o Dashboard não acontecia nada, que era o que se via. */
+ try{ if(typeof cascataPintar==='function') cascataPintar(); }catch(e){ console.log('cascata:',e.message); }
+ try{ if(typeof pulsoPintar==='function') await pulsoPintar(); }catch(e){ console.log('pulso:',e.message); }
 }
 function negPintar(){
- if(!NEG){var t=document.getElementById('negTop'); if(t)t.textContent='sem ligação';return;}
+ if(!NEG){var t=document.getElementById('negTop'); if(t&&!t.innerHTML)t.textContent='sem ligação';return;}
  var d=NEG.dia||{}, en=NEG.entrega||{}, on=NEG.ontem||{}, me=NEG.mes||{}, tp=NEG.top||{};
  var meta=n0((D.lucro||{}).MetaDia)||2000, luc=n0(d.lucro), pct=meta>0?Math.min(luc/meta,1):0;
  var C=2*Math.PI*50;
@@ -3649,7 +4290,12 @@ function negPintar(){
 
  negFila();
 }
-function negFila(){
+/* O Dashboard copiava a secção inteira da Fila — cartões, lista e a
+   FILA WHATSAPP — o que dava duas vezes a mesma coisa na mesma app.
+   Passou a mostrar a cascata do dia. A função fica, vazia, porque é
+   chamada de vários sítios. */
+function negFila(){ return; }
+function negFilaAntigo(){
  var c=document.getElementById('negFila'); if(!c) return;
  var real=document.getElementById('s-fila');
  if(!real){ c.textContent='fila indisponivel'; return; }
@@ -3702,7 +4348,12 @@ var NEGV=0;
 async function negCiclo(){
  if(!document.getElementById('negTop')) return;
  /* a MESMA carga que a aba da Fila usa: um so pedido para as duas */
- if(typeof carregarFila7==='function'){ try{ await carregarFila7(); }catch(e){} }
+ /* A fila e o pedido mais pesado do painel (~46 KB). No ecra da Fila o
+    ciclo de 5 s ja a vai buscar; aqui basta de 6 em 6 s, e so quando se
+    esta noutro ecra. Antes saia de 2 em 2 segundos, sempre. */
+ if(typeof carregarFila7==='function'
+    && (typeof secao==='undefined' || secao!=='s-fila')
+    && NEGV%3===0){ try{ await carregarFila7(); }catch(e){} }
  if(NEGV%2===0){ try{ NEG=await rpc('negocio_resumo',{}); }catch(e){} }
  if(NEGV%5===0){ if(typeof carregarFila==='function'){ try{ await carregarFila(6); }catch(e){} } }
  NEGV++; negPintar();
@@ -4044,6 +4695,12 @@ setTimeout(negCiclo, 900);
       '<div class="f7abas" id="ordDev">'+
       '<button data-d="redmi8"><span class="r">Redmi 8</span></button>'+
       '<button data-d="redmi13"><span class="r">Redmi 13c</span></button></div>'+
+      '<div class="ordDestCx"><label for="ordDest">Número de destino</label>'+
+      '<div class="ordDestLinha"><input id="ordDest" inputmode="numeric" maxlength="9" '+
+      'placeholder="8XXXXXXXX" autocomplete="off">'+
+      '<button class="acao" id="ordDestBt">Só o destino</button></div>'+
+      '<small>Muda o número que <b>recebe</b> os megas, dentro do conteúdo. '+
+      'Não toca no número de quem transferiu.</small></div>'+
       '<div class="acoes"><button class="acao" id="ordId">Trocar o último dígito do ID</button>'+
       '<button class="acao forte" id="ordEnviar">Corrigir e enviar</button></div>'+
       '<p class="folhaP" style="margin-top:12px">Corrige o que falta — normalmente o número '+
@@ -4061,6 +4718,25 @@ setTimeout(negCiclo, 900);
       t.value=n;
       if(typeof aviso==='function') aviso('ID trocado','ok');
     });
+    document.getElementById('ordDestBt').addEventListener('click',async function(){
+      var d=(document.getElementById('ordDest').value||'').replace(/\D/g,'');
+      if(d.length!==9){ aviso('O destino tem de ter 9 algarismos','bad'); return; }
+      if(!ORD_REFID){ aviso('Não sei de que comprovativo se trata','bad'); return; }
+      if(!confirm('Mudar o destino para '+d+' e reenviar?\n\nO comprovativo é o mesmo — fica corrigido, não se cria outro.')) return;
+      this.disabled=true;
+      try{
+        var r=String(await rpc('fila_corrigir_destino',
+              {p_refid:ORD_REFID,p_destino:d,p_dev:ORD_DEV})||'');
+        if(r.indexOf('OK')===0){
+          aviso(r.replace(/^OK:\s*/,'Destino: '),'ok');
+          fecharOrdem();
+          if(typeof carregar==='function') carregar();
+          if(typeof carregarFila7==='function') carregarFila7();
+        }else aviso(explicaErro(r),'bad');
+      }catch(e){ aviso('Falhou: '+(e&&e.message?e.message:e),'bad'); }
+      this.disabled=false;
+    });
+
     document.getElementById('ordEnviar').addEventListener('click',async function(){
       var v=document.getElementById('ordTxt').value.trim();
       if(!v){ aviso('Não há nada para enviar','bad'); return; }
@@ -4081,11 +4757,24 @@ setTimeout(negCiclo, 900);
     });
   }
 
+  /* Lê o destino tal como o destino_do() da base: primeiro "Conteudo:",
+     depois "na conta", e só em último caso o número de quem pagou. Se as
+     duas leituras divergissem, o painel mostrava um número e o telefone
+     entregava a outro. */
+  function destinoDe(t){
+    t=String(t||'');
+    var m=t.match(/Conteudo:\s*(\d{9})/); if(m) return m[1];
+    m=t.match(/na conta\s*(\d{9})/);      if(m) return m[1];
+    m=t.match(/(\d{9})/);                  return m?m[1]:'';
+  }
+
   function abrirOrdem(dev,txt){
     montarFolhaOrdem();
     ORD_DEV=(dev==='redmi13'||dev==='redmi8')?dev:'redmi8';
     pintarOrdDev();
     ORD_REFID=refidDe(txt);
+    var cd=document.getElementById('ordDest');
+    if(cd) cd.value=destinoDe(txt);
     var t=document.getElementById('ordTxt'); if(t) t.value=txt;
     document.body.classList.add('comOrdem');
   }
@@ -4186,12 +4875,12 @@ function lyDur(s){s=Math.max(0,Math.round(s||0));
 function lyMb(v){var n=n0(v);return n>=1024?(n/1024).toFixed(n%1024?1:0)+' GB':Math.round(n)+' MB';}
 async function lyCarregar(){
  var b=document.getElementById('lyBusca');
- try{ LYD=await rpc('layra_fila',{p_n:60,p_q:(b&&b.value||'').trim()||null}); }catch(e){ LYD=null; }
+ try{ var _l=await rpc('layra_fila',{p_n:60,p_q:(b&&b.value||'').trim()||null}); if(_l) LYD=_l; }catch(e){/* fica o ultimo bom */}
  lyPintar();
 }
 function lyPintar(){
  var cx=document.getElementById('lyLista'); if(!cx) return;
- if(!LYD){ cx.textContent='sem ligação'; return; }
+ if(!LYD){ if(!cx.innerHTML) cx.textContent='sem ligação'; return; }
  var c=LYD.contas||{}, t=LYD.totais||{};
  var tl=document.getElementById('lyContas');
  if(tl) tl.innerHTML=
@@ -4442,8 +5131,8 @@ document.addEventListener('click', function(ev){
   +   '</div>'
   +   '<div class="bwCampo"><label>Dia</label><input type="date" id="bwDia">'
   +     '<div class="bwDuo">'
-  +       '<div><label>Das</label><input type="time" id="bwH1" value="09:00"></div>'
-  +       '<div><label>Até</label><input type="time" id="bwH2" value="18:00"></div></div></div>'
+  +       '<div><label>Das</label><input type="time" id="bwH1" value="00:00"></div>'
+  +       '<div><label>Até</label><input type="time" id="bwH2" value="23:59"></div></div></div>'
   +   '<label class="bwChk"><input type="checkbox" id="bwFila" checked>'
   +     '<span>Pôr na fila de entrega<small>sem isto só mostra, não despacha</small></span></label>'
   +   '<div class="acoes"><button class="acao forte" onclick="bwRecolher(this)">Recolher agora</button></div>'
@@ -4516,6 +5205,11 @@ document.addEventListener('click', function(ev){
     var d = new Date(), z = function(n){ return String(n).padStart(2,'0'); };
     var e2 = document.getElementById('bwDia');
     if (e2) e2.value = d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+    /* a recolha cobre o dia todo até agora: das 00:00 à hora a que se abre.
+       Antes vinha 09:00-18:00 fixo e deixava de fora as vendas da noite. */
+    var h1 = document.getElementById('bwH1'), h2 = document.getElementById('bwH2');
+    if (h1) h1.value = '00:00';
+    if (h2) h2.value = z(d.getHours())+':'+z(d.getMinutes());
     return true;
   }
 
@@ -4570,6 +5264,8 @@ async function bwOrdem(bot,acao,b){
     for(var i=0;i<20;i++){
       await bwDorme(3000);
       var e=null; try{ e=await bwRpc("bot_estado_ordem",{p_bot:bot}); }catch(x){}
+      /* a ordem morreu na nuvem: o telemovel nunca a foi buscar */
+      if(e&&e.expirou){ bwMsg("bwR"+bot,e.resultado||"a ordem expirou","Mau"); bwPonto(bot,"off"); return; }
       if(e&&e.feito){ bwMsg("bwR"+bot,e.resultado||"feito","Ok"); bwPonto(bot,"on");
                       setTimeout(function(){ bwQrCalado(bot); },6000); return; }
     }
@@ -4714,6 +5410,59 @@ async function bwVerQR(bot,b){
 function pqEscapar(t){ return String(t==null?"":t)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+/* ─── agir sobre um resultado da pesquisa ────────────────────────────
+   A pesquisa encontrava o pagamento de há meses mas não deixava mexer
+   nele. Agora cada linha traz o destino editável e dois botões:
+   reenviar como está, ou corrigir o número e reenviar.
+   O refid vem da própria pesquisa; sem ele não há nada a fazer, e a
+   barra não aparece (é o caso das entregas que chegaram sem ID). */
+function pqAccoes(l){
+  var ref=(l.refid||l.comprovativo||"").trim();
+  if(!ref) return '<div class="pqSemAcao">sem ID — não dá para reenviar por aqui</div>';
+  var dest=(l.destino||"").trim();
+  var falta=(l.falta_destino===true)||!dest;
+  var id=ref.replace(/[^A-Za-z0-9]/g,"");
+  return '<div class="pqAcoes'+(falta?' pqFalta':'')+'">'
+    +  '<input class="pqNum" id="pqN_'+id+'" value="'+pqEscapar(falta?"":dest)+'" '
+    +        'inputmode="numeric" maxlength="9" '
+    +        'placeholder="'+(falta?"falta o número — escreve":"número de destino")+'">'
+    +  '<button class="pqBt" onclick="pqReenviar(this,\''+pqEscapar(ref)+'\',\''+id+'\')">'
+    +      (falta?'preencher e enviar':'reenviar')+'</button>'
+    +  '<span class="pqAviso" id="pqM_'+id+'"></span>'
+    + (falta?'<div class="pqNota">o cliente não escreveu o destino — escreve-o tu, '
+            +'e ele passa a fazer parte do comprovativo</div>':'')
+    + '</div>';
+}
+
+async function pqReenviar(b, ref, id){
+  var campo=document.getElementById("pqN_"+id);
+  var msg=document.getElementById("pqM_"+id);
+  var dest=(campo && campo.value || "").replace(/\D/g,"");
+  if(dest.length < 9){ if(msg){msg.textContent="número curto"; msg.className="pqAviso mau";} return; }
+  if(!confirm("Reenviar "+ref+" para "+dest+" ?")) return;
+  var rot=b.textContent; b.disabled=true; b.textContent="a enviar…";
+  if(msg){ msg.textContent=""; msg.className="pqAviso"; }
+  try{
+    /* fila_corrigir_destino escreve o número dentro do conteúdo do
+       comprovativo (a seguir a "Conteudo:" ou "na conta") e só depois
+       reenvia. É o mesmo ID: corrige-se o que existe, não se cria outro.
+       O fila_reenviar simples não servia aqui — mandava para um número
+       solto e deixava o comprovativo com o destino errado lá dentro. */
+    var r=await bwRpc("fila_corrigir_destino",{p_refid:ref, p_destino:dest, p_dev:null});
+    var t=(typeof r==="string"?r:JSON.stringify(r))||"";
+    var bom=/^OK/i.test(t);
+    if(msg){
+      msg.textContent = bom ? t.replace(/^OK:\s*/,"").slice(0,64) :
+        (/NAO_ENCONTRADO/i.test(t)  ? "não achei o pagamento" :
+         /NUMERO_INVALIDO/i.test(t) ? "número tem de ter 9 algarismos" :
+         /SEM_ALTERACAO/i.test(t)   ? "já estava esse número" :
+         /FALTA_REFID/i.test(t)     ? "sem ID" : t.slice(0,60));
+      msg.className = "pqAviso " + (bom ? "bom" : "mau");
+    }
+  }catch(e){ if(msg){ msg.textContent="não deu: "+e.message.slice(0,50); msg.className="pqAviso mau"; } }
+  finally{ b.disabled=false; b.textContent=rot; }
+}
+
 function pqDesenhar(linhas, vazio){
   var cx=document.getElementById("pqRes");
   if(!linhas || !linhas.length){ cx.textContent = vazio; return; }
@@ -4733,7 +5482,11 @@ function pqDesenhar(linhas, vazio){
       +    (l.origem?'  ·  '+pqEscapar(l.origem):'')
       +    (l.estado?'  ·  '+pqEscapar(l.estado):'')
       +    (semNum?'  ·  <span class="pqSem">sem número Vodacom</span>':'')
-      +  '</div></div>';
+      +    (l.entregue===true?'  ·  <span class="pqOk">entregue</span>':'')
+      +    (l.entregue===false&&l.refid?'  ·  <span class="pqSem">por entregar</span>':'')
+      +  '</div>'
+      +  pqAccoes(l)
+      +  '</div>';
   });
   cx.innerHTML=h;
 }
@@ -4995,10 +5748,520 @@ async function bwEstadoVer(){
 }
 setTimeout(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 2800);
 setInterval(function(){ if(document.getElementById('bwPtlacasa')) bwEstadoVer(); }, 20000);
+
+/* ─── bolhas do eFootball no cartão do lucro ─────────────────────────
+   Foram tentadas primeiro por background-image e não apareceram, mesmo
+   com a regra a ganhar a cascata. Agora são elementos a sério com
+   estilo em linha: se o JS corre, elas existem — não há folha de
+   estilo que as apague.
+   Cores tiradas da imagem que o Euclides enviou: magenta #f000f0,
+   ciano #00f0f0, azul #000090 e branco.
+   Ficam só na metade esquerda, longe do anel do lucro à direita. */
+var BOLHAS = [
+  [6,22,15,"240,0,240",.80],   [14,68,23,"0,240,240",.62],
+  [3,78,10,"255,255,255",.55], [22,26,12,"0,0,144",.70],
+  [29,62,18,"240,0,240",.48],  [36,18,8,"0,240,240",.58],
+  [19,44,9,"255,255,255",.42], [41,74,13,"0,0,144",.46],
+  [9,48,6,"0,240,240",.66],    [33,40,5,"255,255,255",.40],
+  [45,34,10,"240,0,240",.34],  [25,84,7,"0,240,240",.44],
+  [11,12,5,"240,0,240",.50],   [38,54,6,"0,0,144",.38]
+];
+function porBolhas(){
+  var cx = document.getElementById("cxNeg");
+  if(!cx || cx.querySelector(".bolhaEF")) return;
+  var capa = document.createElement("div");
+  capa.className = "bolhasEF";
+  capa.style.cssText = "position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;border-radius:inherit";
+  BOLHAS.forEach(function(b){
+    var d = document.createElement("span");
+    d.className = "bolhaEF";
+    d.style.cssText = "position:absolute;border-radius:50%;pointer-events:none"
+      + ";left:" + b[0] + "%;top:" + b[1] + "%"
+      + ";width:" + (b[2]*2) + "px;height:" + (b[2]*2) + "px"
+      + ";margin-left:" + (-b[2]) + "px;margin-top:" + (-b[2]) + "px"
+      + ";background:rgba(" + b[3] + "," + b[4] + ")";
+    capa.appendChild(d);
+  });
+  if(getComputedStyle(cx).position === "static") cx.style.position = "relative";
+  cx.insertBefore(capa, cx.firstChild);
+  // o conteúdo tem de ficar por cima da camada das bolhas
+  Array.prototype.forEach.call(cx.children, function(el){
+    if(el === capa) return;
+    if(getComputedStyle(el).position === "static") el.style.position = "relative";
+    el.style.zIndex = "2";
+  });
+}
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", porBolhas);
+else porBolhas();
+setTimeout(porBolhas, 1200);
+
+
+/* ═══ cascata do dia ═══════════════════════════════════════════════
+   Cada pagamento de hoje cai do topo, um a seguir ao outro, e o total
+   sobe à medida que cada um aterra. Desde as 00h até ao segundo em que
+   se abriu o Dashboard.
+   Só corre a primeira vez que se abre — repetir a queda a cada
+   actualização seria bonito uma vez e irritante à décima. Depois disso
+   as peças novas entram sozinhas, sem refazer as antigas. */
+var CASC_JAVIU = false, CASC_VISTOS = {};
+/* Ao sair do Dashboard esquece-se o que já caiu, para que ao voltar a
+   cascata corra de novo — é uma entrada, não uma repetição. */
+function cascataRepor(){ CASC_JAVIU = false; CASC_VISTOS = {}; }
+
+function cascHora(ep){ var d=new Date(ep*1000);
+  return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+
+function cascPeca(x, i, animar){
+  var canal = x.canal==='emola' ? 'emola' : 'mpesa';
+  var st = x.st==='enviado' ? 'ok' : (x.falhou ? 'mau' : 'espera');
+  var rot = st==='ok' ? 'entregue' : (st==='mau' ? 'por entregar' : 'a caminho');
+  return '<div class="cascP '+canal+' '+st+(animar?' cai':'')+'"'+
+         (animar?' style="animation-delay:'+(i*85)+'ms"':'')+'>'+
+    '<span class="cascM"></span>'+
+    '<span class="cascN">'+seg(x.nome||'sem nome')+'</span>'+
+    '<span class="cascNum">'+seg(x.num||'')+'</span>'+
+    '<span class="cascMb">'+seg(x.mb||0)+' MB</span>'+
+    '<span class="cascMt">'+seg(x.mt||0)+'</span>'+
+    '<span class="cascH">'+(x.t_pago?cascHora(x.t_pago):seg(x.h||''))+'</span>'+
+    '<span class="cascE">'+rot+'</span>'+
+  '</div>';
+}
+
+function cascContar(el, ate, ms){
+  var de = 0, t0 = null;
+  function passo(t){
+    if(!t0) t0 = t;
+    var p = Math.min(1, (t-t0)/ms);
+    var v = Math.round(de + (ate-de) * (1-Math.pow(1-p,3)));
+    el.textContent = v.toLocaleString('pt-PT');
+    if(p<1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+async function cascataPintar(){
+  var cx = document.getElementById('negCascata'); if(!cx) return;
+  var sec = (typeof secao !== 'undefined') ? secao : 's-resumo';
+  if(sec !== 's-resumo') return;
+  /* Não depende de quem a chamou ter carregado o NEGQ: se estiver vazio,
+     vai ela própria buscar a fila. */
+  if(!NEGQ || !NEGQ.itens){
+    try{ var _q2 = await rpc('fila_lista',{p_n:60,p_q:null}); if(_q2&&_q2.itens) NEGQ = _q2; }catch(e){/* fica o ultimo bom */}
+  }
+  var itens = (NEGQ && NEGQ.itens) ? NEGQ.itens.slice() : [];
+  // do mais antigo para o mais recente: cai pela ordem em que o dia aconteceu
+  itens.sort(function(a,b){ return (a.t_pago||0) - (b.t_pago||0); });
+
+  var total = 0, entregues = 0;
+  itens.forEach(function(x){ total += Number(x.mt)||0; if(x.st==='enviado') entregues++; });
+
+  var lento = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var animar = !CASC_JAVIU && !lento;
+
+  if(!CASC_JAVIU){
+    cx.innerHTML =
+      '<div class="cascTopo"><div class="cascTot"><b id="cascMt">0</b><span>MT hoje</span></div>'+
+      '<div class="cascCnt"><b id="cascQt">0</b><span>pagamentos</span></div>'+
+      '<div class="cascCnt"><b id="cascEnt">0</b><span>entregues</span></div></div>'+
+      '<div class="cascLista" id="cascLista"></div>';
+    var lista = document.getElementById('cascLista');
+    lista.innerHTML = itens.map(function(x,i){ CASC_VISTOS[x.refid]=1; return cascPeca(x,i,animar); }).join('');
+    var ms = animar ? Math.max(700, itens.length*85) : 320;
+    cascContar(document.getElementById('cascMt'),  total, ms);
+    cascContar(document.getElementById('cascQt'),  itens.length, ms);
+    cascContar(document.getElementById('cascEnt'), entregues, ms);
+    CASC_JAVIU = true;
+    return;
+  }
+
+  // já viu a queda: só entram os que ainda não estavam
+  var lista = document.getElementById('cascLista'); if(!lista) { CASC_JAVIU=false; return cascataPintar(); }
+  var novos = itens.filter(function(x){ return !CASC_VISTOS[x.refid]; });
+  novos.forEach(function(x,i){
+    CASC_VISTOS[x.refid]=1;
+    var d = document.createElement('div');
+    d.innerHTML = cascPeca(x, i, !lento);
+    lista.appendChild(d.firstChild);
+  });
+  var mt=document.getElementById('cascMt'), qt=document.getElementById('cascQt'), en=document.getElementById('cascEnt');
+  if(mt) cascContar(mt, total, 500);
+  if(qt) cascContar(qt, itens.length, 500);
+  if(en) cascContar(en, entregues, 500);
+}
+
+
+/* ─── arrastar a linha para mudar de estado ──────────────────────────
+   Puxar para a direita faz o pagamento avançar: na fila → a enviar →
+   enviado. É o mesmo que o botão ▶ já fazia, mas com o polegar e sem
+   ter de acertar num alvo de 30px.
+   Cuidados: só conta se o movimento for claramente horizontal (senão
+   rolar a lista disparava sem querer), e a seguir a um arrasto o toque
+   é engolido, para não abrir os detalhes por cima. */
+(function(){
+  var LIMITE = 95;             // quanto é preciso puxar
+  var x0=null, y0=null, dx=0, alvo=null, arrastou=false;
+
+  function proximo(st){
+    return st==='enviado' ? null : (st==='enviar' ? 'enviado' : 'enviar');
+  }
+  function estadoDe(r){
+    var m = String(r.className||'').match(/e-(\w+)/);
+    return m ? m[1] : 'fila';
+  }
+  function rotulo(st){
+    return st==='enviado' ? 'ENTREGUE' : (st==='enviar' ? 'A ENVIAR' : 'NA FILA');
+  }
+
+  document.addEventListener('touchstart', function(e){
+    var r = e.target.closest && e.target.closest('.f7r');
+    if(!r || e.target.closest('.f7par') || e.target.closest('.f7dbt')) { alvo=null; return; }
+    alvo=r; x0=e.touches[0].clientX; y0=e.touches[0].clientY; dx=0; arrastou=false;
+    r.style.transition='none';
+  }, {passive:true});
+
+  document.addEventListener('touchmove', function(e){
+    if(!alvo || x0===null) return;
+    var mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+    if(!arrastou && (Math.abs(my) > Math.abs(mx) || Math.abs(mx) < 12)) return;  // é rolar
+    arrastou = true; dx = Math.max(0, mx);                                        // só para a direita
+    alvo.style.transform = 'translateX(' + Math.min(dx, 150) + 'px)';
+    var st = estadoDe(alvo), seg = proximo(st);
+    alvo.dataset.puxa = (dx > LIMITE && seg) ? rotulo(seg) : '';
+    alvo.classList.toggle('vaiMudar', dx > LIMITE && !!seg);
+  }, {passive:true});
+
+  document.addEventListener('touchend', function(){
+    if(!alvo) return;
+    var r = alvo; alvo = null; x0 = null;
+    r.style.transition=''; r.style.transform=''; r.classList.remove('vaiMudar');
+    r.dataset.puxa = '';
+    if(!arrastou || dx <= LIMITE) return;
+    var st = estadoDe(r), seg = proximo(st);
+    if(!seg){ aviso('Já está entregue — nada a avançar.','ok'); return; }
+    var id = r.querySelector('.f7id');
+    id = id ? id.textContent.trim() : '';
+    if(!id) return;
+    r.dataset.engole = '1';                       // engole o toque que vem a seguir
+    setTimeout(function(){ delete r.dataset.engole; }, 500);
+    try { f7avanca(id, st); } catch(e){ aviso('Não deu: '+e.message,'bad'); }
+  }, {passive:true});
+
+  // o toque logo a seguir a um arrasto não abre os detalhes
+  document.addEventListener('click', function(e){
+    var r = e.target.closest && e.target.closest('.f7r');
+    if(r && r.dataset.engole){ e.stopPropagation(); e.preventDefault(); }
+  }, true);
+})();
+
+
+/* ─── a história de uma pessoa, por cima e com o resto desfocado ───── */
+async function pessoaAbrir(num, refid){
+  num = String(num||'').replace(/\D/g,'');
+  if(!num){ aviso('Sem número nesta linha','bad'); return; }
+  var f = document.getElementById('pessoaFolha');
+  if(!f){
+    f = document.createElement('div');
+    f.id = 'pessoaFolha';
+    f.innerHTML = '<div class="pfFundo" onclick="pessoaFechar()"></div>'+
+                  '<div class="pfCaixa"><div class="pfCorpo">a carregar…</div></div>';
+    document.body.appendChild(f);
+  }
+  f.classList.add('on');
+  document.body.classList.add('comFolha');
+  var corpo = f.querySelector('.pfCorpo');
+  corpo.innerHTML = '<div class="pfVazio">a carregar…</div>';
+  try{
+    var d = await rpc('pessoa_historico', { p_num: num, p_dias: 30 });
+    corpo.innerHTML = pessoaDesenhar(d, refid);
+  }catch(e){
+    corpo.innerHTML = '<div class="pfVazio">não consegui ler: '+seg(e.message)+'</div>';
+  }
+}
+function pessoaFechar(){
+  var f = document.getElementById('pessoaFolha');
+  if(f) f.classList.remove('on');
+  document.body.classList.remove('comFolha');
+}
+function pessoaDesenhar(d, refid){
+  if(!d) return '<div class="pfVazio">nada encontrado</div>';
+  var r = d.resumo || {};
+  var linhas = d.linhas || [];
+  var cab = '<div class="pfTopo">'+
+    '<div class="pfNome">'+seg(d.nome||'sem nome')+'</div>'+
+    '<div class="pfNum">'+seg(d.numero||'')+'</div>'+
+    '<button class="pfX" onclick="pessoaFechar()">✕</button></div>'+
+   '<div class="pfCartoes">'+
+     '<div class="pfC"><b>'+(r.pagamentos||0)+'</b><span>pagamentos</span></div>'+
+     '<div class="pfC"><b>'+(r.pago_mt||0)+'</b><span>MT pagos</span></div>'+
+     '<div class="pfC"><b>'+(r.entregas||0)+'</b><span>entregas</span></div>'+
+     '<div class="pfC'+((r.por_servir||0)>0?' mau':'')+'"><b>'+(r.divida_mt||0)+'</b><span>MT por servir</span></div>'+
+   '</div>';
+  if(!linhas.length) return cab + '<div class="pfVazio">sem movimento nos últimos '+(d.dias||30)+' dias</div>';
+  var corpo = linhas.map(function(l){
+    var eu = (l.refid && refid && l.refid === refid) ? ' esta' : '';
+    if(l.tipo === 'pagou'){
+      return '<div class="pfL pagou'+eu+'">'+
+        '<span class="pfH">'+seg(l.h)+'</span>'+
+        '<span class="pfT">pagou <b>'+seg(l.mt)+' MT</b></span>'+
+        '<span class="pfR">'+seg(l.refid||'')+'</span>'+
+        '<span class="pfE '+(l.servido?'ok':'falta')+'">'+(l.servido?'servido':'por servir')+'</span></div>';
+    }
+    return '<div class="pfL recebeu'+eu+'">'+
+      '<span class="pfH">'+seg(l.h)+'</span>'+
+      '<span class="pfT">recebeu <b>'+seg(l.mb||0)+' MB</b></span>'+
+      '<span class="pfR">'+seg(l.refid||'sem ID')+'</span>'+
+      '<span class="pfE '+(l.refid?'ok':'deduz')+'">'+(l.refid?'pelo ID':'deduzido')+'</span></div>';
+  }).join('');
+  return cab + '<div class="pfLista">'+corpo+'</div>';
+}
+
+
+/* ═══ pulso do negócio ═══════════════════════════════════════════════
+   O que os contadores não dizem: o ritmo do dia contra o de ontem, a
+   velocidade real de entrega, o dinheiro parado por servir, e quanto
+   ainda se consegue servir com o que resta nos cartões.
+   Tudo desenhado à mão em SVG e CSS — nenhuma biblioteca, nenhum
+   pedido extra à rede. */
+var PULSO = null, PULSO_VEZ = 0;
+
+function pvNum(el, ate, ms, sufixo){
+  var de = 0, t0 = null;
+  function passo(t){
+    if(!t0) t0 = t;
+    var p = Math.min(1, (t - t0) / ms);
+    var v = de + (ate - de) * (1 - Math.pow(1 - p, 3));
+    el.textContent = (Math.abs(ate) >= 100 ? Math.round(v) : Math.round(v * 10) / 10)
+                     .toLocaleString('pt-PT') + (sufixo || '');
+    if(p < 1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+function pvDur(s){
+  s = Math.max(0, Math.round(s || 0));
+  if(s < 60) return s + 's';
+  if(s < 3600) return Math.floor(s/60) + 'm' + String(s%60).padStart(2,'0');
+  return Math.floor(s/3600) + 'h' + String(Math.floor(s%3600/60)).padStart(2,'0');
+}
+
+/* linha do ritmo: hoje a cheio, ontem a tracejado por trás */
+function pvRitmo(hoje, ontem, hr){
+  var L = 300, A = 74, n = 24;
+  var max = Math.max(1, Math.max.apply(null, hoje.concat(ontem)));
+  function caminho(v, ate){
+    var p = '';
+    for(var i = 0; i <= ate; i++){
+      var x = (i/(n-1))*L, y = A - (v[i]/max)*(A-10) - 4;
+      p += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    return p;
+  }
+  var dHoje = caminho(hoje, hr), dOntem = caminho(ontem, n-1);
+  var area = dHoje + 'L' + ((hr/(n-1))*L).toFixed(1) + ' ' + A + 'L0 ' + A + 'Z';
+  var pontos = '';
+  for(var i = 0; i <= hr; i++){
+    if(!hoje[i]) continue;
+    var x = (i/(n-1))*L, y = A - (hoje[i]/max)*(A-10) - 4;
+    pontos += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="2" class="pvPt"/>';
+  }
+  return '<svg viewBox="0 0 '+L+' '+A+'" preserveAspectRatio="none" class="pvSvg">'+
+    '<defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1">'+
+    '<stop offset="0%" stop-color="#4ef0a8" stop-opacity=".38"/>'+
+    '<stop offset="100%" stop-color="#4ef0a8" stop-opacity="0"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#pvG)"/>'+
+    '<path d="'+dOntem+'" class="pvOntem"/>'+
+    '<path d="'+dHoje+'" class="pvHoje"/>'+ pontos +
+  '</svg>';
+}
+
+function pvDesenhar(d){
+  if(!d) return '<div class="pvVazio">sem dados</div>';
+  var v = d.velocidade||{}, dv = d.divida||{}, cp = d.capacidade||{},
+      cl = d.clientes||{}, ca = d.canais||{}, hr = d.hora||0;
+  var hoje = d.ritmo||[], ontem = d.ritmo_ontem||[];
+  var mtH = Number(d.mt_hoje||0), mtO = Number(d.mt_ontem_ate_agora||0);
+  var dif = mtO > 0 ? Math.round(((mtH-mtO)/mtO)*100) : null;
+
+  var tot = Math.max(1, v.total||0);
+  var pRap = Math.round(((v.rapidos||0)/tot)*100);
+  var pLen = Math.round(((v.lentos||0)/tot)*100);
+  var pMed = Math.max(0, 100 - pRap - pLen);
+
+  var mp = (ca.mpesa||{}), em = (ca.emola||{});
+  var totC = Math.max(1, (mp.n||0) + (em.n||0));
+  var pMp = Math.round(((mp.n||0)/totC)*100);
+
+  var pacotes = d.pacotes||[];
+  var maxRec = Math.max(1, pacotes.reduce(function(a,b){return Math.max(a, b.receita||0);},0));
+
+  return ''+
+  /* ── ritmo ── */
+  '<div class="pvC pvRitmoC">'+
+    '<div class="pvCab"><span class="pvTit">Ritmo do dia</span>'+
+      (dif===null?'':'<span class="pvDif '+(dif>=0?'sobe':'desce')+'">'+
+        (dif>=0?'▲ ':'▼ ')+Math.abs(dif)+'% que ontem</span>')+'</div>'+
+    pvRitmo(hoje, ontem, hr)+
+    '<div class="pvLeg"><span><i class="pvLh"></i>hoje</span>'+
+      '<span><i class="pvLo"></i>ontem</span>'+
+      '<span class="pvPico">pico às '+((d.pico||{}).hora||0)+'h · '+((d.pico||{}).n||0)+'</span></div>'+
+  '</div>'+
+
+  /* ── velocidade ── */
+  '<div class="pvC">'+
+    '<div class="pvCab"><span class="pvTit">Velocidade de entrega</span>'+
+      '<span class="pvSub">mediana <b id="pvMed">—</b></span></div>'+
+    '<div class="pvBarra">'+
+      '<i class="b1" style="width:'+pRap+'%"></i>'+
+      '<i class="b2" style="width:'+pMed+'%"></i>'+
+      '<i class="b3" style="width:'+pLen+'%"></i></div>'+
+    '<div class="pvLeg3">'+
+      '<span><i class="p1"></i>até 1 min · <b>'+(v.rapidos||0)+'</b></span>'+
+      '<span><i class="p2"></i>até 10 min</span>'+
+      '<span><i class="p3"></i>acima · <b>'+(v.lentos||0)+'</b></span></div>'+
+    '<div class="pvNota">os 10% piores demoraram <b>'+pvDur(v.p90)+'</b></div>'+
+  '</div>'+
+
+  /* ── dívida ── */
+  '<div class="pvC '+((dv.mt||0)>0?'alerta':'')+'">'+
+    '<div class="pvCab"><span class="pvTit">Parado por servir</span></div>'+
+    '<div class="pvGrande"><b id="pvDiv">0</b><span>MT</span></div>'+
+    '<div class="pvNota">'+(dv.clientes||0)+' cliente'+((dv.clientes||0)===1?'':'s')+
+      ((dv.ha_mais)?' · o mais antigo há <b>'+pvDur((dv.ha_mais||0)*60)+'</b>':'')+'</div>'+
+  '</div>'+
+
+  /* ── capacidade ── */
+  '<div class="pvC">'+
+    '<div class="pvCab"><span class="pvTit">Ainda dá para</span></div>'+
+    '<div class="pvGrande"><b id="pvCap">0</b><span>pacotes de 400 MB</span></div>'+
+    '<div class="pvNota"><b>'+(cp.transferencias||0)+'</b> transferências livres · '+
+      '<b>'+((cp.megas||0)/1024).toFixed(1)+' GB</b> nos cartões</div>'+
+  '</div>'+
+
+  /* ── de onde vem ── */
+  '<div class="pvC">'+
+    '<div class="pvCab"><span class="pvTit">De onde vem</span></div>'+
+    '<div class="pvSplit"><i class="mp" style="width:'+pMp+'%"></i><i class="em"></i></div>'+
+    '<div class="pvLeg3"><span><i class="pmp"></i>M-Pesa <b>'+(mp.n||0)+'</b> · '+(mp.mt||0)+' MT</span>'+
+      '<span><i class="pem"></i>e-Mola <b>'+(em.n||0)+'</b> · '+(em.mt||0)+' MT</span></div>'+
+  '</div>'+
+
+  /* ── o que mais vende ── */
+  '<div class="pvC">'+
+    '<div class="pvCab"><span class="pvTit">O que mais vende</span></div>'+
+    pacotes.map(function(x,i){
+      return '<div class="pvP"><span class="pvPv">'+x.mt+' MT</span>'+
+        '<div class="pvPb"><i style="width:'+Math.round((x.receita/maxRec)*100)+'%;animation-delay:'+(i*80)+'ms"></i></div>'+
+        '<span class="pvPn">'+x.n+'×</span><span class="pvPr">'+x.receita+' MT</span></div>';
+    }).join('')+
+  '</div>'+
+
+  /* ── clientes ── */
+  '<div class="pvC">'+
+    '<div class="pvCab"><span class="pvTit">Clientes de hoje</span></div>'+
+    '<div class="pvTres">'+
+      '<div><b id="pvCt">0</b><span>ao todo</span></div>'+
+      '<div><b id="pvCn">0</b><span>novos</span></div>'+
+      '<div><b id="pvCr">0</b><span>voltaram</span></div></div>'+
+  '</div>';
+}
+
+/* Actualiza os números por dentro, sem refazer o HTML. É isto que evita
+   o piscar: o ciclo do painel corre de poucos em poucos segundos, e
+   refazer o innerHTML fazia tudo desaparecer e voltar, com as animações
+   de entrada a correrem outra vez. */
+function pulsoAtualizar(d){
+  if(!d) return;
+  var v=d.velocidade||{}, dv=d.divida||{}, cp=d.capacidade||{}, cl=d.clientes||{}, e;
+  function põe(id, val){ var el=document.getElementById(id);
+    if(el && el.textContent !== String(val)) el.textContent = String(val); }
+  põe('pvMed', pvDur(v.mediana));
+  põe('pvDiv', Number(dv.mt||0).toLocaleString('pt-PT'));
+  põe('pvCap', Number(cp.pacotes400||0).toLocaleString('pt-PT'));
+  põe('pvCt',  Number(cl.total||0));
+  põe('pvCn',  Number(cl.novos||0));
+  põe('pvCr',  Number(cl.repetiram||0));
+  var tot=Math.max(1, v.total||0);
+  var b=document.querySelector('#negPulso .pvBarra');
+  if(b){
+    var r=Math.round(((v.rapidos||0)/tot)*100), l=Math.round(((v.lentos||0)/tot)*100);
+    var i1=b.querySelector('.b1'), i2=b.querySelector('.b2'), i3=b.querySelector('.b3');
+    if(i1) i1.style.width=r+'%';
+    if(i2) i2.style.width=Math.max(0,100-r-l)+'%';
+    if(i3) i3.style.width=l+'%';
+  }
+  var alerta=document.querySelector('#negPulso .pvC.alerta, #negPulso .pvC:nth-child(3)');
+  if(alerta) alerta.classList.toggle('alerta', Number(dv.mt||0) > 0);
+}
+
+var PULSO_SEC = null;
+
+async function pulsoPintar(){
+  var cx = document.getElementById('negPulso'); if(!cx) return;
+  var sec = (typeof secao !== 'undefined') ? secao : 's-resumo';
+  /* Fora do Dashboard nem vale a pena pedir à rede. */
+  if(sec !== 's-resumo'){ PULSO_SEC = sec; return; }
+  var entrou = (PULSO_SEC !== 's-resumo') || !cx.firstChild;
+  PULSO_SEC = sec;
+
+  try{ var _p = await rpc('negocio_vivo', {}); if(_p) PULSO = _p; }catch(e){/* fica o ultimo bom */}
+  if(!PULSO){ if(!cx.innerHTML) cx.innerHTML = '<div class="pvVazio">sem ligação</div>'; return; }
+
+  if(!entrou){ pulsoAtualizar(PULSO); return; }      /* já estava aberto: só os números */
+
+  cx.innerHTML = pvDesenhar(PULSO);
+  PULSO_VEZ++;
+  var v = PULSO.velocidade||{}, dv = PULSO.divida||{}, cp = PULSO.capacidade||{}, cl = PULSO.clientes||{}, e;
+  if((e=document.getElementById('pvMed'))) e.textContent = pvDur(v.mediana);
+  if((e=document.getElementById('pvDiv'))) pvNum(e, Number(dv.mt||0), 900);
+  if((e=document.getElementById('pvCap'))) pvNum(e, Number(cp.pacotes400||0), 900);
+  if((e=document.getElementById('pvCt'))) pvNum(e, Number(cl.total||0), 900);
+  if((e=document.getElementById('pvCn'))) pvNum(e, Number(cl.novos||0), 900);
+  if((e=document.getElementById('pvCr'))) pvNum(e, Number(cl.repetiram||0), 900);
+}
+
 </script>
 
 
 
 
+<style>
+/* ═══ borda da fila — opção 9: o aro do cartão da velocidade ═════════
+   É o mesmo aro do .pvC, o cartão da «Velocidade de entrega»: um fio de
+   1 px a rgba(96,156,255,.28), raio 16 e fundo #1d2635. Mais fino e mais
+   redondo do que o aro antigo, que estava a .45 com raio 14 — a esse
+   nível o azul competia com os logótipos da M-Pesa e da e-Mola.
+   No claro o fio sozinho apaga-se contra o branco, por isso leva uma
+   sombra fina por baixo.                                              */
+.f7r{border:1px solid rgba(96,156,255,.28) !important;
+  border-radius:16px !important;
+  background:#1d2635 !important;
+  box-shadow:none !important}
+html.claro .f7r{border-color:rgba(47,125,255,.35) !important;
+  background:#ffffff !important;
+  box-shadow:0 1px 3px rgba(20,30,50,.08) !important}
+
+/* a linha aberta continua a distinguir-se das fechadas */
+.f7r.aberta{background:#243047 !important;
+  border-color:rgba(140,190,255,.75) !important}
+html.claro .f7r.aberta{background:#f4f7ff !important;
+  border-color:rgba(47,125,255,.55) !important}
+
+/* o aviso do arrasto volta a viver no aro, agora que ele existe */
+.f7r.vaiMudar{border-color:#4ef0a8 !important;box-shadow:none !important}
+html.claro .f7r.vaiMudar{border-color:#0a8f5c !important}
+
+/* ═══ carimbo da versão ══════════════════════════════════════════════
+   No fundo dos Ajustes, para se saber num relance qual dos ficheiros
+   está publicado. Se esta linha não aparecer, o site está a correr
+   uma versão antiga.                                                 */
+#s-sistema::after{content:"painel 30/08 · aro da velocidade";
+  display:block;text-align:center;padding:22px 0 10px;
+  font:700 10px var(--titulo);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fumo);opacity:.5}
+
+/* o contador de espera da fila, em brasa — a mesma cor do estado */
+.f7r .f7g3 .f7tval.espera{color:#ffd08a !important;font-weight:700 !important}
+html.claro .f7r .f7g3 .f7tval.espera{color:#a86a00 !important}
+</style>
 </body>
 </html>
