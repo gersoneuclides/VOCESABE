@@ -6225,32 +6225,39 @@ async function pulsoPintar(){
 
 
 <style>
-/* ═══ borda da fila — opção 2: só fundo ═══════════════════════════════
-   O aro azul saiu. O estado entra como um véu de cor no cimo do cartão:
-   mel para na fila, gelo para a enviar, menta para entregue. A linha
-   deixa de ter um risco à volta a competir com os logótipos da M-Pesa
-   e da e-Mola, que são o elemento mais colorido do ecrã.
-   No modo claro o véu sozinho não segura o cartão contra o branco, por
-   isso leva uma sombra fina — foi a queixa antiga das bordas a 14%.
-   E como já não há borda, o "vai mudar" do arrasto passa a ser um anel
-   por dentro em vez de mudar a cor do aro.                            */
-.f7r{border:0 !important;box-shadow:none !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 34%),#1d2635 !important}
-.f7r.e-fila   {background:linear-gradient(180deg,rgba(255,194,51,.15),transparent 46%),#1d2635 !important}
-.f7r.e-enviar {background:linear-gradient(180deg,rgba(57,220,255,.15),transparent 46%),#1d2635 !important}
-.f7r.e-enviado{background:linear-gradient(180deg,rgba(61,255,164,.13),transparent 46%),#1d2635 !important}
+/* ═══ borda da fila — opção 9: o aro do cartão da velocidade ═════════
+   É o mesmo aro do .pvC, o cartão da «Velocidade de entrega»: um fio de
+   1 px a rgba(96,156,255,.28), raio 16 e fundo #1d2635. Mais fino e mais
+   redondo do que o aro antigo, que estava a .45 com raio 14 — a esse
+   nível o azul competia com os logótipos da M-Pesa e da e-Mola.
+   No claro o fio sozinho apaga-se contra o branco, por isso leva uma
+   sombra fina por baixo.                                              */
+.f7r{border:1px solid rgba(96,156,255,.28) !important;
+  border-radius:16px !important;
+  background:#1d2635 !important;
+  box-shadow:none !important}
+html.claro .f7r{border-color:rgba(47,125,255,.35) !important;
+  background:#ffffff !important;
+  box-shadow:0 1px 3px rgba(20,30,50,.08) !important}
 
-html.claro .f7r{box-shadow:0 1px 3px rgba(20,30,50,.10) !important;
-  background:linear-gradient(180deg,rgba(16,19,28,.05),transparent 34%),#ffffff !important}
-html.claro .f7r.e-fila   {background:linear-gradient(180deg,rgba(255,176,32,.26),transparent 46%),#ffffff !important}
-html.claro .f7r.e-enviar {background:linear-gradient(180deg,rgba(47,125,255,.20),transparent 46%),#ffffff !important}
-html.claro .f7r.e-enviado{background:linear-gradient(180deg,rgba(10,143,92,.18),transparent 46%),#ffffff !important}
+/* a linha aberta continua a distinguir-se das fechadas */
+.f7r.aberta{background:#243047 !important;
+  border-color:rgba(140,190,255,.75) !important}
+html.claro .f7r.aberta{background:#f4f7ff !important;
+  border-color:rgba(47,125,255,.55) !important}
 
-.f7r.aberta{background:linear-gradient(180deg,rgba(140,190,255,.20),transparent 46%),#243047 !important}
-html.claro .f7r.aberta{background:linear-gradient(180deg,rgba(47,125,255,.16),transparent 46%),#f4f7ff !important}
+/* o aviso do arrasto volta a viver no aro, agora que ele existe */
+.f7r.vaiMudar{border-color:#4ef0a8 !important;box-shadow:none !important}
+html.claro .f7r.vaiMudar{border-color:#0a8f5c !important}
 
-.f7r.vaiMudar{box-shadow:0 0 0 2px #4ef0a8 inset !important}
-html.claro .f7r.vaiMudar{box-shadow:0 0 0 2px #0a8f5c inset !important}
+/* ═══ carimbo da versão ══════════════════════════════════════════════
+   No fundo dos Ajustes, para se saber num relance qual dos ficheiros
+   está publicado. Se esta linha não aparecer, o site está a correr
+   uma versão antiga.                                                 */
+#s-sistema::after{content:"painel 30/08 · aro da velocidade";
+  display:block;text-align:center;padding:22px 0 10px;
+  font:700 10px var(--titulo);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fumo);opacity:.5}
 
 /* o contador de espera da fila, em brasa — a mesma cor do estado */
 .f7r .f7g3 .f7tval.espera{color:#ffd08a !important;font-weight:700 !important}
