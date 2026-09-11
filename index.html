@@ -302,24 +302,47 @@ html.claro .sw button{background:#dcdce6}
 .heroi .tres div{font-size:12px;color:var(--cabo-texto2)}
 .heroi .tres b{display:block;font-size:17px;color:var(--cabo-texto);font-variant-numeric:tabular-nums}
 .heroi .tres b.esp{color:var(--amarelo)}
-.anelD{position:relative;width:118px;height:118px;flex:none}
-.anelD svg{width:118px;height:118px;transform:rotate(-90deg);overflow:visible}
-.anelD circle{fill:none;stroke-linecap:round}
-.anelD .f{stroke:rgba(127,127,127,.22)}
-.anelD .p1{stroke:url(#gradAnel);stroke-width:9;transition:stroke-dashoffset .8s ease}
-.anelD .p2{stroke:var(--ciano);stroke-width:6;transition:stroke-dashoffset .8s ease}
-.anelD .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.anelD .c b{font-size:20px;font-weight:800;color:var(--cabo-texto);font-variant-numeric:tabular-nums}
-.anelD .c span{font-size:9.5px;color:var(--cabo-texto2);font-weight:700}
-/* ── opção 4: o anel bate e solta ondas, e o traço do dia desenha-se ── */
-.anelD .onda{fill:none;stroke:rgba(255,45,120,.8);stroke-width:2.5;transform-origin:center;
-  animation:ondaA 3s ease-out infinite}
-.anelD .onda.b{stroke:rgba(34,224,255,.55);animation-delay:1.5s}
-@keyframes ondaA{0%{transform:scale(.76);opacity:.95}100%{transform:scale(1.26);opacity:0}}
-.anelD .bate{transform-origin:center;animation:bateA 3s ease-in-out infinite}
-@keyframes bateA{0%,20%,100%{transform:scale(1)}8%{transform:scale(1.045)}14%{transform:scale(.98)}}
-.anelD .p1{filter:drop-shadow(0 0 5px rgba(255,45,120,.55))}
-.anelD .p2{filter:drop-shadow(0 0 5px rgba(34,224,255,.5))}
+/* ── a alma: três fitas soltas que nadam à volta do lucro. Não estão
+      empilhadas — cada uma tem a sua inclinação e o seu ritmo, e o
+      conjunto nunca desenha a mesma coisa duas vezes. ───────────── */
+.anelD{position:relative;width:132px;height:132px;flex:none;
+  perspective:760px;perspective-origin:50% 50%}
+.anelD .agua{position:absolute;inset:0;transform-style:preserve-3d}
+/* cada fita: a inclinação ondula devagar — é isto que dá o nadar */
+.anelD .fita{position:absolute;inset:0;transform-style:preserve-3d;
+  animation:precessa var(--n,13s) linear infinite}
+/* o plano da fita roda sempre para o mesmo lado. Duas rotações
+   contínuas em eixos diferentes, com tempos que não se dividem um
+   pelo outro, dão movimento sempre novo sem nunca voltar atrás. */
+@keyframes precessa{
+  from{transform:rotateX(var(--x)) rotateY(var(--y))}
+  to  {transform:rotateX(var(--x)) rotateY(calc(var(--y) + 360deg))}}
+/* a fita corre à volta sem parar: 360° acaba onde começa, não há salto */
+.anelD .fita svg{width:100%;height:100%;overflow:visible;transform-origin:50% 50%;
+  animation:correrTaca var(--g,14s) linear infinite}
+.anelD .fita.tras svg{animation-direction:reverse}
+@keyframes correrTaca{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.anelD circle{fill:none;stroke-linecap:round;
+  transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+.anelD .corpo{filter:drop-shadow(0 0 6px rgba(150,60,255,.65))}
+/* o rasto vem atrás, mais apagado e mais fino — é a cauda */
+.anelD .rasto{opacity:.30}
+/* o brilho por trás do número: o que a alma deixa no ar */
+.anelD .halo{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;
+  border-radius:99px;filter:blur(13px);opacity:.85;
+  background:conic-gradient(from 0deg,rgba(214,41,190,.34),rgba(124,58,255,.30),
+    rgba(150,60,255,.05),rgba(214,41,190,.34));
+  animation:rodaHalo 26s linear infinite}
+/* volta inteira: o fim do desenho é igual ao princípio, não há costura */
+@keyframes rodaHalo{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* o lucro fica fora da cena: nunca roda, nunca se deforma */
+.anelD .c{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  text-align:center;z-index:5;pointer-events:none}
+.anelD .c b{font-size:24px;font-weight:800;color:var(--cabo-texto);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;text-shadow:0 2px 16px rgba(0,0,0,.75)}
+.anelD .c small{font-size:11px;font-weight:700;color:var(--cabo-texto2);margin-left:3px}
+@media (prefers-reduced-motion:reduce){
+  .anelD .fita,.anelD .fita svg,.anelD .halo{animation:none}}
 .ritmo .hoje.traca{stroke-dasharray:1400;stroke-dashoffset:1400;
   animation:desenhaR 1.9s .15s cubic-bezier(.3,.6,.2,1) forwards}
 @keyframes desenhaR{to{stroke-dashoffset:0}}
@@ -342,32 +365,64 @@ html.claro .ritmo .pt{fill:#fff}
 .horas span.on{background:var(--rosa);color:#fff}
 .heroiToque{display:block;margin-top:10px;font-size:12px;font-weight:700;color:var(--rosa)}
 
-/* cartões (os SIM como cartões de banco) */
-.carrossel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;margin:0 -2px;
+/* cartões — um por aparelho, com os dois SIM lá dentro */
+.carrossel{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;margin:0 -2px;
   -webkit-overflow-scrolling:touch;scrollbar-width:none}
 .carrossel::-webkit-scrollbar{display:none}
-.cartaoSim{flex:none;width:min(78vw,300px);height:172px;scroll-snap-align:start;padding:18px 18px 16px;
-  display:flex;flex-direction:column;justify-content:space-between;text-align:left}
-.cartaoSim .csTopo{display:flex;justify-content:space-between;align-items:flex-start}
-.cartaoSim .csNum{font-size:15px;letter-spacing:.14em;font-weight:800;font-variant-numeric:tabular-nums}
-.cartaoSim .csDev{font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;text-align:right}
-.cartaoSim .csDev i{display:block;font-style:normal;color:#fff;font-size:12px}
-.cartaoSim .csRot{font-size:11px;color:#fff;font-weight:700}
-.cartaoSim .csSaldo{font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums}
-.cartaoSim .csSaldo small{font-size:13px;font-weight:700;margin-left:4px;color:#fff}
-.cartaoSim .csBase{display:flex;align-items:flex-end;justify-content:space-between}
-.pips{display:flex;gap:3px}
-.pips i{width:8px;height:14px;border-radius:3px;background:rgba(255,255,255,.22);transform:skewX(-12deg)}
-.pips i.on{background:#fff}.pips.quente i.on{background:var(--amarelo)}.pips.cheio i.on{background:var(--mau)}
-.pipsRot{font-size:10.5px;color:#fff;font-weight:700;margin-top:4px;text-align:right}
-/* as manchas ficam por baixo de um véu: são acento, não fundo */
-.cartaoSim .manchas{opacity:.9}
-.cartaoSim::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(150deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.18) 45%,rgba(0,0,0,.66) 100%)}
-.cartaoSim .csEstado{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;
-  background:rgba(255,255,255,.18);color:#fff;margin-bottom:6px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-.cartaoSim.morto .csEstado{background:rgba(255,59,92,.45)}
-.cartaoSim.morto .manchas{opacity:.3}
+.cartaoDev{flex:none;width:min(84vw,330px);scroll-snap-align:start;padding:16px 16px 14px;
+  display:flex;flex-direction:column;gap:12px;text-align:left;cursor:pointer;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.cartaoDev:active{transform:scale(.975)}
+.cartaoDev .manchas{opacity:.85}
+.cartaoDev::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(155deg,rgba(0,0,0,.70) 0%,rgba(0,0,0,.28) 46%,rgba(0,0,0,.74) 100%)}
+
+/* cabeça: quem é o aparelho */
+.cdTopo{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cdQuem{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:800;letter-spacing:-.01em}
+.cdPt{width:8px;height:8px;border-radius:99px;background:var(--ok);flex:none;
+  box-shadow:0 0 0 3px rgba(23,201,138,.22)}
+.cdPt.mid{background:var(--amarelo);box-shadow:0 0 0 3px rgba(255,184,48,.22)}
+.cdPt.off{background:var(--mau);box-shadow:0 0 0 3px rgba(255,59,92,.22)}
+.cdIdade{font-size:11px;font-weight:700;color:rgba(255,255,255,.72);white-space:nowrap}
+
+/* o saldo do aparelho inteiro */
+.cdSaldo{display:flex;align-items:baseline;gap:5px;line-height:1}
+.cdSaldo b{font-size:34px;font-weight:800;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.cdSaldo small{font-size:14px;font-weight:700;color:rgba(255,255,255,.8)}
+.cdRot{font-size:11px;font-weight:700;color:rgba(255,255,255,.66);margin-top:-7px}
+
+/* os dois SIM, um por linha */
+.cdSims{display:flex;flex-direction:column;gap:1px;border-radius:14px;overflow:hidden;
+  background:rgba(255,255,255,.10);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cdSim{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:9px;
+  padding:9px 11px;background:rgba(0,0,0,.30)}
+.cdSim.vazio{opacity:.42}
+.cdTag{font-size:9.5px;font-weight:800;letter-spacing:.07em;padding:3px 6px;border-radius:6px;
+  background:rgba(255,255,255,.16)}
+.cdSim.cheio .cdTag{background:rgba(255,59,92,.5)}
+.cdSim.quente .cdTag{background:rgba(255,184,48,.42)}
+.cdMeio{min-width:0}
+.cdN{font-size:12.5px;font-weight:800;letter-spacing:.09em;font-variant-numeric:tabular-nums;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdEnv{font-size:10px;font-weight:700;color:rgba(255,255,255,.6);margin-top:1px}
+.cdDir{text-align:right}
+.cdMb{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cdMb small{font-size:9.5px;font-weight:700;margin-left:2px;color:rgba(255,255,255,.75)}
+
+/* a barrinha de envios */
+.cdBar{height:4px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden;margin-top:4px;width:62px;margin-left:auto}
+.cdBar i{display:block;height:100%;border-radius:99px;background:#fff;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.cdBar.quente i{background:var(--amarelo)}
+.cdBar.cheio i{background:var(--mau)}
+
+/* rodapé: convite a tocar */
+.cdPe{display:flex;align-items:center;justify-content:space-between;font-size:10.5px;font-weight:700;
+  color:rgba(255,255,255,.6)}
+.cdPe b{color:#fff;font-weight:800}
+.cdPe .cdSeta{font-size:13px;opacity:.75}
+.cartaoDev.morto .manchas{opacity:.22}
+.cartaoDev.morto .cdSaldo b{color:rgba(255,255,255,.55)}
 
 /* transações */
 .mov{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:18px;background:var(--cx-bg);box-shadow:var(--cx-sombra)}
@@ -877,7 +932,7 @@ body{font-weight:500}
 <div id="app" aria-hidden="true">
 <header class="topo">
   <button class="rb" onclick="gaveta(true)" aria-label="Menu"><span class="pontos"><i></i><i></i><i></i><i></i></span></button>
-  <div class="tit"><span id="tituloArea">Início</span><i id="verTopo">v10/09 · CARTOES-ORIG</i></div>
+  <div class="tit"><span id="tituloArea">Início</span><i id="verTopo">v10/09 · APARELHOS</i></div>
   <button class="rb foto" id="btFoto" onclick="abrirFoto()" aria-label="Foto de perfil"></button>
 </header>
 
@@ -892,7 +947,7 @@ body{font-weight:500}
   </div>
   <div class="folha">
     <div class="bloco">
-      <div class="blTit"><h2>Cartões<small>os SIM que vendem, um por cartão</small></h2><button class="mais" onclick="ir('s-disp')">••</button></div>
+      <div class="blTit"><h2>Aparelhos<small>toca num para gerir os cartões</small></h2><button class="mais" onclick="ir('s-disp')">••</button></div>
       <div id="cartoes" class="carrossel"></div>
     </div>
     <div class="bloco">
@@ -966,7 +1021,7 @@ body{font-weight:500}
 
 <!-- ═══ AJUSTES ═══ -->
 <section id="s-ajustes" class="ecra">
-  <div class="cabo"><div class="ajTop"><h1 id="ajTitulo">Ajustes</h1><span class="carimbo" id="carimboV">v10/09 · CARTOES-ORIG</span></div>
+  <div class="cabo"><div class="ajTop"><h1 id="ajTitulo">Ajustes</h1><span class="carimbo" id="carimboV">v10/09 · APARELHOS</span></div>
     <p class="sub" id="ajSub">preços e envio, telefones, bots e o estado do sistema</p></div>
   <div class="folha">
     <div id="ajPaineis">
@@ -1143,7 +1198,7 @@ const URL_BASE="https://wjebxekgzzmdikabwyqw.supabase.co/rest/v1/rpc/";
 const CHAVE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqZWJ4ZWtnenptZGlrYWJ3eXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTI1NjAsImV4cCI6MjA5OTg2ODU2MH0.VsKJKIeeKtZkfLuQLZCTP81U-TK13b2MgxEcmhJmwyQ";
 const META_PADRAO=2000;
 const DEVS=[['redmi8','Redmi 8'],['redmi13','Redmi 13c']];
-const VERSAO='v10/09 · CARTOES-ORIG';
+const VERSAO='v10/09 · APARELHOS';
 /* o estado — tudo o que a nuvem manda fica aqui e sobrevive a um pedido falhado */
 var D={}, F={}, NEG=null, NEGQ=null, G7={contas:{},itens:[]}, LYD=null, PULSO=null, CONS={}, PK=[];
 var secao='s-inicio', ativos={}, tocados={}, estadoUI={}, F7DELTA=0, NEGV=0;
@@ -1398,29 +1453,66 @@ function pintarHeroi(){
   const L=D.lucro||{}, meta=n0(L.MetaDia)||META_PADRAO, d=(NEG&&NEG.dia)||{};
   const luc=n0(L.LucroDia||d.lucro), pct=Math.max(0,Math.min(1,luc/Math.max(1,meta)));
   const vendas=n0(d.vendas||L.total_hoje), pend=n0(d.pendentes), ent=Math.max(0,vendas-pend), r2=vendas>0?ent/vendas:0;
-  const C1=2*Math.PI*50, C2=2*Math.PI*38;
-  const h='<div class="hL"><div class="rotulo">Lucro de hoje</div>'+
+  /* Três fitas a nadar à volta do lucro. Cada uma tem inclinação,
+     tamanho e ritmo próprios, e uma delas corre ao contrário — por
+     isso cruzam-se sempre de maneira diferente. Não há pilha nem
+     cone: o que se via antes como um vulcão era o empilhamento.
+     Todas as voltas são de 360°, logo não há reset para o olho
+     apanhar. O comprimento aceso conta o dia: quanto mais perto da
+     meta, mais comprida fica a fita. */
+  function corVolta(f){
+    const a=[214,41,190], b=[124,58,255];
+    return 'rgb('+a.map((v,i)=>Math.round(v+(b[i]-v)*f)).join(',')+')';
+  }
+  const FITAS=[
+    {r:52, larg:4.4, y:'0deg',   x:'24deg', g:'15s',   n:'11s',  o:1,   tras:false},
+    {r:40, larg:3.4, y:'52deg',  x:'-30deg',g:'19.5s', n:'14s',  o:.85, tras:true },
+    {r:29, larg:2.8, y:'104deg', x:'16deg', g:'12.5s', n:'17s',  o:.7,  tras:false}
+  ];
+  const aceso01=Math.max(0.14,Math.min(0.62,0.14+pct*0.9));    /* quanto do círculo fica aceso */
+  let taca='<div class="halo"></div><div class="agua">';
+  FITAS.forEach(function(F,i){
+    const C=2*Math.PI*F.r, cor=corVolta(i/(FITAS.length-1));
+    const aceso=C*aceso01;                                      /* o dia estica a fita */
+    taca+='<div class="fita'+(F.tras?' tras':'')+'" style="--y:'+F.y+';--x:'+F.x+
+      ';--g:'+F.g+';--n:'+F.n+';opacity:'+F.o+'">'+
+      '<svg viewBox="0 0 120 120">'+
+      '<circle class="rasto" data-c="'+C.toFixed(1)+'" data-p="1.9" cx="60" cy="60" r="'+F.r+'" stroke="'+cor+'" stroke-width="'+(F.larg*.55).toFixed(1)+
+      '" stroke-dasharray="'+(aceso*1.9).toFixed(1)+' '+(C-aceso*1.9).toFixed(1)+'"/>'+
+      '<circle class="corpo" data-c="'+C.toFixed(1)+'" data-p="1" cx="60" cy="60" r="'+F.r+'" stroke="'+cor+'" stroke-width="'+F.larg+
+      '" stroke-dasharray="'+aceso.toFixed(1)+' '+(C-aceso).toFixed(1)+'"/>'+
+      '</svg></div>';
+  });
+  taca+='</div>';
+
+  const hL='<div class="rotulo">Lucro de hoje</div>'+
     '<div class="grande"><span id="lucroNum">'+mt(luc)+'</span><small>MT</small></div>'+
     '<div class="meta">meta <b>'+mt(meta)+' MT</b> · '+Math.round(pct*100)+'%'+(luc>=meta?' · atingida':' · faltam '+mt(Math.max(0,meta-luc))+' MT')+'</div>'+
     '<div class="tres"><div><b>'+mt(vendas)+'</b>vendas</div><div><b>'+mt(d.facturado||F&&F.contagens&&F.contagens.mt_hoje||0)+'</b>MT</div>'+
-    '<div><b class="'+(pend?'esp':'')+'">'+mt(pend)+'</b>na fila</div></div></div>'+
-    '<div class="anelD"><svg viewBox="0 0 120 120"><defs><linearGradient id="gradAnel" x1="0" y1="0" x2="1" y2="1">'+
-    '<stop offset="0" stop-color="#ff2d78"/><stop offset="1" stop-color="#7c3aff"/></linearGradient></defs>'+
-    '<circle class="onda" cx="60" cy="60" r="52"/><circle class="onda b" cx="60" cy="60" r="52"/>'+
-    '<g class="bate">'+
-    '<circle class="f" cx="60" cy="60" r="50" stroke-width="9"/><circle class="p1" cx="60" cy="60" r="50" stroke-dasharray="'+C1.toFixed(1)+'" stroke-dashoffset="'+(C1*(1-pct)).toFixed(1)+'"/>'+
-    '<circle class="f" cx="60" cy="60" r="38" stroke-width="6"/><circle class="p2" cx="60" cy="60" r="38" stroke-dasharray="'+C2.toFixed(1)+'" stroke-dashoffset="'+(C2*(1-r2)).toFixed(1)+'"/>'+
-    '</g></svg>'+
-    '<div class="c"><b>'+Math.round(pct*100)+'%</b><span>'+ent+' de '+vendas+'</span></div></div>';
-  porHtml('heroi',h);
-  /* na primeira pintura o anel enche do zero e o número conta a subir */
+    '<div><b class="'+(pend?'esp':'')+'">'+mt(pend)+'</b>na fila</div></div>';
+
+  /* As fitas são construídas UMA vez. Se as reescrevêssemos a cada
+     pintura, o navegador criava elementos novos e a rotação recomeçava
+     do zero — era isso que se via a saltar de segundo a segundo.
+     Daqui para a frente só se mexe nos números, nunca no elemento. */
+  const cx=document.getElementById('heroi'); if(!cx) return;
+  if(!document.getElementById('anelD')){
+    cx.innerHTML='<div class="hL" id="heroiL">'+hL+'</div>'+
+      '<div class="anelD" id="anelD">'+taca+
+      '<div class="c"><b id="anelNum">'+mt(luc)+'</b><small>MT</small></div></div>';
+  }else{
+    porHtml('heroiL',hL);
+    porTexto('anelNum',mt(luc));
+    document.querySelectorAll('#anelD circle').forEach(function(el){
+      const C=+el.getAttribute('data-c')||0, p=+el.getAttribute('data-p')||1;
+      if(C) el.setAttribute('stroke-dasharray',(C*p*aceso01).toFixed(1)+' '+(C-C*p*aceso01).toFixed(1));
+    });
+  }
+
+  /* na primeira pintura o número conta a subir */
   if(!HEROI_JAVIU&&luc>=0){ HEROI_JAVIU=true;
     const num=document.getElementById('lucroNum');
     if(num){ num.textContent='0'; try{ cascContar(num,luc,1500); }catch(e){ num.textContent=mt(luc); } }
-    ['p1','p2'].forEach(function(k){ const el=document.querySelector('.anelD .'+k); if(!el) return;
-      const fim=el.getAttribute('stroke-dashoffset'), tudo=el.getAttribute('stroke-dasharray');
-      el.setAttribute('stroke-dashoffset',tudo);
-      requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.setAttribute('stroke-dashoffset',fim); }); }); });
   }
   pintarRitmo();
 }
@@ -1462,7 +1554,7 @@ function pintarRitmo(){
   /* só marca como visto depois de o traço se desenhar, para não cortar a animação */
   if(!RITMO_JAVIU&&!pintarRitmo._t) pintarRitmo._t=setTimeout(function(){ RITMO_JAVIU=true; },2300);
 }
-/* os cartões — cada SIM é um cartão de banco preto com manchas */
+/* os cartões — um por aparelho; tocar abre a folha de edição desse aparelho */
 function estadoSim(t,n,lim){
   const u=n0(t['cont_sim'+n]), mb=n0(t['saldoSim'+n]);
   if(u>=lim) return ['esgotado','cheio']; if(!(mb>0)) return ['sem saldo','mudo'];
@@ -1470,15 +1562,34 @@ function estadoSim(t,n,lim){
 }
 function pips(u,lim){let s='';for(let i=0;i<lim;i++) s+='<i class="'+(i<u?'on':'')+'"></i>';
   return '<div class="pips'+(u>=lim?' cheio':u>=lim-2?' quente':'')+'">'+s+'</div>';}
+/* uma linha por SIM, dentro do cartão do aparelho */
+function linhaSim(t,n,lim){
+  const u=n0(t['cont_sim'+n]), mb=n0(t['saldoSim'+n]), num=t['numSim'+n];
+  const cls=u>=lim?'cheio':u>=lim-2?'quente':'';
+  const pc=Math.min(100,Math.round((u/Math.max(1,lim))*100));
+  return '<div class="cdSim '+cls+(mb>0?'':' vazio')+'">'+
+    '<span class="cdTag">SIM '+n+'</span>'+
+    '<div class="cdMeio"><div class="cdN">'+(num?'•••• '+ultimos4(num):'sem cartão')+'</div>'+
+    '<div class="cdEnv">'+u+' de '+lim+' envios</div></div>'+
+    '<div class="cdDir"><div class="cdMb">'+(mb>0?gbPartes(mb):'—')+'</div>'+
+    '<div class="cdBar '+cls+'"><i style="width:'+pc+'%"></i></div></div></div>';
+}
 function pintarCartoes(){
   const T=D.telefones||{}; let k=0;
-  const h=DEVS.map(([id,nome])=>{const t=T[id]||{}, e=estadoFone(t), lim=n0(t.LimiteSIM)||9;
-    return [1,2].map(n=>{const u=n0(t['cont_sim'+n]), mb=n0(t['saldoSim'+n]), es=estadoSim(t,n,lim); k++;
-      return '<button class="negro cartaoSim'+(e==='off'?' morto':'')+'" onclick="abrirDisp(\''+id+'\')">'+manchas(k)+
-        '<div class="csTopo"><span class="csNum">•••• '+ultimos4(t['numSim'+n])+'</span><span class="csDev">'+seg(nome)+'<i>SIM '+n+'</i></span></div>'+
-        '<div class="csBase"><div><span class="csEstado">'+(e==='off'?'sem sinal':es[0])+'</span>'+
-        '<div class="csRot">Saldo</div><div class="csSaldo">'+(mb>0?gbPartes(mb):'—')+'</div></div>'+
-        '<div>'+pips(u,lim)+'<div class="pipsRot">'+u+' de '+lim+' envios</div></div></div></button>';}).join('');
+  const h=DEVS.map(([id,nome])=>{
+    const t=T[id]||{}, e=estadoFone(t), lim=n0(t.LimiteSIM)||9; k++;
+    const mb1=n0(t.saldoSim1), mb2=n0(t.saldoSim2), tot=mb1+mb2;
+    const u1=n0(t.cont_sim1), u2=n0(t.cont_sim2), usa=u1+u2, teto=lim*2;
+    const activos=[1,2].filter(n=>n0(t['saldoSim'+n])>0).length;
+    return '<button class="negro cartaoDev'+(e==='off'?' morto':'')+'" onclick="abrirDisp(\''+id+'\')">'+manchas(k)+
+      '<div class="cdTopo"><span class="cdQuem"><i class="cdPt '+e+'"></i>'+seg(nome)+'</span>'+
+      '<span class="cdIdade">'+(e==='off'?'sem sinal':idade(t.beaconTs))+'</span></div>'+
+      '<div><div class="cdSaldo">'+(tot>0?'<b>'+gbPartes(tot).replace('<small>','</b><small>'):'<b>—</b>')+'</div>'+
+      '<div class="cdRot">saldo dos dois cartões</div></div>'+
+      '<div class="cdSims">'+linhaSim(t,1,lim)+linhaSim(t,2,lim)+'</div>'+
+      '<div class="cdPe"><span><b>'+usa+'</b> de '+teto+' envios · <b>'+activos+'</b> a vender</span>'+
+      '<span class="cdSeta">tocar para gerir ›</span></div>'+
+    '</button>';
   }).join('');
   porHtml('cartoes',h);
 }
