@@ -60,6 +60,14 @@ svg{display:block}
 .manchas{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit}
 .manchas svg{position:absolute;inset:0;width:100%;height:100%}
 .manchas path{transform-box:fill-box;transform-origin:center}
+/* ── cristal lapidado: cada faceta acende no seu tempo, e o conjunto
+      nunca repete porque os atrasos não se dividem uns pelos outros ── */
+.cristal{background:#12000a}
+.cristal .fac{animation:brilhaFaceta 6s ease-in-out infinite;
+  animation-delay:calc(var(--k) * -0.7s);transform-box:fill-box;transform-origin:50% 50%}
+@keyframes brilhaFaceta{0%,100%{opacity:.10}50%{opacity:.55}}
+.cartaoDev.morto .cristal .fac{animation:none;opacity:.10}
+@media (prefers-reduced-motion:reduce){.cristal .fac{animation:none;opacity:.26}}
 
 /* ═══ START — a entrada ═════════════════════════════════════════════ */
 #start{position:fixed;inset:0;z-index:200;background:#000;color:#fff;overflow:hidden;
@@ -354,7 +362,20 @@ html.claro .sw button{background:#dcdce6}
 .ritmo .rCab b{color:var(--cabo-texto)}
 .ritmo .dif.sobe{color:#3ef0b0}.ritmo .dif.desce{color:#ff5c7a}
 .ritmo svg{width:100%;height:96px;margin-top:6px;overflow:visible}
-.ritmo .hoje{fill:none;stroke:var(--rosa);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.ritmo .hoje{fill:none;stroke:rgba(255,45,120,.45);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+/* ── o pulso único: uma onda grossa percorre o fio devagar, como um
+      batimento a viajar. O eco vem meio passo atrás, mais largo e mais
+      apagado — é o que lhe dá corpo. ─────────────────────────────── */
+.ritmo .estrada{fill:none;stroke:#3a1026;stroke-width:7;stroke-linecap:round}
+html.claro .ritmo .estrada{stroke:rgba(255,45,120,.14)}
+.ritmo .pulso,.ritmo .eco,.ritmo .pulsoN{fill:none;stroke-linecap:round;
+  stroke-dasharray:26 274;animation:correPulso 4.2s cubic-bezier(.45,0,.55,1) infinite}
+.ritmo .eco{stroke:var(--rosa);stroke-width:11;opacity:.35;animation-delay:-.18s}
+.ritmo .pulso{stroke:var(--rosa);stroke-width:8}
+.ritmo .pulsoN{stroke:#fff;stroke-width:3}
+@keyframes correPulso{to{stroke-dashoffset:-300}}
+@media (prefers-reduced-motion:reduce){
+  .ritmo .pulso,.ritmo .eco,.ritmo .pulsoN{animation:none;stroke-dasharray:none;opacity:.5}}
 .ritmo .areaH{fill:url(#gradRitmo);stroke:none}
 .ritmo .ontem{fill:none;stroke:rgba(127,127,127,.55);stroke-width:1.5;stroke-dasharray:3 4}
 .ritmo .grade line{stroke:rgba(127,127,127,.18);stroke-dasharray:2 4}
@@ -940,8 +961,8 @@ body{font-weight:500}
 <!-- ═══ INÍCIO ═══ -->
 <section id="s-inicio" class="ecra ver">
   <div class="cabo">
-    <div id="chips" style="display:flex;gap:6px;margin-bottom:10px"></div>
-    <div id="heroi" class="heroi"><div class="hL"><div class="rotulo">Lucro de hoje</div><div class="grande">—</div></div></div>
+    <div id="chips" style="display:none"></div>
+    <div id="heroi" class="heroi"></div>
     <div id="ritmo" class="ritmo"></div>
     <button class="heroiToque" onclick="abrirDia()">Ver o dia ao pormenor ›</button>
   </div>
@@ -958,10 +979,7 @@ body{font-weight:500}
       <div class="blTit"><h2>Pulso<small>o ritmo real do negócio</small></h2></div>
       <div id="pulso" class="pulsoG"><div class="vazio pv larg">a carregar…</div></div>
     </div>
-    <div class="bloco">
-      <div class="blTit"><h2>Hoje<small>cada pagamento do dia, pela ordem em que caiu</small></h2></div>
-      <div id="cascata"><div class="vazio">a carregar…</div></div>
-    </div>
+    <!-- [vel] o bloco «Hoje» foi retirado a pedido do dono -->
   </div>
 </section>
 
@@ -1256,17 +1274,28 @@ function nomeDe(dev){for(const d of DEVS) if(d[0]===dev) return d[1]; return dev
 function ultimos4(n){const d=String(n||'').replace(/\D/g,'');return d?d.slice(-4):'----';}
 function agoraS(){return Math.floor(Date.now()/1000)+F7DELTA;}
 
-/* as manchas de cor, em SVG — as mesmas quatro do ecrã de entrada, mais pequenas */
-const MANCHAS=[['#ff2d78','M226-24c50-24 102 16 92 66-8 42-62 72-106 56S148 40 168 10c12-18 34-22 58-34z'],
-  ['#7c3aff','M-28 118c30-56 118-62 158-16 32 36 10 100-44 108S-50 176-28 118z'],
-  ['#22e0ff','M198 152c36-32 94-8 94 42 0 34-44 62-82 46s-42-58-12-88z'],
-  ['#ffb830','M100-36c36-4 62 28 50 60-10 30-54 46-80 24S62-30 100-36z']];
+/* [vel] as manchas antigas saíram: os cartões passaram a cristal lapidado */
+const CRISTAL=[['135,8 255,41 166,87',0.28],['18,63 162,20 107,160',0.11],['192,77 270,57 228,217',0.19],['259,1 357,31 364,145',0.31],['265,119 385,75 318,194',0.22],['38,44 161,12 132,129',0.23],['256,144 349,107 355,287',0.24],['160,-6 300,35 193,136',0.11],['75,97 232,115 154,207',0.2],['202,62 310,43 250,221',0.27],['11,117 119,134 99,230',0.26]];
+/* ─── O FUNDO DOS CARTÕES: cristal lapidado ──────────────────────────
+   Facetas angulares sobre fundo escuro. Cada uma acende e apaga no seu
+   tempo, e por isso a luz parece mover-se dentro da pedra. Tudo em
+   código: não há imagem nenhuma, não pesa, e fica nítido em qualquer
+   ecrã. O `k` roda a pedra por cartão, para dois aparelhos lado a lado
+   nunca mostrarem a mesma face. ──────────────────────────────────── */
 function manchas(k,so){
-  const tr=['','scaleX(-1)','rotate(180deg)','scaleY(-1)'][(k||0)%4];
-  return '<div class="manchas" aria-hidden="true"><svg viewBox="0 0 300 172" preserveAspectRatio="xMidYMid slice"'+
-    (tr?' style="transform:'+tr+'"':'')+'>'+MANCHAS.filter((m,i)=>!so||so.indexOf(i)>=0)
-    .map(m=>'<path fill="'+m[0]+'" d="'+m[1]+'"/>').join('')+'</svg></div>';
+  const kk=(k||0)%4;
+  const tr=['','scaleX(-1)','rotate(180deg)','scaleY(-1)'][kk];
+  const g='gCris'+kk;
+  return '<div class="manchas cristal" aria-hidden="true">'+
+    '<svg viewBox="0 0 300 172" preserveAspectRatio="xMidYMid slice"'+(tr?' style="transform:'+tr+'"':'')+'>'+
+    '<defs><linearGradient id="'+g+'" x1="0" y1="0" x2="1" y2="1">'+
+    '<stop offset="0" stop-color="#ff2d78"/><stop offset=".5" stop-color="#a03cff"/>'+
+    '<stop offset="1" stop-color="#00d4ff"/></linearGradient></defs>'+
+    CRISTAL.filter((m,i)=>!so||so.indexOf(i)>=0)
+      .map((m,i)=>'<polygon class="fac" style="--k:'+i+'" points="'+m[0]+'" fill="url(#'+g+')" opacity="'+m[1]+'"/>').join('')+
+    '</svg></div>';
 }
+
 
 /* ─── avisos ────────────────────────────────────────────────────────── */
 function aviso(t,cor){const a=document.getElementById('aviso'); if(!a) return;
@@ -1485,11 +1514,9 @@ function pintarHeroi(){
   });
   taca+='</div>';
 
-  const hL='<div class="rotulo">Lucro de hoje</div>'+
-    '<div class="grande"><span id="lucroNum">'+mt(luc)+'</span><small>MT</small></div>'+
-    '<div class="meta">meta <b>'+mt(meta)+' MT</b> · '+Math.round(pct*100)+'%'+(luc>=meta?' · atingida':' · faltam '+mt(Math.max(0,meta-luc))+' MT')+'</div>'+
-    '<div class="tres"><div><b>'+mt(vendas)+'</b>vendas</div><div><b>'+mt(d.facturado||F&&F.contagens&&F.contagens.mt_hoje||0)+'</b>MT</div>'+
-    '<div><b class="'+(pend?'esp':'')+'">'+mt(pend)+'</b>na fila</div></div>';
+  /* [vel] a coluna da esquerda foi retirada a pedido do dono:
+     o anel à direita já mostra o lucro, e o resto passou a ruído */
+  const hL='';
 
   /* As fitas são construídas UMA vez. Se as reescrevêssemos a cada
      pintura, o navegador criava elementos novos e a rotação recomeçava
@@ -1511,7 +1538,7 @@ function pintarHeroi(){
 
   /* na primeira pintura o número conta a subir */
   if(!HEROI_JAVIU&&luc>=0){ HEROI_JAVIU=true;
-    const num=document.getElementById('lucroNum');
+    const num=document.getElementById('anelNum');  /* [vel] o lucro vive agora só no anel */
     if(num){ num.textContent='0'; try{ cascContar(num,luc,1500); }catch(e){ num.textContent=mt(luc); } }
   }
   pintarRitmo();
@@ -1539,15 +1566,25 @@ function pintarRitmo(){
   const mtH=n0(p.mt_hoje), mtO=n0(p.mt_ontem_ate_agora), dif=mtO>0?Math.round(((mtH-mtO)/mtO)*100):null;
   const pico=p.pico||{};
   const rot=[0,4,8,12,16,20].map(h0=>'<span class="'+(hr>=h0&&hr<h0+4?'on':'')+'">'+h0+'h</span>').join('');
-  const h='<div class="rCab"><span>ritmo do dia · <b>'+mt(mtH)+' MT</b> até agora</span>'+
+  const h='<div class="rCab" style="justify-content:flex-end">'+
     (dif===null?'':'<span class="dif '+(dif>=0?'sobe':'desce')+'">'+(dif>=0?'▲':'▼')+' '+Math.abs(dif)+'% que ontem</span>')+'</div>'+
     '<svg viewBox="0 0 '+L+' '+A+'" preserveAspectRatio="none">'+
     '<defs><linearGradient id="gradRitmo" x1="0" y1="0" x2="0" y2="1">'+
-    '<stop offset="0" stop-color="#ff2d78" stop-opacity=".55"/>'+
-    '<stop offset="1" stop-color="#ff2d78" stop-opacity="0"/></linearGradient></defs>'+
+    '<stop offset="0" stop-color="#ff2d78" stop-opacity=".28"/>'+
+    '<stop offset="1" stop-color="#ff2d78" stop-opacity="0"/></linearGradient>'+
+    '<filter id="bPulso" x="-20%" y="-60%" width="140%" height="220%">'+
+    '<feGaussianBlur stdDeviation="3.2"/></filter></defs>'+
     '<g class="grade">'+[0.33,0.66].map(f=>'<line x1="0" x2="'+L+'" y1="'+(A*f).toFixed(1)+'" y2="'+(A*f).toFixed(1)+'"/>').join('')+'</g>'+
     (area?'<path class="areaH'+(RITMO_JAVIU?'':' entra')+'" d="'+area+'"/>':'')+
-    '<path class="ontem" d="'+dO+'"/><path class="hoje'+(RITMO_JAVIU?'':' traca')+'" d="'+dH+'"/>'+pts+'</svg>'+
+    '<path class="ontem" d="'+dO+'"/>'+
+    /* a estrada escura por onde o pulso corre */
+    '<path class="estrada" d="'+dH+'"/>'+
+    /* o pulso: um eco largo atrás e o corpo à frente, os dois acesos */
+    '<g filter="url(#bPulso)">'+
+    '<path class="eco" d="'+dH+'"/><path class="pulso" d="'+dH+'"/></g>'+
+    '<path class="pulsoN" d="'+dH+'"/>'+
+    /* o traço de base, ténue, para o dia continuar legível quando o pulso está longe */
+    '<path class="hoje'+(RITMO_JAVIU?'':' traca')+'" d="'+dH+'"/>'+pts+'</svg>'+
     '<div class="horas">'+rot+'</div>'+
     '<div class="rCab" style="margin-top:6px"><span>pico às <b>'+n0(pico.hora)+'h</b> com '+n0(pico.n)+' pagamentos</span><span>ontem a tracejado</span></div>';
   porHtml('ritmo',h);
@@ -1649,7 +1686,8 @@ function cascContar(el,ate,ms){if(!el) return; const de=n0(el.textContent.replac
   function passo(t){if(!t0)t0=t; const p=Math.min(1,(t-t0)/ms); el.textContent=Math.round(de+(ate-de)*(1-Math.pow(1-p,3))).toLocaleString('pt-PT'); if(p<1) requestAnimationFrame(passo);}
   requestAnimationFrame(passo);}
 function cascataPintar(){
-  const cx=document.getElementById('cascata'); if(!cx||secao!=='s-inicio') return;
+  const cx=document.getElementById('cascata');
+  if(!cx||secao!=='s-inicio') return;   /* [vel] o bloco já não existe: sai em silêncio */
   const itens=((NEGQ&&NEGQ.itens)||[]).slice().sort((a,b)=>n0(a.t_pago)-n0(b.t_pago));
   let total=0, ent=0; itens.forEach(x=>{total+=n0(x.mt); if(x.st==='enviado') ent++;});
   const lento=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -1829,8 +1867,8 @@ async function f7reenvia(id,num){
 }
 async function negTodos(){
   const q=n0((G7.contas||{}).fila)+n0((G7.contas||{}).enviar);
-  if(!confirm('Reprocessar '+(q||'todos')+' pagamento(s) da fila?')) return;
-  try{ const r=await rpc('fila_reenviar_todos',{p_max:25}); aviso(String(r),'ok'); carregarFila7(); }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
+  if(!confirm('Mandar outra vez os '+(q||'')+' pagamento(s) que estão à espera?\n\nOs que já foram entregues não se repetem.')) return;
+  try{ const r=await rpc('fila_reenviar_todos',{});  /* [vel] a fila toda, não 25 */ aviso(String(r),'ok'); carregarFila7(); }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
 }
 async function reproTodos(b){ const rot=b.innerHTML; b.textContent='a mandar…'; try{ await negTodos(); }finally{ setTimeout(()=>{b.innerHTML=rot;},1200); } }
 document.addEventListener('input',function(e){ if(e.target&&e.target.id==='filaBusca'){ clearTimeout(F7T); F7T=setTimeout(carregarFila7,400); } });
