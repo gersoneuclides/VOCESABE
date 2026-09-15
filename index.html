@@ -1044,6 +1044,16 @@ body{font-weight:500}
 .hsFita{background:rgba(255,255,255,.26)}
 .mes30{border-top-color:rgba(255,255,255,.28)}
 .rb.foto,html.claro .rb.foto{border-color:rgba(255,255,255,.38)}
+/* 7 · BUG corrigido: o número do saldo e o contador herdavam preto (#000)
+       dentro do cartão escuro — contraste medido de 1.05:1, quase invisível */
+#s-disp .foneG,#folhaDispCorpo .foneG{color:#fff}
+.aV,.aN{color:#fff}
+/* 8 · acentos com contraste suficiente em fundo claro, sem apagar o brilho
+       que eles têm quando estão em cima de fundo escuro */
+.bt.mau{color:#c00027}
+.bt.ok,.bwEstado.on{color:#07694a}
+#s-disp .bt.mau,#folhaDispCorpo .bt.mau,#s-fila .bt.mau,.negro .bt.mau{color:#ff6b80}
+#s-disp .bt.ok,#folhaDispCorpo .bt.ok,#s-fila .bt.ok,.negro .bt.ok,#s-disp .bwEstado.on,#folhaDispCorpo .bwEstado.on{color:#4ee3a5}
 /* ═══ fim do bloco de legibilidade ═══════════════════════════════════ */
 </style>
 </head>
