@@ -1487,7 +1487,7 @@ html.claro #consBox .consl{background:#f3f2f9}
       </div>
 
     </div>
-    <p class="verRodape" id="carimboV">v20/09 · FINO</p>
+    <p class="verRodape" id="carimboV">v20/09 · DIAS</p>
   </div>
 </section>
 <section id="s-consultas" class="ecra">
@@ -1600,7 +1600,7 @@ const URL_BASE="https://wjebxekgzzmdikabwyqw.supabase.co/rest/v1/rpc/";
 const CHAVE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqZWJ4ZWtnenptZGlrYWJ3eXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTI1NjAsImV4cCI6MjA5OTg2ODU2MH0.VsKJKIeeKtZkfLuQLZCTP81U-TK13b2MgxEcmhJmwyQ";
 const META_PADRAO=2000;
 const DEVS=[['redmi8','Redmi 8'],['redmi13','Redmi 13c']];
-const VERSAO='v20/09 · FINO';
+const VERSAO='v20/09 · DIAS';
 /* o estado — tudo o que a nuvem manda fica aqui e sobrevive a um pedido falhado */
 var D={}, F={}, NEG=null, NEGQ=null, G7={contas:{},itens:[]}, LYD=null, PULSO=null, CONS={}, PK=[], CONSUSO={};
 var secao='s-inicio', ativos={}, tocados={}, estadoUI={}, F7DELTA=0, NEGV=0;
@@ -2002,10 +2002,12 @@ function memGuardar(){try{const g={q:Date.now()};
   if(D&&D.lucro){const c=Object.assign({},D); delete c.comandos; g.D=c;}
   if(F&&F.contagens) g.F=F; if(NEG) g.NEG=NEG; if(PK&&PK.length) g.PK=PK; if(PULSO) g.PULSO=PULSO;
   if(G7&&G7.itens&&G7.itens.length) g.G7={contas:G7.contas,itens:G7.itens.slice(0,60),agora:G7.agora};
+  if(DIAS30&&DIAS30.length) g.DIAS30=DIAS30;   /* semana e calendário desenhados à entrada */
   localStorage.setItem(MEM,JSON.stringify(g));}catch(e){}}
 function memLer(){try{const g=JSON.parse(localStorage.getItem(MEM)||'null'); if(!g) return false;
   if(g.D&&(!D||!D.lucro)) D=g.D; if(g.F&&!(F&&F.contagens)) F=g.F; if(g.NEG&&!NEG) NEG=g.NEG;
   if(g.PK&&!PK.length) PK=g.PK; if(g.PULSO&&!PULSO) PULSO=g.PULSO; if(g.G7&&!(G7.itens&&G7.itens.length)) G7=g.G7;
+  if(g.DIAS30&&g.DIAS30.length&&!DIAS30.length){ DIAS30=g.DIAS30; M30SIG=''; }
   return true;}catch(e){return false;}}
 
 /* ─── toque com resposta e trava contra toques duplos ───────────────── */
@@ -2066,7 +2068,7 @@ function mesConta(){
 function pintarMes30(){
   const cx=document.getElementById('mes30'); if(!cx) return;
   const M=mesConta();
-  if(!M){ if(cx.innerHTML) cx.innerHTML=''; return; }
+  if(!M) return;   /* ainda sem dias: fica o último bom, não se apaga */
   let chave=''; for(let d=1;d<=M.hoje;d++) chave+=M.dia[d]+',';
   const sig=M.ano+'-'+M.mes+'|'+M.hoje+'|'+M.total+'|'+chave;
   if(sig===M30SIG) return; M30SIG=sig;
@@ -3339,9 +3341,12 @@ async function ciclo(){
     if(NEGV%3===0){ try{ const q=await rpc('fila_lista',{p_n:60,p_q:null});
       if(q&&q.itens){ NEGQ=q; if(q.agora) F7DELTA=n0(q.agora)-Math.floor(Date.now()/1000); cascataPintar(); } }catch(e){} }
     if(NEGV%5===0){ try{ const p=await rpc('negocio_vivo',{}); if(p){ PULSO=p; pintarPulso(); pintarRitmo(); memGuardar(); } }catch(e){} }
-    /* os 30 dias mudam uma vez por dia: pedidos à entrada e de 10 em 10 min */
-    if(!DIAS30.length||NEGV%120===0){ try{ const m=await rpc('lucro_dias',{p_dias:32});
-      if(m&&m.dias&&m.dias.length){ DIAS30=m.dias; M30SIG=''; pintarHeroi(); } }catch(e){} }
+    /* os dias do mês: primeiro pedido do ciclo e SEM esperar por ele —
+       atrás das outras chamadas, uma rede fraca deixava a semana e o
+       calendário por pintar */
+    if(!DIAS30.length||NEGV%120===0){ rpc('lucro_dias',{p_dias:32}).then(function(m){
+      if(m&&m.dias&&m.dias.length){ DIAS30=m.dias; M30SIG=''; try{ memGuardar(); }catch(e){} pintarHeroi(); }
+    }).catch(function(){}); }
     /* o que mais sai muda devagar: mesma cadência lenta, fora do ciclo de 5 s */
     if(!PACSAI.length||NEGV%120===0){ try{ const tp=await rpc('top_pacotes',{p_n:6});
       if(tp&&tp.length){ PACSAI=tp; pintarPulso(); } }catch(e){} }
