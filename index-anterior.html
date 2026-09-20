@@ -1003,6 +1003,58 @@ body{font-weight:500}
 .gvDono span{font-weight:500}
 .ajRow .ajTx span{font-weight:500}
 
+
+/* ═══ LEGIBILIDADE — contraste reforçado (15/09) ═══════════════════════
+   Bloco aditivo, no fim da folha de estilo: não apaga nada do desenho
+   original. Para desfazer, apaga deste comentário até ao fim do bloco. */
+/* 1 · painéis escuros mais sólidos — a foto de fundo deixa de comer o texto */
+#s-disp{--cx-bg:rgba(8,8,13,.95);--linha:rgba(255,255,255,.30)}
+#folhaDispCorpo{--linha:rgba(255,255,255,.30)}
+/* 2 · textos pequenos passam a 100% */
+.gIdade,.gEng,.aL,.aLn,.aRot,.aPe,.pNota,#s-disp .grande small,.gvItem svg,.cdPe .cdSeta,.cdAbrir .cdCv{opacity:1}
+.abas.q4 button b{opacity:.92}
+.cdSim.vazio{opacity:.72}
+.aGrav input::placeholder,#folhaDispCorpo .aGrav input::placeholder,.campo::placeholder{opacity:.75}
+/* 3 · anéis de saldo — o traço vazio e a bolha "de 9" viam-se mal */
+.aF{stroke:rgba(255,255,255,.26)}
+.aMini{background:#171722;box-shadow:0 0 0 4px #171722,0 3px 10px rgba(0,0,0,.7)}
+/* 4 · caixas de escrever e botões dos cartões */
+.aGrav input{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.38)}
+.aGrav input:focus{box-shadow:0 0 0 2px rgba(255,255,255,.45)}
+.aGrav button{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.40)}
+.aMenu button,.gMenu button{background:rgba(255,255,255,.20);border-color:rgba(255,255,255,.38)}
+#s-disp .bt.forte,html.claro #s-disp .bt.forte{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.40)}
+.barra{background:#414b59}
+.barra .bt:active{background:rgba(255,255,255,.16)}
+/* 5 · cartões do Início, que assentam em cima de fotografia */
+.cartaoDev::after{background:linear-gradient(155deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.52) 46%,rgba(0,0,0,.84) 100%)}
+.cdSim{background:rgba(0,0,0,.52)}
+.cdTag{background:rgba(255,255,255,.26)}
+.cdCel i{background:rgba(255,255,255,.30)}
+.cdAbrir{background:rgba(255,255,255,.26)}
+.cartaoDev.morto .cdSaldo b{color:rgba(255,255,255,.78)}
+/* 6 · cartão da Fila e blocos escuros soltos */
+#s-fila .filaCard .campo{box-shadow:inset 0 0 0 1px rgba(255,255,255,.30)}
+#s-fila .filaCard .campo::placeholder{color:#a7b0bd}
+#s-fila .filaCard .f7r,#s-fila .filaCard .lyL,#s-fila .filaCard .f7dbt button,#s-fila .filaCard .lyAcs button{box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+#s-fila .filaCard .f7par button+button{border-left-color:rgba(255,255,255,.26)}
+#s-fila .filaCard .f7det{border-top-color:rgba(255,255,255,.22)}
+.chip{background:rgba(255,255,255,.22)}
+.contas4 div{background:rgba(255,255,255,.16)}
+.hsFita{background:rgba(255,255,255,.26)}
+.mes30{border-top-color:rgba(255,255,255,.28)}
+.rb.foto,html.claro .rb.foto{border-color:rgba(255,255,255,.38)}
+/* 7 · BUG corrigido: o número do saldo e o contador herdavam preto (#000)
+       dentro do cartão escuro — contraste medido de 1.05:1, quase invisível */
+#s-disp .foneG,#folhaDispCorpo .foneG{color:#fff}
+.aV,.aN{color:#fff}
+/* 8 · acentos com contraste suficiente em fundo claro, sem apagar o brilho
+       que eles têm quando estão em cima de fundo escuro */
+.bt.mau{color:#c00027}
+.bt.ok,.bwEstado.on{color:#07694a}
+#s-disp .bt.mau,#folhaDispCorpo .bt.mau,#s-fila .bt.mau,.negro .bt.mau{color:#ff6b80}
+#s-disp .bt.ok,#folhaDispCorpo .bt.ok,#s-fila .bt.ok,.negro .bt.ok,#s-disp .bwEstado.on,#folhaDispCorpo .bwEstado.on{color:#4ee3a5}
+/* ═══ fim do bloco de legibilidade ═══════════════════════════════════ */
 </style>
 </head>
 <body>
