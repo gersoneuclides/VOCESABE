@@ -160,6 +160,87 @@ html.claro .blTit .mais{background:#fff}
   isolation:isolate}
 .negro>*:not(.manchas){position:relative;z-index:1}
 
+
+/* ─── STOCK (30/09): crédito do Principal → 7 GB pelo *109# ─────────── */
+.stkHero{padding:18px 18px 16px;margin-top:0}
+.stkTopo{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.stkQuando{font-size:11.5px;color:rgba(255,255,255,.62);font-variant-numeric:tabular-nums}
+.stkSaldo{margin:16px 0 4px;display:flex;align-items:baseline;gap:8px}
+.stkSaldo b{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stkSaldo small{font-size:13px;color:rgba(255,255,255,.7);font-weight:600}
+.stkLinha{font-size:12.5px;color:rgba(255,255,255,.72);margin-top:8px;line-height:1.5}
+.stkLinha b{color:#fff}
+.stkFases{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.stkFases span{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:99px;font-size:11.5px;font-weight:700;
+  background:var(--papel2);color:var(--texto3)}
+.stkFases span.on{background:rgba(255,45,120,.14);color:var(--rosa)}
+.stkFases span.ok{background:rgba(23,201,138,.16);color:var(--verdeT)}
+.stkFases span.mau{background:rgba(255,59,92,.14);color:var(--mau)}
+.stkFases span i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.stkFases span.on i{animation:pulsa 1.4s ease-in-out infinite}
+.stkCurso{margin:8px 0 2px;font-size:12.5px;color:var(--texto2);line-height:1.5}
+.stkHist .l{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid rgba(127,127,127,.14)}
+.stkHist .l:first-child{border-top:0;padding-top:2px}
+.stkHist .h{font-size:11.5px;color:var(--texto3);font-variant-numeric:tabular-nums;min-width:74px;line-height:1.35;padding-top:2px}
+.stkHist .q{flex:1;min-width:0}
+.stkHist .q b{display:block;font-size:13.5px}
+.stkHist .q span{display:block;font-size:12px;color:var(--texto2);line-height:1.4;margin-top:2px;word-break:break-word}
+.stkHist .q .acc{margin-top:6px;display:flex;gap:6px}
+/* 04/10 · «Ver mais…» / «Ver menos» no fim de cada histórico do Stock */
+.stkMaisCx{display:flex;gap:8px;margin-top:4px;padding-top:12px;border-top:1px solid rgba(127,127,127,.14)}
+.stkMaisCx button{flex:1;padding:11px 14px;border-radius:14px;background:var(--papel2);color:var(--texto);font-weight:700;font-size:13.5px;letter-spacing:.01em}
+.stkMaisCx button.menos{flex:0 0 auto;background:transparent;color:var(--texto2);font-weight:600}
+.stkMaisCx button:disabled{opacity:.55}
+.stkRegras{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.stkRegras label{display:block}
+.stkRegras .rot{margin:0 0 6px}
+.stkStock{display:flex;align-items:baseline;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.stkStock span{font-size:11.5px;color:rgba(255,255,255,.62)}
+.stkStock b{font-size:20px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stkStock small{font-size:11px;color:rgba(255,255,255,.55)}
+.stkBtHero{background:rgba(255,255,255,.14);color:#fff;margin-top:14px}
+.stkHeroCurso{color:rgba(255,255,255,.75)}
+
+.stkChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.stkChips button{padding:6px 12px;border-radius:99px;background:var(--papel2);color:var(--texto2);font-weight:700;font-size:12.5px}
+.stkChips button.on{background:#0b0b10;color:#fff}
+html.claro .stkChips button.on{background:#0b0b10}
+.stkConta{margin:10px 0 0;font-size:13px;color:var(--texto2);line-height:1.5}
+.stkConta b{color:var(--texto)}
+.stkBarra{height:8px;border-radius:99px;background:var(--papel2);overflow:hidden;margin-top:14px}
+.stkBarra i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff2d78,#a03cff);transition:width .6s}
+.stkHist .cv{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.stkHist .cv span{min-width:26px;height:26px;padding:0 7px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:var(--papel2);color:var(--texto3)}
+.stkHist .cv span.ok{background:rgba(23,201,138,.16);color:var(--verdeT)}
+.stkHist .cv span.mau{background:rgba(255,59,92,.14);color:var(--mau)}
+.stkHist .cv span.esp{background:rgba(245,166,35,.18);color:var(--ambarT)}
+.stkHist .cv span.on{background:rgba(255,45,120,.14);color:var(--rosa)}
+
+/* ─── cartão do Principal · «bilhete SIM» (opção 5, escolhida 30/09 19:00) ─── */
+.stkBilhete{padding:0;display:grid;grid-template-columns:54px 1fr}
+.stkRail{background:linear-gradient(180deg,var(--rosa),var(--roxo));display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:16px 0}
+.stkSim{width:26px;height:34px;border-radius:6px;background:rgba(255,255,255,.92);position:relative;clip-path:polygon(0 0,70% 0,100% 22%,100% 100%,0 100%)}
+.stkSim::after{content:"";position:absolute;left:5px;top:12px;width:16px;height:14px;border-radius:3px;border:1.5px solid rgba(124,58,255,.9)}
+.stkRailTxt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92);white-space:nowrap}
+.stkCorpo{padding:16px;min-width:0}
+.stkBilhete .stkSaldo{margin:14px 0 2px;gap:7px}
+.stkBilhete .stkSaldo b{font-size:38px}
+.stkBilhete .stkLinha{margin-top:4px;font-size:11.5px;color:rgba(255,255,255,.62)}
+.stkBilhete .stkLinha b{color:#fff}
+.stkRot{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.stkRot b{color:#fff;letter-spacing:0;text-transform:none;font-size:12px;margin-left:4px;font-variant-numeric:tabular-nums}
+.stkDuo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.stkDuo>div{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 11px;min-width:0}
+.stkNum b{display:block;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;margin-top:4px;word-break:break-word}
+.stkNum small{font-size:11px;color:rgba(255,255,255,.6);margin-left:3px;font-weight:700;letter-spacing:0}
+.stkSub{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:3px;font-weight:600;line-height:1.35}
+.stkTransfL{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap}
+.stkQuad{display:flex;gap:3px;flex-wrap:wrap}
+.stkQuad i{width:10px;height:10px;border-radius:3px;background:rgba(255,255,255,.16)}
+.stkQuad i.ok{background:#3ef0b0}
+.stkQuad i.mau{background:var(--mau)}
+.stkBilhete .acoes{margin-top:14px}
+.stkBilhete .stkHeroCurso{margin-top:8px}
 /* ─── botões e campos ────────────────────────────────────────────── */
 .bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;
   border-radius:99px;background:var(--papel2);color:var(--texto);font-weight:700;font-size:14px;
@@ -1487,7 +1568,7 @@ html.claro #consBox .consl{background:#f3f2f9}
       </div>
 
     </div>
-    <p class="verRodape" id="carimboV">v20/09 · DIAS</p>
+    <p class="verRodape" id="carimboV">v04/10 · VER MAIS</p>
   </div>
 </section>
 <section id="s-consultas" class="ecra">
@@ -1513,6 +1594,71 @@ html.claro #consBox .consl{background:#f3f2f9}
           <div class="ajSec">Número que recebe a recolha</div>
           <div class="linhaC"><input id="cfgNumRecolha" class="campo" inputmode="numeric" placeholder="8xxxxxxxx"><button class="bt forte" onclick="gravarRecolha()">Guardar</button></div>
           <p class="nota">Os telefones apanham o número novo em segundos. Sem ele guardado, o botão Recolher não faz nada.</p></div>
+      </div>
+  </div>
+</section>
+
+
+<section id="s-stock" class="ecra">
+  <div class="cabo"><h1>Stock</h1><p class="sub">converter crédito do Principal em megas de 7 GB para revender</p></div>
+  <div class="folha">
+      <div id="aj-stock">
+        <div class="cx negro stkHero stkBilhete" id="stkHero">
+          <div class="stkRail"><div class="stkSim" aria-hidden="true"></div><div class="stkRailTxt" id="stkRailTxt">SIM 1 · Principal</div></div>
+          <div class="stkCorpo">
+            <div class="stkTopo"><span class="chip" id="stkVivo"><i></i>Principal</span><span class="stkQuando" id="stkQuando">—</span></div>
+            <div class="stkSaldo"><b id="stkSaldoMT">—</b><small>MT</small></div>
+            <div class="stkLinha" id="stkLinha">—</div>
+            <div class="stkDuo">
+              <div><div class="stkRot">internet</div><div class="stkNum"><b id="stkInternetMB">—</b></div><div class="stkSub" id="stkInternetQuando"></div></div>
+              <div><div class="stkRot">stock</div><div class="stkNum"><b id="stkStockMB">—</b></div><div class="stkSub" id="stkStockQuando"></div></div>
+            </div>
+            <div class="stkTransfL"><div class="stkRot">transferências hoje <b id="stkTransf">—</b></div><div class="stkQuad" id="stkQuad" aria-hidden="true"></div></div>
+            <div class="stkSub" id="stkTransfNota">só contam as confirmadas por SMS</div>
+            <div class="acoes"><button class="bt larg rosa" id="stkBtVer" onclick="stockVerGeral()">Consultar (*100#)</button></div>
+            <div class="stkCurso stkHeroCurso" id="stkVerCurso" style="display:none"></div>
+          </div>
+        </div>
+        <div class="cx"><h3>Converter crédito</h3>
+          <p class="funcao" id="stkFuncao">cada <b>150 MT</b> viram <b>7 GB</b>: o Principal marca <b>*109#</b>, escolhe «150MT=7GB/30d» e depois «Converte com crédito», e repete até gastar o valor que escreveres.</p>
+          <span class="rot">Quanto converter (MT)</span>
+          <div class="linhaC"><input class="campo" id="stkMT" inputmode="numeric" placeholder="1500" oninput="stockBotao()"></div>
+          <div class="stkChips" id="stkChips"></div>
+          <p class="stkConta" id="stkConta">—</p>
+          <div id="stkCursoCx" style="display:none">
+            <div class="stkBarra"><i id="stkBarraI"></i></div>
+            <div class="stkFases" id="stkFases"></div>
+            <div class="stkCurso" id="stkCurso"></div>
+          </div>
+          <div class="acoes"><button class="bt rosa larg" id="stkBtConv" onclick="stockConverter()">Converter</button></div>
+          <div class="acoes"><button class="bt mau larg" id="stkBtCanc" onclick="stockCancelar()">Parar</button></div>
+          <p class="nota" id="stkNota">As conversões saem uma a seguir à outra. Se uma falhar (crédito a acabar, menu diferente), o Principal pára e o resto fica por fazer.</p></div>
+        <div class="cx"><h3>Tirar stock</h3>
+          <p class="funcao">o Principal marca <b>*162#</b> → 8 (Transferir Megas) → 2, lê o stock, escreve o <b>montante</b> e o <b>número</b> — o mesmo caminho da recolha dos Redmis.</p>
+          <div class="stkRegras">
+            <label><span class="rot">Montante (MB)</span><input class="campo" id="stkEnvMB" inputmode="numeric" placeholder="10240" oninput="stockEnvBotao()"></label>
+            <label><span class="rot">Número que recebe</span><input class="campo" id="stkEnvNum" inputmode="tel" placeholder="8xxxxxxxx" oninput="stockEnvBotao()"></label>
+          </div>
+          <div class="stkChips" id="stkEnvChips"></div>
+          <p class="stkConta" id="stkEnvConta">—</p>
+          <div id="stkEnvCursoCx" style="display:none"><div class="stkFases" id="stkEnvFases"></div><div class="stkCurso" id="stkEnvCurso"></div></div>
+          <div class="acoes"><button class="bt forte larg" id="stkBtEnv" onclick="stockEnviar()">Enviar</button></div>
+          <div class="g2"><button class="bt" id="stkBtStock" onclick="stockVer()">Ver stock (*162#)</button><button class="bt mau" id="stkBtEnvCanc" onclick="stockEnvCancelar()">Parar</button></div>
+          <p class="nota">Depois de escrever o número não há volta: os megas saem mesmo que a Vodacom responda com erro — por isso não se repete sozinho.</p></div>
+        <div class="cx"><h3>Regras</h3><p class="funcao">o pacote que a Vodacom vende no *109# e quantos pedidos aceitas por dia</p>
+          <div class="stkRegras">
+            <label><span class="rot">Preço do pacote (MT)</span><input class="campo" id="stkCfgPreco" inputmode="numeric" placeholder="150"></label>
+            <label><span class="rot">Megas do pacote (GB)</span><input class="campo" id="stkCfgGb" inputmode="numeric" placeholder="7"></label>
+            <label><span class="rot">Pedidos por dia</span><input class="campo" id="stkCfgMax" inputmode="numeric" placeholder="1"></label>
+            <label><span class="rot">Transferências por dia</span><input class="campo" id="stkCfgTransf" inputmode="numeric" placeholder="10"></label>
+            <label><span class="rot">Cartão do Principal</span><select class="campo" id="stkCfgSim"><option value="1">SIM 1</option><option value="2">SIM 2</option></select></label>
+          </div>
+          <div class="acoes"><button class="bt forte larg" onclick="stockGravar()">Guardar regras</button></div>
+          <p class="nota">O preço é o da Vodacom (150 MT = 7 GB/30d), não o total — o total escreve-se em cima. As transferências por dia contam-se pelos SMS «Transferiste com sucesso» que entram no Principal: uma saída sem SMS não gasta transferência. Se um menu mudar, o Principal pára e mostra aqui o que viu.</p></div>
+        <div class="cx"><h3>Entradas</h3><p class="funcao" id="stkHistResumo">—</p>
+          <div class="stkHist" id="stkHist"><div class="vazio">ainda sem conversões</div></div></div>
+        <div class="cx"><h3>Saídas</h3><p class="funcao" id="stkSaidasResumo">—</p>
+          <div class="stkHist" id="stkSaidas"><div class="vazio">ainda sem saídas</div></div></div>
       </div>
   </div>
 </section>
@@ -1600,7 +1746,7 @@ const URL_BASE="https://wjebxekgzzmdikabwyqw.supabase.co/rest/v1/rpc/";
 const CHAVE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqZWJ4ZWtnenptZGlrYWJ3eXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTI1NjAsImV4cCI6MjA5OTg2ODU2MH0.VsKJKIeeKtZkfLuQLZCTP81U-TK13b2MgxEcmhJmwyQ";
 const META_PADRAO=2000;
 const DEVS=[['redmi8','Redmi 8'],['redmi13','Redmi 13c']];
-const VERSAO='v20/09 · DIAS';
+const VERSAO='v04/10 · VER MAIS';
 /* o estado — tudo o que a nuvem manda fica aqui e sobrevive a um pedido falhado */
 var D={}, F={}, NEG=null, NEGQ=null, G7={contas:{},itens:[]}, LYD=null, PULSO=null, CONS={}, PK=[], CONSUSO={};
 var secao='s-inicio', ativos={}, tocados={}, estadoUI={}, F7DELTA=0, NEGV=0;
@@ -1613,7 +1759,9 @@ var SEM_SINAL=false;
 async function rpc(fn,corpo,ms){
   const usaSinal=!SEM_SINAL&&(typeof AbortController!=='undefined');
   const ctl=usaSinal?new AbortController():null;
-  const t=ctl?setTimeout(function(){ try{ctl.abort();}catch(e){} }, ms||15000):null;
+  /* 23/09 · nenhum pedido é cortado antes de 25 s: a nuvem responde sempre em até 12 s */
+  ms=Math.max(Number(ms)||0,25000);
+  const t=ctl?setTimeout(function(){ try{ctl.abort();}catch(e){} }, ms):null;
   try{
     const cab={apikey:CHAVE,Authorization:'Bearer '+CHAVE,'Content-Type':'application/json'};
     const corpoTxt=JSON.stringify(corpo||{});
@@ -1625,6 +1773,12 @@ async function rpc(fn,corpo,ms){
       const m=String((e1&&e1.message)||'');
       if(ctl&&/clon|Clone|DataClone/.test(m)){ SEM_SINAL=true;
         r=await fetch(URL_BASE+fn,{method:'POST',headers:cab,body:corpoTxt}); }
+      else if(String((e1&&e1.name)||'')==='AbortError'||/abort/i.test(m)){
+        const e=new Error('A nuvem demorou a responder. O pedido pode ter sido feito: a lista actualiza-se sozinha.');
+        e.demorou=true; throw e; }
+      else if(/Load failed|Failed to fetch|NetworkError|network|internet/i.test(m)){
+        const e=new Error('Sem ligação à internet neste momento. Tente outra vez daqui a pouco.');
+        e.rede=true; throw e; }
       else throw e1;
     }
     const txt=await r.text();
@@ -1709,9 +1863,9 @@ function porHtml(id,html){const el=document.getElementById(id); if(el&&el.innerH
 
 /* ─── navegação ─────────────────────────────────────────────────────── */
 const ECRAS={'s-inicio':'Dashboard','s-fila':'Fila em tempo real','s-disp':'Dispositivos','s-ordens':'Ordens',
-  's-ajustes':'Ajustes','s-consultas':'Consultas e histórico','s-recolha':'Recolher dados'};
+  's-ajustes':'Ajustes','s-consultas':'Consultas e histórico','s-recolha':'Recolher dados','s-stock':'Stock'};
 /* estes dois têm ecrã próprio, mas continuam a pertencer aos Ajustes na barra */
-const TAB_DE={'s-consultas':'s-ajustes','s-recolha':'s-ajustes'};
+const TAB_DE={'s-consultas':'s-ajustes','s-recolha':'s-ajustes','s-stock':'s-ajustes'};
 function ir(id){
   if(!document.getElementById(id)) return;
   document.querySelectorAll('main .ecra').forEach(s=>s.classList.toggle('ver',s.id===id));
@@ -1727,6 +1881,7 @@ function ir(id){
   if(id==='s-ajustes'){ ajVoltar(); ajCarregar(); }
   if(id==='s-consultas'){ try{ comEstado(desenhar); }catch(e){} try{ carregarConsultas(); }catch(e){} }
   if(id==='s-recolha'){ try{ comEstado(desenhar); }catch(e){} }
+  if(id==='s-stock'){ try{ stockCarregar(); }catch(e){} }
   if(id==='s-fila'){ try{carregarFila7();}catch(e){} try{lyCarregar();}catch(e){} }
   if(id==='s-inicio'){ try{negCarregar();}catch(e){} }
 }
@@ -1932,6 +2087,7 @@ const IC={
  recolha:'<path d="M12 4v10M8 10l4 4 4-4"/><path d="M4 18h16"/>',
  bots:'<rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/>',
  comprov:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+ stock:'<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/>',
  foto:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
  tema:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
 const AJUSTES=[];
@@ -1941,13 +2097,13 @@ function montarMenu(){
     '><svg viewBox="0 0 24 24">'+IC[ic]+'</svg>'+nome+'</button>';
   m.innerHTML='<div class="gvGrupo">GERAL</div>'+it('s-inicio','inicio','Dashboard')+
     '<div class="gvGrupo">CONFIGURAÇÕES BÁSICAS</div>'+
-    it('s-consultas','consultas','Consultas e histórico')+it('s-recolha','recolha','Recolher dados')+
+    it('s-consultas','consultas','Consultas e histórico')+it('s-recolha','recolha','Recolher dados')+it('s-stock','stock','Stock')+
     '<button class="gvItem" onclick="abrirFoto()"><svg viewBox="0 0 24 24">'+IC.foto+'</svg>Foto de perfil</button>'+
     '<button class="gvItem" onclick="alternarTema()"><svg viewBox="0 0 24 24">'+IC.tema+'</svg><span id="gvTema">Tema claro</span></button>';
   const gm=document.getElementById('gvManchas'); if(gm&&!gm.innerHTML) gm.outerHTML=manchas(2,[0,3]).replace('class="manchas"','class="manchas" id="gvManchas"');
 }
 var AJ_ABERTO='';
-function abrirAjuste(ch){ ir(ch==='consultas'?'s-consultas':(ch==='recolha'?'s-recolha':'s-ajustes')); }
+function abrirAjuste(ch){ ir(ch==='consultas'?'s-consultas':(ch==='recolha'?'s-recolha':(ch==='stock'?'s-stock':'s-ajustes'))); }
 /* ao entrar nos Ajustes carrega-se tudo — está tudo à vista */
 function ajCarregar(){
   try{ comEstado(desenhar); }catch(e){}
@@ -2961,10 +3117,11 @@ function pintarPrecos(){
   const tb=document.getElementById('tbPrecos'); if(!tb||editando('#tbPrecos')) return;
   const T=D.tarifas||{};
   tb.innerHTML='<div class="linhaP"><span></span><span class="cabP">preço MT</span><span class="cabP">megas MB</span><span class="cabP">lucro MT</span></div>'+
-    Array.from({length:15},(_,i)=>{const n=i+1, mb=mbKey(n);
-      return '<div class="linhaP"><span class="idx">'+n+'</span><input class="campo vPreco" id="P'+n+'" inputmode="numeric" placeholder="preço" value="'+seg(T['P'+n]||'')+'">'+
-        '<input class="campo vMegas" id="'+mb+'" inputmode="numeric" placeholder="megas" value="'+seg(T[mb]||'')+'"><input class="campo vLucro" id="LC'+n+'" inputmode="numeric" placeholder="lucro" value="'+seg(T['LC'+n]||'')+'"></div>';}).join('')+
-    '<div class="acoes"><button class="bt forte" onclick="gravarPrecos()">Gravar preços</button></div>';
+    Array.from({length:15},(_,i)=>{const n=i+1, mb=mbKey(n), grp=String(T['GT'+n]||'')==='1';
+      return '<div class="linhaP"><span class="idx">'+n+'</span><input class="campo vPreco" id="P'+n+'" inputmode="numeric" placeholder="preço" value="'+(grp?'':seg(T['P'+n]||''))+'">'+
+        '<input class="campo vMegas" id="'+mb+'" inputmode="numeric" placeholder="megas" value="'+(grp?'':seg(T[mb]||''))+'"><input class="campo vLucro" id="LC'+n+'" inputmode="numeric" placeholder="lucro" value="'+(grp?'':seg(T['LC'+n]||''))+'"></div>';}).join('')+
+    '<div class="acoes"><button class="bt forte" onclick="gravarPrecos()">Gravar preços</button></div>'+
+    '<p style="font-size:12px;opacity:.65;margin:10px 6px 0;line-height:1.4">Os tamanhos do grupo da Layra (450, 650 e 850 MB) são geridos pela nuvem e não aparecem aqui.</p>';
 }
 function gravarPrecos(){const o={}; for(let n=1;n<=15;n++){const mb=mbKey(n); const p=document.getElementById('P'+n), m=document.getElementById(mb), l=document.getElementById('LC'+n); if(!p||!m||!l) return aviso('Abre primeiro a tabela dos diários','bad');
   o['P'+n]=p.value.trim(); o[mb]=m.value.trim(); o['LC'+n]=l.value.trim(); p.dataset.tocado=m.dataset.tocado=l.dataset.tocado='';}
@@ -3316,6 +3473,256 @@ function pintarDash(){
   porTexto('dzFalS',!RP?'—':(falhas?porTel.join(' · '):'nenhuma transferência falhou'));
   dzClasse(document.getElementById('blFal'),'mau',!!RP&&falhas>0);
 }
+
+/* ─── STOCK (30/09): crédito do Principal → 7 GB pelo *109#, em LOTES ────
+   O valor escrito é o TOTAL; a nuvem parte-o em conversões de 150 MT e manda-as ao
+   Principal uma a seguir à outra (stock_pedir → stock_compra_lancar → …). O telefone
+   relata cada fase; o ecrã actualiza-se de 3 em 3 s enquanto há lote a correr. */
+var STK=null, STK_T=null, STK_OCUP=false;
+/* 04/10 · regra do dono: o histórico do Stock não pode crescer à vista. Cada lista (e = Entradas, s = Saídas) mostra as
+   STK_BASE mais recentes; «Ver mais…» abre mais STK_PASSO — primeiro as que o stock_resumo já trouxe (15), depois as mais
+   antigas, pedidas à nuvem (stock_historico_mais). «Ver menos» volta ao princípio. STK_GUARDA junta tudo o que já se viu
+   (por id), para a janela das 15 mais recentes poder andar sem abrir buracos no meio do que está aberto. */
+var STK_BASE=3, STK_PASSO=10, STK_VER={e:3,s:3}, STK_GUARDA={e:{},s:{}}, STK_PEDE={e:false,s:false}, STK_FIMN={e:false,s:false};
+function stkJunta(t,L){ const G=STK_GUARDA[t], ks=Object.keys(G), topo=ks.length?Math.max.apply(null,ks.map(Number)):null; let novas=0;
+  (L||[]).forEach(function(x){ if(x&&x.id!==undefined&&x.id!==null){ const k=String(x.id); if(!(k in G)&&topo!==null&&n0(x.id)>topo) novas++; G[k]=x; } });
+  /* lista aberta: uma linha nova entra por cima e o que já estava à vista continua à vista; fechada: são sempre as 3 últimas */
+  if(novas&&STK_VER[t]>STK_BASE) STK_VER[t]+=novas;
+  return Object.keys(G).map(function(k){ return G[k]; }).sort(function(a,b){ return n0(b.id)-n0(a.id); }); }
+function stkTotal(t,todas){ const T=(STK&&STK.totais)||{}; return Math.max(n0(t==='e'?T.entradas:T.saidas), todas.length); }
+function stkMaisHtml(t,todas){
+  const v=Math.min(STK_VER[t],todas.length), maisGuardadas=todas.length>v, maisNaNuvem=!STK_FIMN[t]&&stkTotal(t,todas)>todas.length;
+  let h='';
+  if(maisGuardadas||maisNaNuvem) h+='<button type="button" class="mais" onclick="stkVerMais(\''+t+'\')"'+(STK_PEDE[t]?' disabled':'')+'>'+(STK_PEDE[t]?'a carregar…':'Ver mais…')+'</button>';
+  if(STK_VER[t]>STK_BASE&&todas.length>STK_BASE) h+='<button type="button" class="menos" onclick="stkVerMenos(\''+t+'\')">Ver menos</button>';
+  return h?'<div class="stkMaisCx">'+h+'</div>':'';
+}
+async function stkVerMais(t){
+  if(STK_PEDE[t]) return;
+  const todas=stkJunta(t,[]); STK_VER[t]=Math.min(STK_VER[t],todas.length)+STK_PASSO;
+  if(STK_VER[t]>todas.length&&!STK_FIMN[t]&&stkTotal(t,todas)>todas.length){
+    STK_PEDE[t]=true; try{ stockPintar(); }catch(e){}
+    try{
+      const antes=todas.length?n0(todas[todas.length-1].id):null;
+      const r=await rpc('stock_historico_mais',{p_tipo:t==='e'?'entradas':'saidas',p_antes:antes,p_n:STK_PASSO});
+      const L=Array.isArray(r)?r:[]; stkJunta(t,L); if(L.length<STK_PASSO) STK_FIMN[t]=true;
+    }catch(e){ aviso('Não deu para trazer os mais antigos: '+seg(e.message),'bad'); STK_VER[t]=Math.max(STK_BASE,todas.length); }
+    STK_PEDE[t]=false;
+  }
+  try{ stockPintar(); }catch(e){}
+}
+function stkVerMenos(t){ STK_VER[t]=STK_BASE; try{ stockPintar(); }catch(e){}
+  const el=document.getElementById(t==='e'?'stkHist':'stkSaidas'), cx=el&&el.closest?el.closest('.cx'):null;
+  if(cx&&cx.getBoundingClientRect().top<0) try{ cx.scrollIntoView({block:'start',behavior:'smooth'}); }catch(e){ cx.scrollIntoView(); } }
+function stkMT(v){ if(v===null||v===undefined||v==='') return '—'; const n=Number(v); if(!isFinite(n)) return '—';
+  return n.toLocaleString('pt-PT',{minimumFractionDigits:(n%1)?2:0,maximumFractionDigits:2}); }
+function stkCfg(){ const c=(STK&&STK.config)||{}; return {preco:n0(c.preco)||150, gb:Number(c.gb)||7, maxd:n0(c.max_dia)||1, transf:n0(c.transf_dia)||10, sim:n0(c.sim)||1, ussd:c.ussd||'*109#'}; }
+async function stockCarregar(){
+  clearTimeout(STK_T);
+  try{ const r=await rpc('stock_resumo',{}); if(r&&typeof r==='object'){ STK=r; stockPintar(); } }catch(e){}
+  if(secao==='s-stock') STK_T=setTimeout(stockCarregar,(STK&&(STK.em_curso||STK.envio_em_curso||STK.consulta_em_curso))?3000:12000);
+}
+function stkFaseHtml(fase, estado){
+  const F=[['pedido','pedido'],['levada','no telefone'],['menu','menu *109#'],['op1','opção 1'],['op2','opção 2'],['fim','resultado']];
+  const ord=['pedido','levada','menu','op1','op2','fim']; let i=ord.indexOf(fase); if(fase==='à espera do telefone') i=0; if(fase==='erro') i=2;
+  const mau=(estado==='falhou'||fase==='erro'), ok=(estado==='ok');
+  return F.map(function(f,k){ let c=''; if(k<i) c='ok'; else if(k===i) c=mau?'mau':(ok?'ok':'on'); return '<span class="'+c+'"><i></i>'+f[1]+'</span>'; }).join('');
+}
+function stkValor(){ const e=document.getElementById('stkMT'); const v=n0(e&&e.value); return v>0?v:0; }
+function stockChip(v){ const e=document.getElementById('stkMT'); if(e){ e.value=v; e.dataset.tocado='1'; } stockBotao(); }
+function stockBotao(){
+  const c=stkCfg(), v=stkValor(), n=Math.floor(v/c.preco), C=(STK&&(STK.em_curso||STK.envio_em_curso||STK.consulta_em_curso)), P=(STK&&STK.principal)||{}, H=(STK&&STK.hoje)||{};
+  const bt=document.getElementById('stkBtConv'); const restam=n0(H.restam);
+  if(bt){ bt.textContent=n>0?('Converter '+v+' MT → '+(n*c.gb)+' GB ('+n+'×)'):'Converter'; bt.disabled=!!C||!restam||!P.vivo||n<1; bt.style.opacity=bt.disabled?'.45':''; }
+  porHtml('stkConta', v?(n>0?('<b>'+n+'</b> conversõ'+(n===1?'ão':'es')+' de '+c.preco+' MT = <b>'+(n*c.gb)+' GB</b>'+(v-n*c.preco>0?' · sobram '+(v-n*c.preco)+' MT por converter':'')):'menos de uma conversão — precisa de pelo menos '+c.preco+' MT'):'escreve quanto crédito queres converter');
+  porHtml('stkChips',[150,450,750,1500].map(function(x){ return '<button type="button" class="'+(v===x?'on':'')+'" onclick="stockChip('+x+')">'+x+' MT</button>'; }).join(''));
+}
+function stockPintar(){
+  const S=STK||{}, c=stkCfg(), P=S.principal||{}, H=S.hoje||{}, C=S.em_curso||null, U=S.ultimo_saldo||null;
+  const vivo=document.getElementById('stkVivo'); if(vivo){ vivo.className='chip '+(P.vivo?'on':'off'); vivo.innerHTML='<i></i>'+(P.vivo?'Stock a correr':(P.telefone_vivo?'macro do Stock sem sinal':'Principal sem sinal')); }
+  porTexto('stkRailTxt', 'SIM '+c.sim+' · Principal');
+  porTexto('stkQuando', U?('crédito lido '+seg(U.quando)):'crédito ainda não lido');
+  porTexto('stkSaldoMT', U?stkMT(U.mt):'—');
+  const restam=n0(H.restam), lotes=n0(H.lotes);
+  porHtml('stkLinha', c.gb+' GB por '+c.preco+' MT · hoje <b>'+lotes+' pedido'+(lotes===1?'':'s')+' de '+c.maxd+'</b>'+(n0(H.conversoes)?' · <b>'+n0(H.conversoes)+'</b> conversões · <b>'+stkMT(H.gb)+' GB</b> por '+stkMT(H.mt)+' MT':'')+
+    (restam?'':' · <b>limite do dia atingido</b>')+(U&&Number(U.mt)<c.preco&&!C?' · <b>crédito abaixo de '+c.preco+' MT</b>':''));
+  porHtml('stkFuncao','cada <b>'+c.preco+' MT</b> viram <b>'+c.gb+' GB</b>: o Principal marca <b>'+seg(c.ussd)+'</b>, escolhe «'+c.preco+'MT='+c.gb+'GB/30d» e depois «Converte com crédito», e repete até gastar o valor que escreveres.');
+  const bc=document.getElementById('stkBtCanc'); if(bc) bc.style.display=C?'':'none';
+  const cx=document.getElementById('stkCursoCx'); if(cx) cx.style.display=C?'':'none';
+  if(C){
+    const A=C.atual||{}, feitas=n0(C.feitas), tot=n0(C.n_total)||1;
+    const bi=document.getElementById('stkBarraI'); if(bi) bi.style.width=Math.min(100,Math.round(100*feitas/tot))+'%';
+    porHtml('stkFases', stkFaseHtml(A.fase,A.estado));
+    porHtml('stkCurso', C.modo==='consulta'?('<b>a ler o crédito</b> · '+(A.levada?'o Principal já pegou':'à espera de o Principal pegar')+' · há '+n0(A.ha_seg)+' s')
+      :('<b>'+n0(A.n)+'.ª de '+tot+'</b> · '+feitas+' feita'+(feitas===1?'':'s')+' ('+stkMT(feitas*Number(C.gb||c.gb))+' GB · '+stkMT(feitas*Number(C.preco_mt||c.preco))+' MT) · '+(A.levada?'o Principal já pegou':'à espera de o Principal pegar')+
+        (A.saldo_antes_mt!==null&&A.saldo_antes_mt!==undefined?' · crédito lido '+stkMT(A.saldo_antes_mt)+' MT':'')+' · há '+n0(A.ha_seg)+' s'));
+  }
+  const nt=document.getElementById('stkNota'); if(nt) nt.textContent=!P.vivo?'A macro «📡 Stock · ordens» não está a pedir ordens à nuvem — importa o Principal_STOCK.mdr no Principal e confirma que está ligada.':(!restam&&!C?('Hoje já foram feitos '+lotes+' de '+c.maxd+' pedidos. Volta a dar às 00h00.'):'As conversões saem uma a seguir à outra. Se uma falhar (crédito a acabar, menu diferente), o Principal pára e o resto fica por fazer.');
+  stockBotao();
+  const hist=stkJunta('e', S.historico||[]), histV=hist.slice(0, STK_VER.e);
+  porTexto('stkHistResumo', hist.length?('a mostrar '+histV.length+' de '+stkTotal('e',hist)+' pedidos · os mais recentes primeiro'):'—');
+  porHtml('stkHist', histV.length?histV.map(function(l){
+    const est=l.estado; const cls=est==='concluido'?'ok':(est==='parado'||est==='cancelado')?'mau':'info';
+    const rot=est==='concluido'?'concluído':est==='parado'?'parou':est==='cancelado'?'cancelado':'a decorrer';
+    const feitas=n0(l.feitas), tot=n0(l.n_total);
+    const tit=l.modo==='consulta'?'consulta do crédito':(stkMT(l.orcamento_mt)+' MT → '+stkMT(tot*Number(l.gb))+' GB');
+    const comp=(l.compras||[]);
+    const cv=l.modo==='consulta'?'':'<div class="cv">'+comp.map(function(x){ const k=x.estado==='ok'?'ok':(x.estado==='falhou'||x.estado==='cancelado')?'mau':x.estado==='incerto'?'esp':(x.estado==='pedido'||x.estado==='a_fazer')?'on':''; return '<span class="'+k+'" title="'+seg(x.resultado||'')+'">'+n0(x.n)+'</span>'; }).join('')+
+      (comp.length<tot?Array.from({length:tot-comp.length}).map(function(_,i){ return '<span>'+(comp.length+i+1)+'</span>'; }).join(''):'')+'</div>';
+    const ult=comp.length?comp[comp.length-1]:null;
+    const inc=comp.filter(function(x){ return x.estado==='incerto'; });
+    const acc=inc.length?'<div class="acc">'+inc.map(function(x){ return '<button class="bt peq ok" onclick="stockMarcar('+n0(x.id)+',\'ok\')">'+n0(x.n)+'.ª entrou</button><button class="bt peq mau" onclick="stockMarcar('+n0(x.id)+',\'falhou\')">'+n0(x.n)+'.ª não</button>'; }).join('')+'</div>':'';
+    const cred=comp.length&&comp[0].saldo_antes_mt!==null&&comp[0].saldo_antes_mt!==undefined?'crédito antes '+stkMT(comp[0].saldo_antes_mt)+' MT · ':'';
+    return '<div class="l"><span class="h">'+seg(l.dia)+'<br>'+seg(l.hora)+'</span><div class="q"><b>'+tit+' <span class="selo '+cls+'">'+rot+'</span></b>'+
+      '<span>'+(l.modo==='consulta'?'':(feitas+' de '+tot+' convertidas · '+stkMT(feitas*Number(l.gb))+' GB · '+stkMT(feitas*Number(l.preco_mt))+' MT · '))+cred+'SIM '+n0(l.sim)+(l.nota?' · '+seg(l.nota):(ult&&ult.resultado?' · '+seg(ult.resultado):''))+'</span>'+cv+acc+'</div></div>';
+  }).join('')+stkMaisHtml('e',hist):'<div class="vazio">ainda sem conversões</div>');
+  const a=document.getElementById('stkCfgPreco'), b=document.getElementById('stkCfgGb'), cc=document.getElementById('stkCfgMax'), d=document.getElementById('stkCfgSim'), tf=document.getElementById('stkCfgTransf');
+  if(tf&&document.activeElement!==tf&&!tf.dataset.tocado) tf.value=c.transf;
+  if(a&&document.activeElement!==a&&!a.dataset.tocado) a.value=c.preco; if(b&&document.activeElement!==b&&!b.dataset.tocado) b.value=c.gb;
+  if(cc&&document.activeElement!==cc&&!cc.dataset.tocado) cc.value=c.maxd; if(d&&document.activeElement!==d&&!d.dataset.tocado) d.value=String(c.sim);
+  try{ stockPintarSaidas(); }catch(e){}
+}
+function stkResposta(r){ const s=String(r||''); if(s.startsWith('OK')) return null;
+  if(s.startsWith('EM_CURSO')) return 'Já há um pedido a decorrer — espera que termine ou pára-o';
+  if(s.startsWith('LIMITE')) return s.replace('LIMITE: ','');
+  if(s.startsWith('VALOR_BAIXO')||s.startsWith('VALOR_ALTO')) return s.replace(/^VALOR_[A-Z]+: /,'');
+  if(s.startsWith('PRINCIPAL_SEM_SINAL')||s.startsWith('MACRO_SEM_SINAL')) return 'A macro do Stock não está a pedir ordens à nuvem — importa o Principal_STOCK.mdr e vê se «📡 Stock · ordens» está ligada';
+  return 'A nuvem recusou: '+s; }
+async function stockConverter(){
+  if(STK_OCUP) return; const c=stkCfg(), v=stkValor(), n=Math.floor(v/c.preco);
+  if(n<1) return aviso('Escreve pelo menos '+c.preco+' MT','bad');
+  if(!confirm('Converter '+v+' MT em '+n+' conversõ'+(n===1?'ão':'es')+' de '+c.preco+' MT ('+(n*c.gb)+' GB)?\n\nO Principal marca *109# → 1 → 2 '+n+' vez'+(n===1?'':'es')+', uma a seguir à outra. Não se desfaz.')) return;
+  STK_OCUP=true; try{ const r=await rpc('stock_pedir',{p_modo:'converter',p_sim:c.sim,p_mt:v}); const m=stkResposta(r);
+    if(m) aviso(m,'bad'); else aviso('Pedido enviado — o Principal começa em segundos','ok'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } finally{ STK_OCUP=false; stockCarregar(); }
+}
+async function stockConsultar(){
+  if(STK_OCUP) return; const c=stkCfg();
+  STK_OCUP=true; try{ const r=await rpc('stock_pedir',{p_modo:'consulta',p_sim:c.sim,p_mt:null}); const m=stkResposta(r);
+    if(m) aviso(m,'bad'); else aviso('O Principal vai ler o crédito e cancelar sem converter','ok'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } finally{ STK_OCUP=false; stockCarregar(); }
+}
+async function stockCancelar(){
+  const C=STK&&STK.em_curso; if(!C) return aviso('Não há pedido a decorrer','bad');
+  if(!confirm('Parar o pedido #'+n0(C.id)+'? O que já foi convertido fica; o resto não sai.')) return;
+  try{ const r=await rpc('stock_cancelar',{p_lote:n0(C.id)}); const s=String(r||'');
+    if(s.startsWith('CANCELADA_TARDE')) aviso('Parado — a conversão que estava no telefone pode ainda acontecer; as seguintes não','esp');
+    else if(s.startsWith('OK')) aviso('Pedido parado','ok'); else aviso('A nuvem recusou: '+s,'bad'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } stockCarregar();
+}
+async function stockMarcar(id,est){
+  if(!confirm(est==='ok'?'Confirmas que os megas entraram no Principal?':'Confirmas que NÃO entraram?')) return;
+  try{ const r=await rpc('stock_marcar',{p_compra:id,p_estado:est}); if(String(r).startsWith('OK')) aviso('Registado','ok'); else aviso('A nuvem recusou: '+r,'bad'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } stockCarregar();
+}
+function stockGravar(){
+  const a=document.getElementById('stkCfgPreco'), b=document.getElementById('stkCfgGb'), cc=document.getElementById('stkCfgMax'), d=document.getElementById('stkCfgSim');
+  const tf=document.getElementById('stkCfgTransf'); const transf=n0(tf&&tf.value);
+  const preco=n0(a&&a.value), gb=Number(b&&b.value), maxd=n0(cc&&cc.value), sim=n0(d&&d.value)||1;
+  if(!(preco>0)) return aviso('Escreve o preço do pacote em MT','bad'); if(preco>=1000&&!confirm('Preço do pacote '+preco+' MT? O preço da Vodacom é 150 MT por 7 GB — o total a converter escreve-se em cima, não aqui.')) return;
+  if(!(gb>0)) return aviso('Escreve os GB do pacote','bad'); if(!(maxd>=0)) return aviso('Escreve os pedidos por dia','bad');
+  if(!(transf>0)) return aviso('Escreve as transferências por dia','bad');
+  [a,b,cc,d,tf].forEach(function(e){ if(e) e.dataset.tocado=''; });
+  gravar('config',{stock_preco:String(preco),stock_gb:String(gb),stock_max_dia:String(maxd),stock_transf_dia:String(transf),stock_sim:String(sim)},'Regras do stock gravadas');
+  setTimeout(stockCarregar,800);
+}
+document.addEventListener('input',function(e){ if(e.target&&/^stkCfg/.test(e.target.id||'')) e.target.dataset.tocado='1'; },true);
+
+/* ─── SAÍDAS do stock: *162# → 8 → 2 → montante → número (30/09 12:20) ─── */
+function stkEnvVal(){ const a=document.getElementById('stkEnvMB'), b=document.getElementById('stkEnvNum'); const mb=n0(a&&a.value); const num=((b&&b.value)||'').replace(/\D/g,''); return {mb:mb, num:num.length>9?num.slice(-9):num}; }
+function stockEnvChip(v){ const e=document.getElementById('stkEnvMB'); if(e){ e.value=v; } stockEnvBotao(); }
+function stkEnvFaseHtml(fase, estado){
+  const F=[['pedido','pedido'],['levada','no telefone'],['menu','*162#'],['sub','8'],['saldo','2 · stock'],['num','montante'],['fim','número → resultado']];
+  const ord=F.map(function(f){return f[0];}); let i=ord.indexOf(fase); if(fase==='à espera do telefone') i=0; if(fase==='erro') i=2;
+  const mau=(estado==='falhou'||fase==='erro'), ok=(estado==='ok');
+  return F.map(function(f,k){ let c=''; if(k<i) c='ok'; else if(k===i) c=mau?'mau':(ok?'ok':'on'); return '<span class="'+c+'"><i></i>'+f[1]+'</span>'; }).join('');
+}
+function stockEnvBotao(){
+  const S=STK||{}, P=S.principal||{}, E=S.envio_em_curso||null, C=S.em_curso||null, v=stkEnvVal(), ST=S.stock||null;
+  const okNum=/^8[2-7]\d{7}$/.test(v.num), ocup=!!E||!!C||!!S.consulta_em_curso, T=S.transf||{}, semTransf=n0(T.max)>0&&n0(T.hoje)>=n0(T.max);
+  const bt=document.getElementById('stkBtEnv'); if(bt){ bt.textContent=(v.mb>0&&okNum)?('Enviar '+v.mb+' MB para '+v.num):'Enviar'; bt.disabled=ocup||!P.vivo||!(v.mb>0)||!okNum||semTransf; bt.style.opacity=bt.disabled?'.45':''; }
+  const bs=document.getElementById('stkBtStock'); if(bs){ bs.disabled=ocup||!P.vivo; bs.style.opacity=bs.disabled?'.45':''; }
+  const bc=document.getElementById('stkBtEnvCanc'); if(bc) bc.style.display=E?'':'none';
+  /* 30/09 15:19 · regra do dono: as sugestões do Tirar stock são de STOCK (10240, 20480, … MB), não 400 MB.
+     Vêm da nuvem (stock_config → chips_mb, chave stock_chips_mb) para se mudarem sem republicar o site. */
+  const CH=(S.config&&Array.isArray(S.config.chips_mb)&&S.config.chips_mb.length)?S.config.chips_mb.map(Number).filter(function(x){return x>0;}):[10240,20480,30720,40960,51200];
+  porHtml('stkEnvChips',CH.map(function(x){ return '<button type="button" class="'+(v.mb===x?'on':'')+'" onclick="stockEnvChip('+x+')">'+x+'</button>'; }).join(''));
+  let t='';
+  if(semTransf) t='<b>limite de transferências do dia atingido</b> ('+n0(T.hoje)+' SMS de '+n0(T.max)+') — volta às 00h00';
+  else if(!(v.mb>0)) t='escreve o montante em MB e o número que recebe';
+  else if(!okNum) t='<b>'+v.mb+' MB</b> · falta o número (8xxxxxxxx)';
+  else t='<b>'+v.mb+' MB</b> para <b>'+v.num+'</b>'+(ST&&ST.mb!==null&&ST.mb!==undefined?(v.mb>Number(ST.mb)?' · <b>acima do stock lido ('+stkMT(ST.mb)+' MB)</b>':' · ficam '+stkMT(Number(ST.mb)-v.mb)+' MB'):'');
+  porHtml('stkEnvConta', t);
+}
+function stockPintarSaidas(){
+  const S=STK||{}, E=S.envio_em_curso||null, ST=S.stock||null, H=S.hoje||{}, T=S.transf||{}, I=S.internet||null, K=S.consulta_em_curso||null, P=S.principal||{}, c=stkCfg();
+  porHtml('stkStockMB', ST?(stkMT(ST.mb)+'<small>MB</small>'):'—');
+  porTexto('stkStockQuando', ST?('transferível · lido '+seg(ST.quando)+(ST.descontado?' · já descontada a última saída':'')):'transferível · ainda não lido — lê-se em cada saída, ou em Ver stock');
+  porHtml('stkInternetMB', I?(stkMT(I.mb)+'<small>MB</small>'):'—');
+  porTexto('stkInternetQuando', I?('*100# lido '+seg(I.quando)):'ainda não lido — carrega em Consultar');
+  const th=n0(T.hoje), tm=n0(T.max)||c.transf;
+  porTexto('stkTransf', th+' de '+tm);
+  /* quadradinhos: um por transferência do dia (até 20 desenhados); verdes as já confirmadas por SMS, vermelhos se o limite bateu */
+  porHtml('stkQuad', Array.from({length:Math.min(tm,20)},function(_,i){ return '<i class="'+(i<th?(th>=tm?'mau':'ok'):'')+'"></i>'; }).join(''));
+  porTexto('stkTransfNota', th>=tm?'limite do dia atingido — volta às 00h00':('só contam as confirmadas por SMS'+(T.ultimo?' · último às '+seg(T.ultimo):'')));
+  const bv=document.getElementById('stkBtVer'); if(bv){ const ocup=!!K||!!E||!!S.em_curso; bv.disabled=ocup||!P.vivo; bv.style.opacity=bv.disabled?'.45':''; bv.textContent=K?'a consultar…':'Consultar (*100#)'; }
+  const vc=document.getElementById('stkVerCurso'); if(vc){ vc.style.display=K?'':'none'; if(K) vc.textContent='*100# pedido há '+n0(K.ha_seg)+' s · '+(K.levada?'o Principal já pegou':'à espera de o Principal pegar'); }
+  const cx=document.getElementById('stkEnvCursoCx'); if(cx) cx.style.display=E?'':'none';
+  if(E){
+    porHtml('stkEnvFases', stkEnvFaseHtml(E.fase,E.estado));
+    porHtml('stkEnvCurso', (E.modo==='consulta'?'<b>a ler o stock</b>':'<b>'+n0(E.mb)+' MB para '+seg(E.numero||'')+'</b>')+' · '+(E.levada?'o Principal já pegou':'à espera de o Principal pegar')+
+      (E.stock_antes_mb!==null&&E.stock_antes_mb!==undefined?' · stock lido '+stkMT(E.stock_antes_mb)+' MB':'')+' · há '+n0(E.ha_seg)+' s');
+  }
+  const L=stkJunta('s', S.saidas||[]), LV=L.slice(0, STK_VER.s);
+  porTexto('stkSaidasResumo', L.length?('a mostrar '+LV.length+' de '+stkTotal('s',L)+' saídas · os mais recentes primeiro'+(n0(H.saidas)?' · hoje '+n0(H.saidas)+' ('+stkMT(H.saidas_mb)+' MB)':'')):'—');
+  porHtml('stkSaidas', LV.length?LV.map(function(x){
+    const est=x.estado; const cls=est==='ok'?'ok':(est==='falhou'||est==='cancelado')?'mau':(est==='incerto'?'esp':'info');
+    const rot=est==='ok'?(x.sms?'saiu · SMS '+seg(x.sms):'saiu'):est==='falhou'?'falhou':est==='cancelado'?'cancelado':est==='incerto'?'incerto · sem SMS':est==='consulta'?'consulta':'a decorrer';
+    const acc=est==='incerto'?'<div class="acc"><button class="bt peq ok" onclick="stockEnvMarcar('+n0(x.id)+',\'ok\')">Saiu</button><button class="bt peq mau" onclick="stockEnvMarcar('+n0(x.id)+',\'falhou\')">Não saiu</button></div>':'';
+    return '<div class="l"><span class="h">'+seg(x.dia)+'<br>'+seg(x.hora)+'</span><div class="q"><b>'+(x.modo==='consulta'?'consulta do stock':(n0(x.mb)+' MB → '+seg(x.numero||'')))+' <span class="selo '+cls+'">'+rot+'</span></b>'+
+      '<span>'+(x.stock_antes_mb!==null&&x.stock_antes_mb!==undefined?'stock lido '+stkMT(x.stock_antes_mb)+' MB · ':'')+'SIM '+n0(x.sim)+(x.resultado?' · '+seg(x.resultado):'')+(x.nota?' · '+seg(x.nota):'')+'</span>'+acc+'</div></div>';
+  }).join('')+stkMaisHtml('s',L):'<div class="vazio">ainda sem saídas</div>');
+  stockEnvBotao();
+}
+function stkEnvResposta(r){ const s=String(r||''); if(s.startsWith('OK')) return null;
+  if(s.startsWith('EM_CURSO')) return s.replace('EM_CURSO: ','');
+  if(/^(MB|NUMERO)_/.test(s)) return s.replace(/^[A-Z_]+: /,'');
+  if(s.startsWith('PRINCIPAL_SEM_SINAL')||s.startsWith('MACRO_SEM_SINAL')) return 'A macro do Stock não está a pedir ordens à nuvem — importa o Principal_STOCK.mdr e vê se «📡 Stock · ordens» está ligada';
+  return 'A nuvem recusou: '+s; }
+async function stockEnviar(){
+  if(STK_OCUP) return; const c=stkCfg(), v=stkEnvVal();
+  if(!(v.mb>0)) return aviso('Escreve o montante em MB','bad'); if(!/^8[2-7]\d{7}$/.test(v.num)) return aviso('Número inválido — escreve um 8xxxxxxxx','bad');
+  if(!confirm('Tirar '+v.mb+' MB do stock do Principal para '+v.num+'?\n\n*162# → 8 → 2 → '+v.mb+' → '+v.num+'. Depois do número não se desfaz.')) return;
+  STK_OCUP=true; try{ const r=await rpc('stock_enviar',{p_mb:v.mb,p_num:v.num,p_sim:c.sim,p_modo:'enviar'}); const m=stkEnvResposta(r);
+    if(m) aviso(m,'bad'); else { aviso('Pedido enviado — o Principal marca *162# em segundos','ok'); const b=document.getElementById('stkEnvNum'); if(b) b.value=''; } }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } finally{ STK_OCUP=false; stockCarregar(); }
+}
+
+async function stockVerGeral(){
+  if(STK_OCUP) return; const c=stkCfg();
+  STK_OCUP=true; try{ const r=await rpc('stock_ver',{p_sim:c.sim}); const m=stkEnvResposta(r);
+    if(m) aviso(m,'bad'); else aviso('O Principal vai marcar *100# e ler crédito e internet','ok'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } finally{ STK_OCUP=false; stockCarregar(); }
+}
+async function stockVer(){
+  if(STK_OCUP) return; const c=stkCfg();
+  STK_OCUP=true; try{ const r=await rpc('stock_enviar',{p_mb:null,p_num:null,p_sim:c.sim,p_modo:'consulta'}); const m=stkEnvResposta(r);
+    if(m) aviso(m,'bad'); else aviso('O Principal vai ler o stock (*162# → 8 → 2) e cancelar','ok'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } finally{ STK_OCUP=false; stockCarregar(); }
+}
+async function stockEnvCancelar(){
+  const E=STK&&STK.envio_em_curso; if(!E) return aviso('Não há saída a decorrer','bad');
+  if(!confirm('Parar a saída #'+n0(E.id)+'?')) return;
+  try{ const r=await rpc('stock_envio_cancelar',{p_envio:n0(E.id)}); const s=String(r||'');
+    if(s.startsWith('CANCELADA_TARDE')) aviso('Parada na nuvem, mas o Principal já tinha pegado — confirma no telefone','esp');
+    else if(s.startsWith('OK')) aviso('Saída parada','ok'); else aviso('A nuvem recusou: '+s,'bad'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } stockCarregar();
+}
+async function stockEnvMarcar(id,est){
+  if(!confirm(est==='ok'?'Confirmas que os megas saíram?':'Confirmas que NÃO saíram?')) return;
+  try{ const r=await rpc('stock_envio_marcar',{p_envio:id,p_estado:est}); if(String(r).startsWith('OK')) aviso('Registado','ok'); else aviso('A nuvem recusou: '+r,'bad'); }
+  catch(e){ aviso('Falhou: '+seg(e.message),'bad'); } stockCarregar();
+}
 </script>
 <script>
 /* ═══ ARRANQUE — o que corre depois do Start ═══════════════════════════
@@ -3323,9 +3730,14 @@ function pintarDash(){
    e do boot.js. Isto é o motor que arranca a seguir.                   */
 
 /* o ciclo principal: painel_resumo + fila, de 5 em 5 segundos */
+/* v20/09 · a mesma trava do ciclo: uma volta do painel de cada vez */
 async function carregar(){
+  if(carregar._ocupado) return; carregar._ocupado=true;
+  try{ await carregarVolta(); } finally{ carregar._ocupado=false; }
+}
+async function carregarVolta(){
   var ok=true;
-  try{ const r=await rpc('painel_resumo'); if(r){ D=r; memGuardar(); } }catch(e){ ok=false; }
+  try{ const r=await rpc('painel_resumo',{},10000); if(r){ D=r; memGuardar(); } }catch(e){ ok=false; }
   if(secao==='s-fila'){ try{ await carregarFila(30); }catch(e){} }
   try{ comEstado(desenhar); }catch(e){}
   if(!ok){ const c=document.getElementById('chips');
@@ -3336,32 +3748,42 @@ async function carregar(){
 /* o ciclo rápido: cada ecrã pede só o que mostra */
 async function ciclo(){
   if(document.hidden) return;
-  if(secao==='s-inicio'){
-    if(NEGV%2===0){ try{ const r=await rpc('negocio_resumo',{}); if(r){ NEG=r; pintarHeroi(); } }catch(e){} }
-    if(NEGV%3===0){ try{ const q=await rpc('fila_lista',{p_n:60,p_q:null});
-      if(q&&q.itens){ NEGQ=q; if(q.agora) F7DELTA=n0(q.agora)-Math.floor(Date.now()/1000); cascataPintar(); } }catch(e){} }
-    if(NEGV%5===0){ try{ const p=await rpc('negocio_vivo',{}); if(p){ PULSO=p; pintarPulso(); pintarRitmo(); memGuardar(); } }catch(e){} }
-    /* os dias do mês: primeiro pedido do ciclo e SEM esperar por ele —
-       atrás das outras chamadas, uma rede fraca deixava a semana e o
-       calendário por pintar */
-    if(!DIAS30.length||NEGV%120===0){ rpc('lucro_dias',{p_dias:32}).then(function(m){
-      if(m&&m.dias&&m.dias.length){ DIAS30=m.dias; M30SIG=''; try{ memGuardar(); }catch(e){} pintarHeroi(); }
-    }).catch(function(){}); }
-    /* o que mais sai muda devagar: mesma cadência lenta, fora do ciclo de 5 s */
-    if(!PACSAI.length||NEGV%120===0){ try{ const tp=await rpc('top_pacotes',{p_n:6});
-      if(tp&&tp.length){ PACSAI=tp; pintarPulso(); } }catch(e){} }
-    try{ pintarDash(); }catch(e){}
-  } else if(secao==='s-fila'){
-    try{ await carregarFila7(); }catch(e){}
-    if(NEGV%3===0){ try{ await lyCarregar(); }catch(e){} }
-  } else if(secao==='s-ajustes'){
-    if(NEGV%10===0){ try{ bwEstadoVer(); }catch(e){} try{ bwVerVigia(null); }catch(e){} }
-    if(NEGV%15===0){ try{ bwAutoVer(); }catch(e){} }
-  } else if(secao==='s-consultas'){
-    if(NEGV%5===0){ try{ await carregarConsultas(); }catch(e){} }
-  }
-  NEGV++;
+  /* v20/09 · UMA VOLTA DE CADA VEZ. O intervalo é de 2 s e cada volta fazia
+     4 a 5 pedidos em fila; numa rede LTE a volta demorava mais do que os 2 s
+     e a seguinte arrancava por cima — e como o contador só andava no fim,
+     repetia os mesmos pedidos. A ligação enchia-se e tudo chegava tarde.
+     Agora: se a volta anterior ainda corre, esta salta; o contador anda à
+     entrada; e os pedidos de cada volta saem todos ao mesmo tempo, por isso
+     a volta dura o pedido mais lento e não a soma de todos. */
+  if(ciclo._ocupado) return; ciclo._ocupado=true;
+  const v=NEGV++;
+  try{
+    if(secao==='s-inicio'){
+      if(!DIAS30.length||v%120===0){ rpc('lucro_dias',{p_dias:32},8000).then(function(m){
+        if(m&&m.dias&&m.dias.length){ DIAS30=m.dias; M30SIG=''; try{ memGuardar(); }catch(e){} pintarHeroi(); }
+      }).catch(function(){}); }
+      const T=[];
+      if(v%2===0) T.push(rpc('negocio_resumo',{},8000).then(function(r){ if(r){ NEG=r; pintarHeroi(); } }));
+      if(v%3===0) T.push(rpc('fila_lista',{p_n:60,p_q:null},8000).then(function(q){
+        if(q&&q.itens){ NEGQ=q; if(q.agora) F7DELTA=n0(q.agora)-Math.floor(Date.now()/1000); cascataPintar(); } }));
+      if(v%5===0) T.push(rpc('negocio_vivo',{},8000).then(function(p){
+        if(p){ PULSO=p; pintarPulso(); pintarRitmo(); memGuardar(); } }));
+      if(!PACSAI.length||v%120===0) T.push(rpc('top_pacotes',{p_n:6},8000).then(function(tp){
+        if(tp&&tp.length){ PACSAI=tp; pintarPulso(); } }));
+      await Promise.all(T.map(function(p){ return p.catch(function(){}); }));
+      try{ pintarDash(); }catch(e){}
+    } else if(secao==='s-fila'){
+      try{ await carregarFila7(); }catch(e){}
+      if(v%3===0){ try{ await lyCarregar(); }catch(e){} }
+    } else if(secao==='s-ajustes'){
+      if(v%10===0){ try{ bwEstadoVer(); }catch(e){} try{ bwVerVigia(null); }catch(e){} }
+      if(v%15===0){ try{ bwAutoVer(); }catch(e){} }
+    } else if(secao==='s-consultas'){
+      if(v%5===0){ try{ await carregarConsultas(); }catch(e){} }
+    }
+  } finally { ciclo._ocupado=false; }
 }
+
 
 var ARRANCOU=false;
 function arrancar(){
