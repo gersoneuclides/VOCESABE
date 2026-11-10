@@ -677,6 +677,23 @@ html.claro #s-fila .folha{background:#07070b url("data:image/svg+xml,%3Csvg%20xm
   box-shadow:inset 0 0 0 2px var(--fc),0 24px 46px -30px rgba(0,0,0,.85)}
 #s-fila .fcAzul{--fc:#4998d1;--fcE:#26303c;--fcT:#04182a}
 #s-fila .fcVerde{--fc:#66d074;--fcE:#1d3c2d;--fcT:#062915}
+/* 04/11 · ecra "Avisar a fila" (CONFIGURACOES BASICAS) */
+#s-avisos textarea.campo{min-height:116px}
+#s-avisos .avLinha{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:9px 2px 0;font-size:12px;font-weight:700;color:var(--texto2)}
+#s-avisos .avCusto.caro{color:#ffb830}
+#s-avisos .acoes{margin-top:14px;flex-wrap:nowrap}
+#s-avisos #avEnviar{flex:1 1 auto;min-width:0}
+#s-avisos #avParar{flex:0 0 58px;padding:0;font-size:17px;
+  background:transparent;color:#ff6b81;box-shadow:inset 0 0 0 1px #ff6b81}
+#s-avisos .bt[disabled]{opacity:.55}
+#s-avisos #avEnviar.confirmar{background:#ffb830;color:#2a1c02}
+#s-avisos #avEnviar.confirmar[disabled]{opacity:.85}
+#s-avisos #avEstado{margin:12px 2px 0;font-size:12.5px;font-weight:700;line-height:1.5;color:var(--texto2)}
+#s-avisos #avEstado.ok{color:#2fbf71}
+#s-avisos #avEstado.mau{color:#ff6b81}
+#s-avisos #avEstado.corre{color:#e08900}
+html:not(.claro) #s-avisos #avEstado.corre{color:#ffb830}
 #s-fila .filaCard::before{content:none}
 #s-fila .filaCard::after{content:"";position:absolute;right:0;bottom:0;z-index:1;
   height:58px;width:80%;pointer-events:none;
@@ -826,12 +843,6 @@ html.claro .f7par{background:#eeeef4}
 .gEng{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;opacity:.7;flex:none}
 .gEng svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .gEng.on{background:rgba(255,255,255,.1);opacity:1}
-/* 06/10 · ligado / desligado das vendas automáticas */
-.gLig{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-6px 0 8px;padding:7px 8px 7px 12px;
-  border-radius:12px;background:rgba(255,255,255,.06);font-size:12px;font-weight:700;color:var(--mel)}
-.gLig.on{color:var(--menta)}
-.gLig .bt{flex:none;min-height:34px;padding:0 14px;font-size:12px}
-.foneG.fora::before{background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,.12))}
 
 .simA{position:relative;display:flex;gap:16px;align-items:flex-start;padding:16px 0}
 .simA+.simA{border-top:1px solid var(--linha)}
@@ -1540,7 +1551,7 @@ html.claro #consBox .consl{background:#f3f2f9}
         <div class="cx"><div class="g2" style="margin-top:0"><button class="bt forte" id="btAtivo" onclick="alternarAtivo()">—</button>
             <button class="bt" onclick="cmd('todos','sincronizar','',event)">Sincronizar telefones</button></div></div>
         <div class="cx"><h3>Fechar pop-ups</h3><p class="funcao">manda os telefones fechar as janelas que ficam por cima</p>
-          <div class="g2" id="popBotoes"><button class="bt" onclick="cmd('redmi8','fechar_popup','',event)">Redmi 8</button>
+          <div class="g2"><button class="bt" onclick="cmd('redmi8','fechar_popup','',event)">Redmi 8</button>
             <button class="bt" onclick="cmd('redmi13','fechar_popup','',event)">Redmi 13c</button></div></div>
 
       </div>
@@ -1669,6 +1680,29 @@ html.claro #consBox .consl{background:#f3f2f9}
   </div>
 </section>
 
+<!-- ═══ AVISAR A FILA ═══ -->
+<section id="s-avisos" class="ecra">
+  <div class="cabo"><h1>Avisar a fila</h1><p class="sub">mandar um SMS a quem está à espera de megas</p></div>
+  <div class="folha">
+      <div id="aj-avisos">
+        <div class="cx"><h3>Avisar a fila</h3>
+          <p class="funcao" id="avQuantos">a ver quem espera…</p>
+          <div class="ajSec">A mensagem</div>
+          <textarea id="avTexto" class="campo" rows="4" maxlength="900"
+            placeholder="Ex.: Ola! Ja temos megas disponiveis. Pode pagar que entregamos agora."
+            autocomplete="off"></textarea>
+          <div class="avLinha"><span id="avConta">0 letras</span><span class="avCusto" id="avCusto">—</span></div>
+          <div class="acoes">
+            <button class="bt larg rosa" id="avEnviar" onclick="avEnviar(this)">Escrever e enviar agora</button>
+            <button class="bt" id="avParar" onclick="avParar(this)" title="Parar o envio">⛔</button>
+          </div>
+          <div id="avEstado"></div>
+          <p class="nota">O Principal vai buscar a mensagem dentro de 20 segundos e manda <b>1 SMS de cada vez, de 10 em 10 segundos</b>. Só vai a quem está na fila à espera de megas, e ninguém recebe a mesma mensagem duas vezes. Quem receber os megas entretanto deixa de ser avisado.</p>
+        </div>
+      </div>
+  </div>
+</section>
+
 </main>
 
 <nav id="barra" aria-label="Navegação">
@@ -1751,10 +1785,8 @@ window.addEventListener('unhandledrejection',function(e){
 const URL_BASE="https://wjebxekgzzmdikabwyqw.supabase.co/rest/v1/rpc/";
 const CHAVE="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqZWJ4ZWtnenptZGlrYWJ3eXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTI1NjAsImV4cCI6MjA5OTg2ODU2MH0.VsKJKIeeKtZkfLuQLZCTP81U-TK13b2MgxEcmhJmwyQ";
 const META_PADRAO=2000;
-/* 06/10 · os telefones vêm da nuvem (registo telefones_megas → painel_resumo.dispositivos): um telefone novo
-   aparece sozinho em todos os ecrãs. Sem essa lista (nuvem sem resposta) ficam os dois de sempre. */
-var DEVS=[['redmi8','Redmi 8'],['redmi13','Redmi 13c']], DEVS_LIG={redmi8:true,redmi13:true}, LIG_LOCAL={};
-const VERSAO='v06/10 · 4 TELEFONES';
+const DEVS=[['redmi8','Redmi 8'],['redmi13','Redmi 13c']];
+const VERSAO='v04/10 · VER MAIS';
 /* o estado — tudo o que a nuvem manda fica aqui e sobrevive a um pedido falhado */
 var D={}, F={}, NEG=null, NEGQ=null, G7={contas:{},itens:[]}, LYD=null, PULSO=null, CONS={}, PK=[], CONSUSO={};
 var secao='s-inicio', ativos={}, tocados={}, estadoUI={}, F7DELTA=0, NEGV=0;
@@ -1817,17 +1849,6 @@ function canalDe(i){const r=String(i.canal||'').trim(); if(r) return r;
 function ligado(x){const s=String(x==null?'':x).trim().toLowerCase();return s==='1'||s==='true'||s==='verdadeiro'||s==='sim'||s==='on';}
 const estadoFone=t=>{const s=desde(t.beaconTs);return s<180?'on':s<1800?'mid':'off';};
 function nomeDe(dev){for(const d of DEVS) if(d[0]===dev) return d[1]; return dev;}
-/* 06/10 · ligado = recebe vendas automáticas; desligado = só ordens dadas à mão */
-function devLigado(dev){ return DEVS_LIG[dev]!==false; }
-function devsDaNuvem(){ const L=D&&D.dispositivos; if(!Array.isArray(L)||!L.length) return;
-  const lista=[], lig={};
-  L.forEach(function(x){ if(x&&typeof x.dev==='string'&&/^[a-z][a-z0-9_]{1,30}$/.test(x.dev)&&!Object.prototype.hasOwnProperty.call(lig,x.dev)){
-    lista.push([x.dev,String(x.nome||x.dev)]); lig[x.dev]=x.ligado!==false; } });
-  if(!lista.length) return;
-  /* o que o dono acabou de mudar vale mais do que o resumo em cache da nuvem (até 40 s) */
-  Object.keys(LIG_LOCAL).forEach(function(k){ const o=LIG_LOCAL[k];
-    if(Date.now()-o.t<40000){ if(Object.prototype.hasOwnProperty.call(lig,k)) lig[k]=o.v; } else delete LIG_LOCAL[k]; });
-  DEVS.length=0; lista.forEach(function(d){ DEVS.push(d); }); DEVS_LIG=lig; }
 function ultimos4(n){const d=String(n||'').replace(/\D/g,'');return d?d.slice(-4):'----';}
 function agoraS(){return Math.floor(Date.now()/1000)+F7DELTA;}
 
@@ -1882,9 +1903,9 @@ function porHtml(id,html){const el=document.getElementById(id); if(el&&el.innerH
 
 /* ─── navegação ─────────────────────────────────────────────────────── */
 const ECRAS={'s-inicio':'Dashboard','s-fila':'Fila em tempo real','s-disp':'Dispositivos','s-ordens':'Ordens',
-  's-ajustes':'Ajustes','s-consultas':'Consultas e histórico','s-recolha':'Recolher dados','s-stock':'Stock'};
+  's-ajustes':'Ajustes','s-consultas':'Consultas e histórico','s-recolha':'Recolher dados','s-stock':'Stock','s-avisos':'Avisar a fila'};
 /* estes dois têm ecrã próprio, mas continuam a pertencer aos Ajustes na barra */
-const TAB_DE={'s-consultas':'s-ajustes','s-recolha':'s-ajustes','s-stock':'s-ajustes'};
+const TAB_DE={'s-consultas':'s-ajustes','s-recolha':'s-ajustes','s-stock':'s-ajustes','s-avisos':'s-ajustes'};
 function ir(id){
   if(!document.getElementById(id)) return;
   document.querySelectorAll('main .ecra').forEach(s=>s.classList.toggle('ver',s.id===id));
@@ -1901,6 +1922,7 @@ function ir(id){
   if(id==='s-consultas'){ try{ comEstado(desenhar); }catch(e){} try{ carregarConsultas(); }catch(e){} }
   if(id==='s-recolha'){ try{ comEstado(desenhar); }catch(e){} }
   if(id==='s-stock'){ try{ stockCarregar(); }catch(e){} }
+  if(id==='s-avisos'){ try{ avFilaVer(); }catch(e){} }
   if(id==='s-fila'){ try{carregarFila7();}catch(e){} try{lyCarregar();}catch(e){} }
   if(id==='s-inicio'){ try{negCarregar();}catch(e){} }
 }
@@ -2108,7 +2130,8 @@ const IC={
  comprov:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
  stock:'<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/>',
  foto:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
- tema:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
+ tema:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+ avisar:'<path d="M4 10.5v3a1 1 0 0 0 1 1h2.2L12 18.5v-13L7.2 9.5H5a1 1 0 0 0-1 1z"/><path d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path d="M18.3 6.4a8 8 0 0 1 0 11.2"/>'};
 const AJUSTES=[];
 function montarMenu(){
   const m=document.getElementById('menu'); if(!m) return;
@@ -2116,7 +2139,7 @@ function montarMenu(){
     '><svg viewBox="0 0 24 24">'+IC[ic]+'</svg>'+nome+'</button>';
   m.innerHTML='<div class="gvGrupo">GERAL</div>'+it('s-inicio','inicio','Dashboard')+
     '<div class="gvGrupo">CONFIGURAÇÕES BÁSICAS</div>'+
-    it('s-consultas','consultas','Consultas e histórico')+it('s-recolha','recolha','Recolher dados')+it('s-stock','stock','Stock')+
+    it('s-consultas','consultas','Consultas e histórico')+it('s-recolha','recolha','Recolher dados')+it('s-stock','stock','Stock')+it('s-avisos','avisar','Avisar a fila')+
     '<button class="gvItem" onclick="abrirFoto()"><svg viewBox="0 0 24 24">'+IC.foto+'</svg>Foto de perfil</button>'+
     '<button class="gvItem" onclick="alternarTema()"><svg viewBox="0 0 24 24">'+IC.tema+'</svg><span id="gvTema">Tema claro</span></button>';
   const gm=document.getElementById('gvManchas'); if(gm&&!gm.innerHTML) gm.outerHTML=manchas(2,[0,3]).replace('class="manchas"','class="manchas" id="gvManchas"');
@@ -2745,6 +2768,122 @@ async function negTodos(){
   if(!confirm('Mandar outra vez os '+(q||'')+' pagamento(s) que estão à espera?\n\nOs que já foram entregues não se repetem.')) return;
   try{ const r=await rpc('fila_reenviar_todos',{});  /* [vel] a fila toda, não 25 */ aviso(String(r),'ok'); carregarFila7(); }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); }
 }
+/* ═══ AVISAR A FILA POR SMS ════════════════════════════════════════════
+   O site abre a campanha na nuvem; o telefone Principal vai busca-la
+   sozinho (sms_aviso_tomar) e manda os SMS de 10 em 10 segundos.
+   Portas da nuvem: fila_avisar(p_texto) · sms_aviso_resumo(p_dev)
+                    sms_aviso_parar(p_dev)                      04/11 */
+var AV={espera:null,corre:'',confirma:0,ocupado:false};
+
+/* Quantos SMS vai custar: com acentos ou emoji cabem 70 letras por SMS,
+   sem eles cabem 160. Ele paga cada pedaco, por isso digo-lho antes. */
+function avPedacos(t){
+  t=String(t||'');
+  if(!t.length) return {n:0,limite:160,uni:false};
+  var uni=/[^\x20-\x7E\n\r@£¥èéùìòÇØøÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ¤¡ÄÖÑÜ§¿äöñüà]/.test(t);
+  var limite=uni?70:160, solto=uni?67:153;
+  return {n:(t.length<=limite)?1:Math.ceil(t.length/solto), limite:limite, uni:uni};
+}
+function avContar(){
+  var ta=document.getElementById('avTexto'); if(!ta) return;
+  var t=ta.value||'', p=avPedacos(t);
+  var c=document.getElementById('avConta'), k=document.getElementById('avCusto');
+  if(c) c.textContent=t.length+(t.length===1?' letra':' letras');
+  if(k){
+    if(!t.length){ k.textContent='—'; k.classList.remove('caro'); }
+    else{
+      var q=AV.espera, tot=(q==null)?null:p.n*q;
+      k.textContent=p.n+(p.n===1?' SMS':' SMS por pessoa')+(tot!=null?' · '+tot+' no total':'')+(p.uni?' (tem acentos)':'');
+      k.classList.toggle('caro',p.n>1);
+    }
+  }
+  if(AV.confirma&&t!==AV.confirma) avConfirmaLimpar();   /* mudou o texto -> recomeca */
+}
+function avConfirmaLimpar(){
+  AV.confirma=0;
+  var b=document.getElementById('avEnviar');
+  if(b){ b.classList.remove('confirmar'); b.textContent='Escrever e enviar agora'; }
+}
+function avDiz(t,cor){
+  var e=document.getElementById('avEstado'); if(!e) return;
+  e.textContent=t||''; e.className=cor||'';
+}
+
+/* le o estado na nuvem: quantos esperam e se ja ha envio a decorrer */
+async function avFilaVer(){
+  if(AV.ocupado) return;
+  try{
+    var d=await rpc('sms_aviso_resumo',{p_dev:'principal'},12000);
+    AV.espera=n0(d&&d.espera); AV.corre=String((d&&d.corre)||'');
+    var q=document.getElementById('avQuantos');
+    if(q) q.textContent=AV.espera?((AV.espera===1?'1 pessoa está':AV.espera+' pessoas estão')+' à espera de megas neste momento')
+                                 :'ninguém está à espera de megas neste momento';
+    var b=document.getElementById('avEnviar');
+    if(b) b.disabled=!AV.espera;
+    if(AV.corre) avDiz(AV.corre,'corre');
+    else if(!AV.espera) avDiz('A fila está vazia — não há quem avisar.','');
+    else if(!AV.confirma) avDiz('');
+    avContar();
+  }catch(e){ /* a nuvem falhou; o ecra fica como estava */ }
+}
+
+async function avEnviar(b){
+  var ta=document.getElementById('avTexto'); if(!ta) return;
+  var t=String(ta.value||'').replace(/\s+$/,'');
+  if(t.replace(/\s+/g,' ').trim().length<10) return aviso('Escreva a mensagem primeiro','bad');
+  if(!AV.espera) return aviso('A fila está vazia','bad');
+
+  /* primeira batida confirma, segunda envia — sem caixas a saltar no ecra */
+  if(AV.confirma!==t){
+    AV.confirma=t;
+    b.classList.add('confirmar');
+    var p=avPedacos(t);
+    b.textContent='Tocar outra vez para enviar a '+AV.espera+(AV.espera===1?' pessoa':' pessoas');
+    avDiz('Vai sair '+(p.n>1?p.n+' SMS':'1 SMS')+' para cada um. Toque outra vez para confirmar, ou mude o texto para desistir.','corre');
+    clearTimeout(AV._t); AV._t=setTimeout(avConfirmaLimpar,12000);
+    return;
+  }
+
+  clearTimeout(AV._t); avConfirmaLimpar();
+  AV.ocupado=true; b.disabled=true;
+  var rot=b.textContent; b.textContent='a abrir…';
+  try{
+    var d=await rpc('fila_avisar',{p_texto:t},25000);
+    if(d&&d.ok){
+      var sub=n0(d&&d.substituiu);
+      avDiz((d.msg||'Aberto.')+' O Principal vai buscá-la dentro de 20 segundos e começa a mandar.'
+            +(sub?' (Substituiu a mensagem anterior, que ainda não tinha saído.)':''),'ok');
+      aviso('Aviso a caminho','ok');
+      ta.value='';
+    }else{
+      avDiz((d&&d.msg)||'A nuvem não aceitou.', (d&&d.ocupado)?'corre':'mau');
+      aviso((d&&d.msg)||'Não abriu','bad');
+    }
+  }catch(e){
+    /* pode ter sido feito e a resposta perdeu-se: nao digo que falhou */
+    if(e&&e.demorou) avDiz('A nuvem demorou a responder. Pode ter sido aberto — veja a linha de cima dentro de alguns segundos antes de tentar outra vez.','corre');
+    else avDiz('Não consegui: '+e.message,'mau');
+  }finally{
+    b.textContent=rot; AV.ocupado=false;
+    setTimeout(function(){ avFilaVer(); },1500);
+  }
+}
+
+async function avParar(b){
+  if(!confirm('Parar o envio de avisos?')) return;
+  b.disabled=true;
+  try{
+    var d=await rpc('sms_aviso_parar',{p_dev:'principal'},15000);
+    avDiz((d&&d.msg)||'Parado.','mau');
+    aviso((d&&d.msg)||'Parado','ok');
+  }catch(e){ aviso('Não consegui parar: '+e.message,'bad'); }
+  finally{ b.disabled=false; avConfirmaLimpar(); setTimeout(avFilaVer,1200); }
+}
+
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='avTexto') avContar();
+});
+
 async function reproTodos(b){ const rot=b.innerHTML; b.textContent='a mandar…'; try{ await negTodos(); }finally{ setTimeout(()=>{b.innerHTML=rot;},1200); } }
 document.addEventListener('input',function(e){ if(e.target&&e.target.id==='filaBusca'){ clearTimeout(F7T); F7T=setTimeout(carregarFila7,400); } });
 function f7tique(){const ag=agoraS(); document.querySelectorAll('[data-vivo]').forEach(e=>{e.textContent=nDur(ag-n0(e.getAttribute('data-vivo')));});}
@@ -2862,21 +3001,6 @@ async function negZerar(dev){ if(!confirm('Pôr os contadores dos dois cartões 
 async function negRecolher(dev){ if(!confirm('Recolher as sobras dos DOIS cartões de '+nomeDe(dev)+'?')) return;
   try{ const r=await rpc('recolher_telefone',{p_dev:dev}); aviso(String(r),'ok'); }catch(e){ aviso('Não deu: '+seg(e.message),'bad'); } }
 const recolherDois=negRecolher;
-/* 06/10 · ligar / desligar um telefone das vendas automáticas (as ordens que já tem continuam) */
-async function ligarDev(dev,lig,ev){
-  const n=nomeDe(dev), semSinal=estadoFone((D.telefones||{})[dev]||{})==='off';
-  const msg=lig?('Ligar o '+n+' às vendas automáticas?\n\nA nuvem passa a mandar-lhe vendas.'+
-                 (semSinal?'\n\nATENÇÃO: este telefone está sem sinal. Liga-o só depois de instalado e testado com uma venda à mão.':''))
-               :('Desligar o '+n+' das vendas automáticas?\n\nDeixa de receber vendas novas; as que já tem continuam.');
-  if(!confirm(msg)) return;
-  const bt=(ev&&ev.currentTarget)||null; if(bt){ bt.disabled=true; bt.textContent='a gravar…'; }
-  try{ const r=String(await rpc('telefone_ligar',{p_dev:dev,p_ligado:!!lig})||'');
-    if(r.indexOf('OK')===0){ LIG_LOCAL[dev]={v:!!lig,t:Date.now()}; DEVS_LIG[dev]=!!lig;
-      aviso(n+(lig?' ligado às vendas automáticas':' desligado das vendas automáticas'),'ok'); try{ comEstado(desenhar); }catch(e){} carregar(); }
-    else aviso(r==='DISPOSITIVO_INVALIDO'?'A nuvem não conhece este telefone':'A nuvem recusou: '+seg(r),'bad');
-  }catch(e){ aviso('Falhou: '+seg(e.message),'bad'); }
-  finally{ if(bt) bt.disabled=false; }
-}
 async function osDois(dev,acao){
   const rot=acao==='consultar_sim'?'consultar':'recolher';
   if(rot==='recolher'&&!((D.config||{}).numero_recolha||'').trim()) return aviso('Guarda primeiro o número que recebe a recolha','bad');
@@ -2952,12 +3076,9 @@ async function zerarSim(dev,n){ if(!confirm('Pôr o contador do SIM '+n+' de '+n
 function cartaoDisp(id,nome,t,p,k){
   const e=estadoFone(t), lim=n0(t.LimiteSIM)||9;
   const noLim=n0(t.cont_sim1)>=lim||n0(t.cont_sim2)>=lim;
-  const ix=DEVS.findIndex(d=>d[0]===id), lig=devLigado(id);
-  return '<div class="foneG'+(ix%2===1?' f2':'')+(e==='off'?' morto':'')+(lig?'':' fora')+'" data-dev="'+id+'">'+
+  return '<div class="foneG'+(id==='redmi13'?' f2':'')+(e==='off'?' morto':'')+'" data-dev="'+id+'">'+
     '<div class="gQuem">'+seg(nome)+'<span class="gIdade">'+(e==='off'?'sem sinal':idade(t.beaconTs))+'</span>'+
       '<button class="gEng" id="geng_'+id+'" onclick="foneMenu(\''+id+'\')" aria-label="Mais acções">'+GEAR+'</button></div>'+
-    '<div class="gLig'+(lig?' on':'')+'"><span>'+(lig?'● recebe vendas automáticas':'○ fora das vendas automáticas')+'</span>'+
-      '<button class="bt peq '+(lig?'mau':'ok')+'" onclick="ligarDev(\''+id+'\','+(lig?'false':'true')+',event)">'+(lig?'Desligar':'Ligar')+'</button></div>'+
     '<div class="gMenu" id="gm_'+id+'">'+
       '<button onclick="negZerar(\''+id+'\')">Zerar os dois contadores</button>'+
       '<button onclick="negRecolher(\''+id+'\')">Recolher sobras (nuvem)</button>'+
@@ -2992,15 +3113,10 @@ function abrirDisp(dev){ const f=document.getElementById('folhaDisp'); if(!f) re
   porTexto('folhaDispTit',nomeDe(dev)); const T=D.telefones||{}, rp=D.resumo_painel||{};
   document.getElementById('folhaDispCorpo').innerHTML=cartaoDisp(dev,nomeDe(dev),T[dev]||{},rp[dev]||{},4); abrirFolha('folhaDisp'); }
 function textoNovo(){ const T=D.telefones||{}, sei=DEVS.map(d=>d[0]), novos=Object.keys(T).filter(k=>sei.indexOf(k)<0);
-  const lista=DEVS.map(d=>'<b>'+seg(d[1])+'</b>'+(devLigado(d[0])?'':' (desligado)')).join(', ');
-  return '<p class="nota">A nuvem conhece estes telefones: '+lista+'.</p>'+
-    '<ol class="nota" style="padding-left:18px">'+
-    '<li>Importar no MacroDroid desse telefone o ficheiro dele (Redmi_10_v99c.mdr ou Redmi_9_v99c.mdr) e dar as permissões.</li>'+
-    '<li>Quando mandar o primeiro sinal, o cartão dele acorda aqui em Dispositivos.</li>'+
-    '<li>Consultar os números dos cartões, gravar o saldo e fazer uma venda de teste à mão.</li>'+
-    '<li>Tocar em <b>Ligar</b> no cartão do telefone: a partir daí entra nas vendas automáticas.</li></ol>'+
-    (novos.length?'<p class="nota">A nuvem está a receber sinal de <b>'+seg(novos.join(', '))+'</b>, que ainda não está no registo dos telefones.</p>'
-      :'<p class="nota">Um telefone que não esteja nesta lista tem de ser registado na nuvem primeiro.</p>'); }
+  return '<p class="nota">Um telefone entra no sistema em dois passos:</p><ol class="nota" style="padding-left:18px"><li>Instalar a automação nesse telefone e dar-lhe um nome próprio. Os que já cá estão chamam-se <b>redmi8</b> e <b>redmi13</b>.</li>'+
+    '<li>Ligá-lo. Assim que mandar o primeiro sinal, a nuvem passa a conhecê-lo.</li></ol>'+
+    (novos.length?'<p class="nota">A nuvem já está a receber sinal de <b>'+seg(novos.join(', '))+'</b>. Diz-me o nome que lhe queres dar e ponho-o aqui ao lado dos outros.</p>'
+      :'<p class="nota">Neste momento a nuvem só conhece estes dois. Quando aparecer outro, mostro-o aqui.</p>'); }
 function abrirNovoDisp(){ const f=document.getElementById('folhaDisp'); if(!f) return; f.dataset.dev='novo'; porTexto('folhaDispTit','Adicionar dispositivo');
   document.getElementById('folhaDispCorpo').innerHTML=textoNovo(); abrirFolha('folhaDisp'); }
 
@@ -3050,10 +3166,9 @@ function explicaErro(c){c=String(c||'');
 function idNovo(v){const i=v.indexOf('~'); const id=i>0?v.slice(0,i):v, resto=i>0?v.slice(i):''; let pos=-1;
   for(let k=id.length-1;k>=0;k--){ if(id.charAt(k)>='0'&&id.charAt(k)<='9'){pos=k;break;} } if(pos<0) return null;
   const d=(parseInt(id.charAt(pos),10)+1)%10, novo=id.slice(0,pos)+d+id.slice(pos+1); return novo+resto.split(id).join(novo);}
-function pintarOrdDev(){ porHtml('ordDev',DEVS.map(d=>'<button data-d="'+d[0]+'">'+seg(d[1])+'</button>').join(''));
-  document.querySelectorAll('#ordDev button').forEach(b=>b.classList.toggle('on',b.dataset.d===ORD_DEV));}
+function pintarOrdDev(){document.querySelectorAll('#ordDev button').forEach(b=>b.classList.toggle('on',b.dataset.d===ORD_DEV));}
 document.addEventListener('click',function(e){const b=e.target.closest&&e.target.closest('#ordDev button[data-d]'); if(b){ORD_DEV=b.dataset.d;pintarOrdDev();}});
-function abrirOrdem(dev,txt){ORD_DEV=DEVS.some(d=>d[0]===dev)?dev:(DEVS[0]?DEVS[0][0]:'redmi8'); pintarOrdDev(); ORD_REFID=refidDe(txt);
+function abrirOrdem(dev,txt){ORD_DEV=(dev==='redmi13'||dev==='redmi8')?dev:'redmi8'; pintarOrdDev(); ORD_REFID=refidDe(txt);
   const cd=document.getElementById('ordDest'); if(cd) cd.value=destinoDe(txt); const t=document.getElementById('ordTxt'); if(t) t.value=txt; abrirFolha('folhaOrdem');}
 function ordTrocarId(){const t=document.getElementById('ordTxt'), n=idNovo(t.value); if(!n) return aviso('Este ID não tem nenhum algarismo','bad'); t.value=n; aviso('ID trocado','ok');}
 async function ordSoDestino(b){const d=(document.getElementById('ordDest').value||'').replace(/\D/g,'');
@@ -3112,7 +3227,6 @@ async function pqOrfaos(b){
 <script>
 /* ═══ AJUSTES e a repintura geral ═════════════════════════════════════ */
 function desenhar(){
-  try{ devsDaNuvem(); }catch(e){}
   const at=(D.ativo||{}).ativo, b=D.bot||{}, L=D.lucro||{}, meta=n0(L.MetaDia)||META_PADRAO, CF=D.config||{};
   try{ pintarChips(); }catch(e){}
   try{ pintarHeroi(); }catch(e){}
@@ -3137,10 +3251,8 @@ function desenhar(){
   try{ pintarPrecos(); }catch(e){}
   try{ pintarNums(); }catch(e){}
   try{ pintarConsBotoes(); }catch(e){}
-  try{ pintarPopBotoes(); }catch(e){}
   try{ pintarTema(); }catch(e){}
 }
-function pintarPopBotoes(){ porHtml('popBotoes',DEVS.map(d=>'<button class="bt" onclick="cmd(\''+d[0]+'\',\'fechar_popup\',\'\',event)">'+seg(d[1])+'</button>').join('')); }
 function alternarAuto(){estadoUI.auto=!estadoUI.auto; desenhar();}
 function gravarConfig(){
   const o={limite_sim:document.getElementById('cfgLimite').value.trim(),saldo_minimo:document.getElementById('cfgSaldoMin').value.trim(),
@@ -3479,7 +3591,7 @@ function pintarDash(){
   /* AINDA DA PARA — envios que cabem: limitado pelos envios livres e pelo saldo (400 MB cada) */
   let mbTot=0, livres=0, aVender=0, cheios=0, poucos=0, semSinal=0;
   const TT=T||{};
-  DEVS.forEach(function(dv){ if(!devLigado(dv[0])) return;
+  DEVS.forEach(function(dv){
     const t=TT[dv[0]]||{}, lim=n0(t.LimiteSIM)||9;
     if(T&&(!t.beaconTs||estadoFone(t)==='off')) semSinal++;
     [1,2].forEach(function(n){
@@ -3826,6 +3938,8 @@ async function ciclo(){
       if(v%15===0){ try{ bwAutoVer(); }catch(e){} }
     } else if(secao==='s-consultas'){
       if(v%5===0){ try{ await carregarConsultas(); }catch(e){} }
+    } else if(secao==='s-avisos'){
+      if(v%3===0){ try{ await avFilaVer(); }catch(e){} }
     }
   } finally { ciclo._ocupado=false; }
 }
